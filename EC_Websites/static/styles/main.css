@@ -1,7 +1,10 @@
+/* 设置 anchorjs-link 的样式，去除下划线并添加过渡效果 */
 .anchorjs-link {
   text-decoration: none !important;
   transition: opacity 0.2s ease-in-out;
 }
+
+/* 当标题被鼠标悬停时，使 anchorjs-link 不透明 */
 .markdown-body h1:hover > .anchorjs-link,
 h2:hover > .anchorjs-link,
 h3:hover > .anchorjs-link,
@@ -10,24 +13,32 @@ h5:hover > .anchorjs-link,
 h6:hover > .anchorjs-link {
   opacity: 1;
 }
+
+/* 设置 banner(横幅，旗帜) 的样式 */
 .banner {
   height: 100%;
   position: relative;
   overflow: hidden;
   cursor: default;
 }
+
+/* 设置 banner 内的遮罩层样式 */
 .banner .mask {
-  position: absolute;
+  position: absolute; /*相对与banner是absolute*/
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.3);
 }
+
+/* 在启用视差滚动效果时，设置 banner 的 transform 属性和过渡效果 */
 .banner[parallax="true"] {
   will-change: transform;
   -webkit-transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;
   transition: transform 0.05s ease-out;
 }
+
+/* 媒体查询，根据视口高度调整样式 */
 @media (max-width: 120vh) {
   .header-inner {
     max-height: 83.33333333333334vw;
@@ -36,11 +47,15 @@ h6:hover > .anchorjs-link {
     margin-top: -1rem !important;
   }
 }
+
+/* 媒体查询，根据视口高度调整样式 */
 @media (max-width: 89.99vh) {
   .scroll-down-bar {
     display: none;
   }
 }
+
+/* 设置 board 的样式 */
 #board {
   position: relative;
   margin-top: -2rem;
@@ -52,6 +67,8 @@ h6:hover > .anchorjs-link {
   -webkit-box-shadow: 0 12px 15px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
   box-shadow: 0 12px 15px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+
+/* 设置代码小部件的样式 */
 .code-widget {
   display: inline-block;
   background-color: transparent;
@@ -64,18 +81,26 @@ h6:hover > .anchorjs-link {
   top: 0.15rem;
   z-index: 1;
 }
+
+/* 设置代码小部件的深色主题样式 */
 .code-widget-light {
   color: #999;
 }
+
+/* 设置代码小部件的浅色主题样式 */
 .code-widget-dark {
   color: #bababa;
 }
+
+/* 设置复制按钮的样式 */
 .copy-btn {
   cursor: pointer;
   user-select: none;
   -webkit-appearance: none;
   outline: none;
 }
+
+/* 设置复制按钮图标的样式 */
 .copy-btn > i {
   font-size: 0.75rem !important;
   font-weight: 400;
@@ -83,13 +108,19 @@ h6:hover > .anchorjs-link {
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }
+
+/* 当代码块被鼠标悬停时，使复制按钮图标透明度增加 */
 .markdown-body pre:hover > .copy-btn > i {
   opacity: 0.9;
 }
+
+/* 当代码块被鼠标悬停时，设置复制按钮图标和按钮的样式 */
 .markdown-body pre:hover > .copy-btn,
 .markdown-body pre:not(:hover) > .copy-btn {
   outline: none;
 }
+
+/* 设置许可证盒子的样式 */
 .license-box {
   background-color: rgba(27,31,35,0.05);
   transition: background-color 0.2s ease-in-out;
@@ -100,11 +131,15 @@ h6:hover > .anchorjs-link {
   position: relative;
   z-index: 1;
 }
+
+/* 设置许可证盒子中的图标样式 */
 .license-box .license-icon {
   position: absolute;
   top: 50%;
   left: 100%;
 }
+
+/* 设置许可证盒子中的图标样式的内容 */
 .license-box .license-icon::after {
   content: "\e8e4";
   font-size: 12.5rem;
@@ -115,36 +150,52 @@ h6:hover > .anchorjs-link {
   bottom: 0.5em;
   z-index: -1;
 }
+
+/* 设置许可证盒子中的标题样式 */
 .license-box .license-title {
   margin-bottom: 1rem;
 }
+
+/* 设置许可证盒子中的标题样式的内容 */
 .license-box .license-title div:nth-child(1) {
   line-height: 1.2;
   margin-bottom: 0.25rem;
 }
+
+/* 设置许可证盒子中的标题样式的内容 */
 .license-box .license-title div:nth-child(2) {
   color: var(--sec-text-color);
   font-size: 0.8rem;
 }
+
+/* 设置许可证盒子中的元数据样式 */
 .license-box .license-meta {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
 }
+
+/* 设置许可证盒子中的元数据项目的样式 */
 .license-box .license-meta .license-meta-item {
   align-items: center;
   justify-content: center;
   margin-right: 1.5rem;
 }
+
+/* 设置许可证盒子中的元数据项目样式的内容 */
 .license-box .license-meta .license-meta-item div:nth-child(1) {
   color: var(--sec-text-color);
   font-size: 0.8rem;
   font-weight: normal;
 }
+
+/* 设置许可证盒子中的元数据项目图标样式 */
 .license-box .license-meta .license-meta-item i.iconfont {
   font-size: 1rem;
 }
+
+/* 媒体查询，根据视口宽度调整许可证盒子样式 */
 @media (max-width: 575px) and (min-width: 425px) {
   .license-box .license-meta .license-meta-item {
     display: flex;
@@ -162,6 +213,8 @@ h6:hover > .anchorjs-link {
     order: -1;
   }
 }
+
+/* 媒体查询，根据视口宽度调整许可证盒子样式 */
 @media (max-width: 424px) {
   .license-box::after {
     top: -65px;
@@ -179,6 +232,9 @@ h6:hover > .anchorjs-link {
     margin-right: 0.5rem;
   }
 }
+
+
+
 .footer-inner {
   padding: 3rem 0 1rem 0;
   text-align: center;
