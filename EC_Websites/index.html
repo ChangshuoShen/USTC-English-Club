@@ -23,8 +23,8 @@
           Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
         }
     </script>
-    <script src="./statis/scripts/utils.js"></script>
-    <script src="./statis/scripts/color-schema.js"></script>
+    <!-- <script src="./statis/scripts/utils.js"></script> -->
+    <!-- <script src="./statis/scripts/color-schema.js"></script> -->
     <script async="">
           if (!Fluid.ctx.dnt) {
             Fluid.utils.createScript('https://www.google-analytics.com/analytics.js', function() {
@@ -35,7 +35,7 @@
             });
           }
     </script>
-    <script src="./statis/scripts/analytics.js" type="text/javascript" charset="UTF-8"></script>
+    <!-- <script src="./statis/scripts/analytics.js" type="text/javascript" charset="UTF-8"></script> -->
     <script async="">
           if (!Fluid.ctx.dnt) {
             Fluid.utils.createScript('//js.users.51.la/21273337.js');
@@ -54,9 +54,13 @@
             <a class="navbar-brand" href="#">
               <strong>USTC English Club!!!</strong>
             </a>
+
+
+            <!-- 导航栏折叠按钮，用于在小屏幕上展开或者收起导航栏内容 -->
             <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <div class="animated-icon"><span></span><span></span><span></span></div>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto text-center">
                 <li class="nav-item">
@@ -90,7 +94,7 @@
                   </a>
                 </li>
 
-                <li class="nav-item" id="search-btn">
+                <!-- <li class="nav-item" id="search-btn">
                   <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
                     <i class="iconfont icon-search"></i>
                   </a>
@@ -100,7 +104,7 @@
                   <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
                     <i class="iconfont icon-dark" id="color-toggle-icon" data="light"></i>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -109,16 +113,60 @@
 
 
     <div id="banner" class="banner" parallax="true" style="background: url('./static/imgs/bgs/bg_blank.png') no-repeat center center; background-size: cover;">
+
         <div class="full-bg-img">
           <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+            
+            <div class="icon-groups">
+              <div class="img-icon">
+                <a href="#">
+                  <img src="./static/imgs/icons/icon001.png" alt="123" width="100">
+                </a>
+              </div>
+
+              <div class="img-icon">
+                <a href="#">
+                  <img src="./static/imgs/icons/icon002.png" alt="123" width="100">
+                </a>
+              </div>
+
+              <div class="img-icon">
+                <a href="#">
+                  <img src="./static/imgs/icons/icon003.png" alt="123" width="100">
+                </a>
+              </div>
+            </div>
+
             <div class="banner-text text-center fade-in-up">
               <div class="h2">
                 <span id="subtitle" data-typed-text="Love and Share" style="color: yellow"></span>
                 <span class="typed-cursor" aria-hidden="true"></span>
               </div>
             </div>
+
+            <div class="icon-groups">
+              <div class="img-icon">
+                <a href="#">
+                  <img src="./static/imgs/icons/icon004.png" alt="123" width="100">
+                </a>
+              </div>
+
+              <div class="img-icon">
+                <a href="#">
+                  <img src="./static/imgs/icons/icon005.png" alt="123" width="100">
+                </a>
+              </div>
+
+              <div class="img-icon">
+                <a href="#">
+                  <img src="./static/imgs/icons/icon006.png" alt="123" width="100">
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
+
       </div>
 
   <footer>
@@ -161,7 +209,9 @@
   <script src="./static/scripts/events.js"></script>
   <script src="./static/scripts/plugins.js"></script>
   <script src="./static/scripts/typed.min.js"></script>
+  
   <script>
+      // 此处实现中间部分的动态打字，别动
       (function (window, document) {
         var typing = Fluid.plugins.typing;
         var subtitle = document.getElementById('subtitle');
@@ -174,7 +224,7 @@
         
       })(window, document);
   </script>
-  <style type="text/css" data-typed-js-css="true">
+  <!-- <style type="text/css" data-typed-js-css="true">
         .typed-cursor{
           opacity: 1;
         }
@@ -191,9 +241,9 @@
           50% { opacity: 0.0; }
           100% { opacity: 1; }
         }
-      </style>
+      </style> -->
   <!-- <script src="./static/scripts/local-search.js"></script> -->
-  <script defer="defer" src="./static/scripts/busuanzi.pure.mini.js"></script>
-  <script src="./static/scripts/boot.js"></script>
+  <!-- <script defer="defer" src="./static/scripts/busuanzi.pure.mini.js"></script> -->
+  <!-- <script src="./static/scripts/boot.js"></script> -->
   </body>
 </html>

@@ -16,8 +16,7 @@ h6:hover > .anchorjs-link {
 
 /* 设置 banner(横幅，旗帜) 的样式 */
 .banner {
-  height: 100%;
-  z-index: -5;
+  height: 100vh;
   position: relative;
   overflow: hidden;
   cursor: default;
@@ -1028,23 +1027,29 @@ sup > a::before,
 
 
 
-
+/* 侧边栏样式 */
 .sidebar {
   position: -webkit-sticky;
   position: sticky;
   top: 2rem;
   padding: 3rem 0;
 }
+
+/* HTML全局样式 */
 html {
   font-size: 16px;
   letter-spacing: 0.02em;
 }
+
+/* HTML和body样式 */
 html,
 body {
   height: 100%;
   font-family: HarmonyOS Sans SC;
   overflow-wrap: break-word;
 }
+
+/* body样式 */
 body {
   transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
   background-color: var(--body-bg-color);
@@ -1052,57 +1057,84 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* body中的链接样式 */
 body a {
   color: var(--text-color);
   text-decoration: none;
   cursor: pointer;
   transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
+
+/* 链接悬停时的样式 */
 body a:hover {
   color: var(--link-hover-color);
   text-decoration: none;
   transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
+
+/* 代码样式 */
 code {
   color: inherit;
 }
+
+/* 表格样式 */
 table {
   font-size: inherit;
   color: var(--post-text-color);
 }
+
+/* 图片懒加载样式 */
 img[lazyload] {
   object-fit: cover;
 }
+
+/* 左对齐样式 */
 *[align="left"] {
   text-align: left;
 }
+
+/* 居中对齐样式 */
 *[align="center"] {
   text-align: center;
 }
+
+/* 右对齐样式 */
 *[align="right"] {
   text-align: right;
 }
+
+/* 滚动条样式 */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+
+/* 滚动条拖拽手柄样式 */
 ::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-color);
   border-radius: 6px;
 }
+
+/* 悬停时滚动条拖拽手柄样式 */
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--scrollbar-hover-color);
 }
+
+/* 滚动条角落样式 */
 ::-webkit-scrollbar-corner {
   background-color: transparent;
 }
-label {
-  margin-bottom: 0;
-}
+
+
+
+/* 图标样式 */
 i.iconfont {
   font-size: 1em;
   line-height: 1;
 }
+
+/* 根变量设置 */
 :root {
   --color-mode: "light";
   --body-bg-color: #eee;
@@ -1125,6 +1157,8 @@ i.iconfont {
   --highlight-bg-color: #fafafa;
   --inlinecode-bg-color: rgba(175,184,193,0.2);
 }
+
+/* 暗色主题下的根变量设置 */
 @media (prefers-color-scheme: dark) {
   :root {
     --color-mode: "dark";
@@ -1180,6 +1214,8 @@ i.iconfont {
     transition: background-color 0.2s ease-in-out;
   }
 }
+
+/* 暗色主题下的根变量设置 */
 [data-user-color-scheme="dark"] {
   --body-bg-color: #181c27;
   --board-bg-color: #252d38;
@@ -1201,11 +1237,17 @@ i.iconfont {
   --highlight-bg-color: #282c34;
   --inlinecode-bg-color: rgba(99,110,123,0.4);
 }
+
+/* 暗色主题下的图片亮度样式 */
 [data-user-color-scheme="dark"] img {
   -webkit-filter: brightness(0.9);
   filter: brightness(0.9);
   transition: filter 0.2s ease-in-out;
 }
+
+
+
+/* 支持背景模糊滤镜的样式 */
 @supports (-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px)) {
   [data-user-color-scheme="dark"] .navbar .dropdown-collapse,
   [data-user-color-scheme="dark"] .top-nav-collapse,
@@ -1215,6 +1257,8 @@ i.iconfont {
     backdrop-filter: blur(3px);
   }
 }
+
+/* 不支持背景模糊滤镜的样式 */
 @supports not ((-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px))) {
   [data-user-color-scheme="dark"] .navbar .dropdown-collapse,
   [data-user-color-scheme="dark"] .top-nav-collapse,
@@ -1222,24 +1266,35 @@ i.iconfont {
     background: #1f3144;
   }
 }
+
+/* 暗色主题下的许可框样式 */
 [data-user-color-scheme="dark"] .license-box {
   background-color: rgba(62,75,94,0.35);
   transition: background-color 0.2s ease-in-out;
 }
+
+/* 暗色主题下的评论管理样式 */
 [data-user-color-scheme="dark"] .gt-comment-admin .gt-comment-content {
   background-color: transparent;
   transition: background-color 0.2s ease-in-out;
 }
+
+/* 淡入向上动画样式 */
 .fade-in-up {
   -webkit-animation-name: fade-in-up;
   animation-name: fade-in-up;
 }
+
+/* 移动端隐藏和显示样式 */
 .hidden-mobile {
   display: block;
 }
+
 .visible-mobile {
   display: none;
 }
+
+/* 小屏幕下的样式 */
 @media (max-width: 575px) {
   .hidden-mobile {
     display: none;
@@ -1248,24 +1303,33 @@ i.iconfont {
     display: block;
   }
 }
+
+/* 无边距样式 */
 .nomargin-x {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
+
+/* 无内边距样式 */
 .nopadding-x {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
+/* 小屏幕下的无内边距样式 */
 @media (max-width: 767px) {
   .nopadding-x-md {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
 }
+
+/* 居中显示样式 */
 .flex-center {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  flex-direction: column;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -1274,10 +1338,24 @@ i.iconfont {
   justify-content: center;
   height: 100%;
 }
+
+.icon-groups {
+  display: flex;
+  justify-content: center;
+}
+
+.img-icon {
+  flex: 1;
+  margin: 100px;
+}
+
+
+/* 带背景颜色的鼠标悬停样式 */
 .hover-with-bg {
   display: inline-block;
   line-height: 1;
 }
+
 .hover-with-bg:hover {
   background-color: var(--link-hover-bg-color);
   transition-duration: 0.2s;
@@ -1449,10 +1527,12 @@ i.iconfont {
 }
 
 
-
+/* 首页卡片样式 */
 .index-card {
   margin-bottom: 2.5rem;
 }
+
+/* 图片样式 */
 .index-img img {
   display: block;
   width: 100%;
@@ -1462,6 +1542,8 @@ i.iconfont {
   border-radius: 0.25rem;
   background-color: transparent;
 }
+
+/* 信息区域样式 */
 .index-info {
   display: flex;
   flex-direction: column;
@@ -1469,6 +1551,8 @@ i.iconfont {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+
+/* 标题样式 */
 .index-header {
   color: var(--text-color);
   font-size: 1.5rem;
@@ -1479,17 +1563,23 @@ i.iconfont {
   text-overflow: ellipsis;
   margin-bottom: 0.25rem;
 }
+
 .index-header .index-pin {
   color: var(--text-color);
   font-size: 1.5rem;
   margin-right: 0.15rem;
 }
+
+/* 底部信息样式 */
 .index-btm {
   color: var(--sec-text-color);
 }
+
 .index-btm a {
   color: var(--sec-text-color);
 }
+
+/* 摘要样式 */
 .index-excerpt {
   color: var(--sec-text-color);
   margin: 0.5rem 0 0.5rem 0;
@@ -1497,6 +1587,7 @@ i.iconfont {
   overflow: hidden;
   display: flex;
 }
+
 .index-excerpt > div {
   width: 100%;
   line-height: 1.4rem;
@@ -1505,14 +1596,19 @@ i.iconfont {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+
+/* 无图片的摘要样式 */
 .index-excerpt__noimg {
   height: auto;
   max-height: calc(1.4rem * 3);
 }
+
+/* 响应式样式 */
 @media (max-width: 767px) {
   .index-info {
     padding-top: 1.25rem;
   }
+
   .index-header {
     font-size: 1.25rem;
     white-space: normal;
@@ -1522,10 +1618,14 @@ i.iconfont {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
+
   .index-header .index-pin {
     font-size: 1.25rem;
   }
 }
+
+
+/* Valine 样式 */
 #valine.v[data-class=v] .status-bar,
 #valine.v[data-class=v] .veditor,
 #valine.v[data-class=v] .vinput,
@@ -1534,26 +1634,39 @@ i.iconfont {
 #valine.v[data-class=v] pre code {
   color: var(--text-color);
 }
+
 #valine.v[data-class=v] .vinput::placeholder {
   color: var(--sec-text-color);
 }
+
 #valine.v[data-class=v] .vicon {
   fill: var(--text-color);
 }
+
+/* 鼠标悬停时去除评论框阴影效果 */
 .gt-container .gt-comment-content:hover {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
+/* 评论区文字颜色 */
 .gt-container .gt-comment-body {
   color: var(--text-color) !important;
   transition: color 0.2s ease-in-out;
 }
+
+/* 提示框 z-index */
 #remark-km423lmfdslkm34-back {
   z-index: 1030;
 }
+
+/* 节点 z-index */
 #remark-km423lmfdslkm34-node {
   z-index: 1031;
 }
+
+
+
 .markdown-body .highlight pre,
 .markdown-body pre {
   padding: 1.45rem 1rem;
@@ -1583,6 +1696,8 @@ i.iconfont {
 pre[class*=language-].line-numbers {
   position: initial;
 }
+
+
 figure {
   margin: 1rem 0;
 }
