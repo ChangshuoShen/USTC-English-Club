@@ -3,45 +3,12 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
-    <link rel="apple-touch-icon" sizes="76x76" href="./static/imgs/sunburst_visualization.png">
-    <link rel="icon" href="./static/imgs/sunburst_visualization.png">
+    <link rel="icon" href="./static/imgs/ec_bg.jpg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
     <title>EC</title>
     <link rel="stylesheet" href="./static/styles/bootstrap.min.css">
     <link rel="stylesheet" href="./static/styles/font_1749284_hj8rtnfg7um.css">
-    <!-- <link rel="stylesheet" href="./static/styles/font_1736178_lbnruvf0jn.css"> -->
     <link rel="stylesheet" href="./static/styles/main.css">
-    <link id="highlight-css" rel="stylesheet" href="./static/styles/highlight.css" disabled="">
-    <link id="highlight-css-dark" rel="stylesheet" href="./static/styles/highlight-dark.css">
-    <script id="fluid-configs">
-        var Fluid = window.Fluid || {};
-        Fluid.ctx = Object.assign({}, Fluid.ctx)
-        var CONFIG = {"hostname":"muzing.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5","collapseDepth":2},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":3},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21273337,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
-
-        if (CONFIG.web_analytics.follow_dnt) {
-          var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-          Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-        }
-    </script>
-    <!-- <script src="./statis/scripts/utils.js"></script> -->
-    <!-- <script src="./statis/scripts/color-schema.js"></script> -->
-    <script async="">
-          if (!Fluid.ctx.dnt) {
-            Fluid.utils.createScript('https://www.google-analytics.com/analytics.js', function() {
-              window.ga = window.ga || function() { (ga.q = ga.q || []).push(arguments) };
-              ga.l = +new Date;
-              ga('create', '[object Object]', 'auto');
-              ga('send', 'pageview');
-            });
-          }
-    </script>
-    <!-- <script src="./statis/scripts/analytics.js" type="text/javascript" charset="UTF-8"></script> -->
-    <script async="">
-          if (!Fluid.ctx.dnt) {
-            Fluid.utils.createScript('//js.users.51.la/21273337.js');
-          }
-    </script>
-    <script src="./statis/scripts/21273337.js" type="text/javascript" charset="UTF-8"></script>
   </head>
 
 
@@ -105,6 +72,7 @@
                     <i class="iconfont icon-dark" id="color-toggle-icon" data="light"></i>
                   </a>
                 </li> -->
+
               </ul>
             </div>
           </div>
@@ -190,60 +158,10 @@
     </div>
   </footer>
 
-  <script src="./static/scripts/nprogress.min.js"></script>
-  <link rel="stylesheet" href="./static/styles/nprogress.min.css">
-  <script>
-      NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-      NProgress.start()
-      window.addEventListener('load', function() {
-        NProgress.done();
-      })
-  </script>
   <div id="nprogress">
     <div class="bar" role="bar" style="transform: translate3d(-0.6%, 0px, 0px); transition: 200ms;">
       <div class="peg"></div>
     </div>
   </div>
-  <script src="./static/scripts/jquery.min.js"></script>
-  <script src="./static/scripts/bootstrap.min.js"></script>
-  <script src="./static/scripts/events.js"></script>
-  <script src="./static/scripts/plugins.js"></script>
-  <script src="./static/scripts/typed.min.js"></script>
-  
-  <script>
-      // 此处实现中间部分的动态打字，别动
-      (function (window, document) {
-        var typing = Fluid.plugins.typing;
-        var subtitle = document.getElementById('subtitle');
-        if (!subtitle || !typing) {
-          return;
-        }
-        var text = subtitle.getAttribute('data-typed-text');
-        
-        typing(text);
-        
-      })(window, document);
-  </script>
-  <!-- <style type="text/css" data-typed-js-css="true">
-        .typed-cursor{
-          opacity: 1;
-        }
-        .typed-cursor.typed-cursor--blink{
-          animation: typedjsBlink 0.7s infinite;
-          -webkit-animation: typedjsBlink 0.7s infinite;
-                  animation: typedjsBlink 0.7s infinite;
-        }
-        @keyframes typedjsBlink{
-          50% { opacity: 0.0; }
-        }
-        @-webkit-keyframes typedjsBlink{
-          0% { opacity: 1; }
-          50% { opacity: 0.0; }
-          100% { opacity: 1; }
-        }
-      </style> -->
-  <!-- <script src="./static/scripts/local-search.js"></script> -->
-  <!-- <script defer="defer" src="./static/scripts/busuanzi.pure.mini.js"></script> -->
-  <!-- <script src="./static/scripts/boot.js"></script> -->
   </body>
 </html>
