@@ -1,0 +1,2217 @@
+/* 设置 anchorjs-link 的样式，去除下划线并添加过渡效果 */
+.anchorjs-link {
+  text-decoration: none !important;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* 当标题被鼠标悬停时，使 anchorjs-link 不透明 */
+.markdown-body h1:hover > .anchorjs-link,
+h2:hover > .anchorjs-link,
+h3:hover > .anchorjs-link,
+h4:hover > .anchorjs-link,
+h5:hover > .anchorjs-link,
+h6:hover > .anchorjs-link {
+  opacity: 1;
+}
+
+/* 设置 banner(横幅，旗帜) 的样式 */
+.banner {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+/* 设置 banner 内的遮罩层样式 */
+.banner .mask {
+  position: absolute; /*相对与banner是absolute*/
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+/* 在启用视差滚动效果时，设置 banner 的 transform 属性和过渡效果 */
+.banner[parallax="true"] {
+  will-change: transform;
+  -webkit-transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  transition: transform 0.05s ease-out;
+}
+
+/* 媒体查询，根据视口高度调整样式 */
+@media (max-width: 120vh) {
+  .header-inner {
+    max-height: 83.33333333333334vw;
+  }
+  #board {
+    margin-top: -1rem !important;
+  }
+}
+
+/* 媒体查询，根据视口高度调整样式 */
+@media (max-width: 89.99vh) {
+  .scroll-down-bar {
+    display: none;
+  }
+}
+
+/* 设置 board 的样式 */
+#board {
+  position: relative;
+  margin-top: -2rem;
+  padding: 3rem 0;
+  background-color: var(--board-bg-color);
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 0.5rem;
+  z-index: 3;
+  -webkit-box-shadow: 0 12px 15px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 12px 15px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+
+/* 设置 footer 内容区域的样式，包括内边距和文本居中对齐 */
+.footer-inner {
+  padding: 3rem 0 1rem 0;
+  text-align: center;
+}
+
+/* 设置 footer 内除第一个子元素外的其他子元素的样式，包括间距和字体大小 */
+.footer-inner > div:not(:first-child) {
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+}
+
+/* 设置用于显示统计信息的容器元素的样式，使用 flex 布局，并水平居中对齐 */
+.footer-inner .statistics {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* 设置统计信息容器内的 span 元素的样式，使其自动填充剩余空间，并设置间距 */
+.footer-inner .statistics > span {
+  flex: 1;
+  margin: 0 0.25rem;
+}
+
+/* 设置统计信息容器内倒数第二个子元素的第一个子元素的右对齐样式 */
+.footer-inner .statistics > *:nth-last-child(2):first-child {
+  text-align: right;
+}
+
+/* 设置统计信息容器内倒数第二个子元素之后的所有子元素的左对齐样式 */
+.footer-inner .statistics > *:nth-last-child(2):first-child ~ * {
+  text-align: left;
+}
+
+/* 设置用于显示备案信息的容器元素的样式，使用 flex 布局，并水平居中对齐 */
+.footer-inner .beian {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* 设置备案信息容器内子元素的间距 */
+.footer-inner .beian > * {
+  margin: 0 0.25rem;
+}
+
+/* 设置备案信息中警徽图片的容器元素的样式，包括位置、溢出和 flex 布局 */
+.footer-inner .beian-police {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: left;
+}
+
+/* 设置备案信息中警徽图片的样式，包括间距和尺寸 */
+.footer-inner .beian-police img {
+  margin-right: 3px;
+  width: 1rem;
+  height: 1rem;
+  margin-bottom: 0.1rem;
+}
+
+/* 在视口宽度小于等于 424px 时应用的样式 */
+@media (max-width: 424px) {
+  /* 调整统计信息容器元素的布局为垂直方向 */
+  .footer-inner .statistics {
+    flex-direction: column;
+  }
+  
+  /* 调整统计信息容器内倒数第二个子元素的对齐方式为居中 */
+  .footer-inner .statistics > *:nth-last-child(2):first-child {
+    text-align: center;
+  }
+  
+  /* 调整统计信息容器内倒数第二个子元素之后的所有子元素的对齐方式为居中 */
+  .footer-inner .statistics > *:nth-last-child(2):first-child ~ * {
+    text-align: center;
+  }
+  
+  /* 调整备案信息容器元素的布局为垂直方向 */
+  .footer-inner .beian {
+    flex-direction: column;
+  }
+  
+  /* 调整备案信息中警徽图片的容器元素的对齐方式为居中 */
+  .footer-inner .beian .beian-police {
+    justify-content: center;
+  }
+  
+  /* 调整备案信息容器内倒数第二个子元素的对齐方式为居中 */
+  .footer-inner .beian > *:nth-last-child(2):first-child {
+    text-align: center;
+  }
+  
+  /* 调整备案信息容器内倒数第二个子元素之后的所有子元素的对齐方式为居中 */
+  .footer-inner .beian > *:nth-last-child(2):first-child ~ * {
+    text-align: center;
+  }
+}
+
+/* 用于添加一些额外的空白块，以实现一些布局效果 */
+sup > a::before,
+.footnote-text::before {
+  display: block;
+  content: "";
+  margin-top: -5rem;
+  height: 5rem;
+  width: 1px;
+  visibility: hidden;
+}
+
+/* 设置超链接和注释文本之前的空白块的样式 */
+sup > a::before,
+.footnote-text::before {
+  display: inline-block;
+}
+
+/* 设置注释列表项之前的空白块的样式 */
+.footnote-item::before {
+  display: block;
+  content: "";
+  margin-top: -5rem;
+  height: 5rem;
+  width: 1px;
+  visibility: hidden;
+}
+
+/* 设置注释列表的样式，包括去除列表样式、设置计数器和内边距 */
+.footnote-list ol {
+  list-style-type: none;
+  counter-reset: sectioncounter;
+  padding-left: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* 设置注释列表项的样式，包括添加计数器标记和设置间距 */
+.footnote-list ol li:before {
+  font-family: "Helvetica Neue", monospace, "Monaco";
+  content: "[" counter(sectioncounter) "]";
+  counter-increment: sectioncounter;
+}
+
+/* 设置注释列表项之间的间距 */
+.footnote-list ol li+li {
+  margin-top: 0.5rem;
+}
+
+/* 设置注释文本的样式，包括内边距 */
+.footnote-text {
+  padding-left: 0.5em;
+}
+
+
+
+/* 设置导航栏的样式，包括背景颜色、字体大小和阴影效果 */
+.navbar {
+  background-color: rgba(0,0,0,0.5);
+  font-size: 0.875rem;
+  box-shadow: 0 2px 5px 0 rgba(230, 208, 4, 0.16), 0 2px 10px 0 rgba(195, 219, 13, 0.12);
+  -webkit-box-shadow: 0 2px 5px 0 rgba(230, 220, 19, 0.16), 0 2px 10px 0 rgba(207, 231, 19, 0.12);
+}
+
+/* 设置导航栏品牌文字的颜色 */
+.navbar .navbar-brand {
+  color: var(--navbar-text-color);
+}
+
+/* 设置导航栏切换按钮中动画图标的颜色 */
+.navbar .navbar-toggler .animated-icon span {
+  background-color: var(--navbar-text-color);
+}
+
+/* 设置导航栏中菜单链接的样式，包括颜色和过渡效果 */
+.navbar .nav-item .nav-link {
+  display: block;
+  color: var(--navbar-text-color);
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+/* 设置导航栏中菜单链接的鼠标悬停样式 */
+.navbar .nav-item .nav-link:hover {
+  color: var(--link-hover-color);
+}
+
+/* 设置导航栏中菜单链接的聚焦样式 */
+.navbar .nav-item .nav-link:focus {
+  color: var(--navbar-text-color);
+}
+
+/* 设置导航栏中菜单链接中图标的样式 */
+.navbar .nav-item .nav-link i {
+  font-size: 0.875rem;
+}
+
+/* 设置导航栏中菜单链接中唯一子元素图标的样式 */
+.navbar .nav-item .nav-link i:only-child {
+  margin: 0 0.2rem;
+}
+
+/* 设置导航栏切换按钮的样式 */
+.navbar .navbar-toggler {
+  border-width: 0;
+  outline: 0;
+}
+
+/* 当导航栏滚动时应用的样式 */
+.navbar.scrolling-navbar {
+  will-change: background, padding;
+  -webkit-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+  transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+
+/* 在视口宽度大于等于 600px 时应用的样式 */
+@media (min-width: 600px) {
+  /* 调整滚动导航栏的上内边距和下内边距 */
+  .navbar.scrolling-navbar {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  /* 设置导航栏中菜单项的过渡效果持续时间 */
+  .navbar.scrolling-navbar .navbar-nav > li {
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
+  }
+}
+
+/* 当滚动导航栏收缩时应用的样式 */
+.navbar.scrolling-navbar.top-nav-collapse {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* 设置下拉菜单的样式 */
+.navbar .dropdown-menu {
+  font-size: 0.875rem;
+  color: var(--navbar-text-color);
+  background-color: rgba(0,0,0,0.3);
+  border: none;
+  min-width: 8rem;
+  -webkit-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+  transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+
+/* 在视口宽度小于等于 991.98px 时应用的样式 */
+@media (max-width: 991.98px) {
+  /* 设置下拉菜单文本居中对齐 */
+  .navbar .dropdown-menu {
+    text-align: center;
+  }
+}
+
+/* 设置下拉菜单项的样式 */
+.navbar .dropdown-item {
+  color: var(--navbar-text-color);
+}
+
+/* 设置下拉菜单项的鼠标悬停和聚焦样式 */
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  color: var(--link-hover-color);
+  background-color: rgba(0,0,0,0.1);
+}
+
+/* 在视口宽度大于等于 992px 时应用的样式 */
+@media (min-width: 992px) {
+  /* 当鼠标悬停在下拉菜单时显示下拉菜单 */
+  .navbar .dropdown:hover > .dropdown-menu {
+    display: block;
+  }
+  /* 禁用下拉菜单切换按钮的点击事件 */
+  .navbar .dropdown > .dropdown-toggle:active {
+    pointer-events: none;
+  }
+  /* 调整下拉菜单的定位 */
+  .navbar .dropdown-menu {
+    top: 95%;
+  }
+}
+
+/* 设置导航栏切换按钮的动画效果 */
+.navbar .animated-icon {
+  width: 30px;
+  height: 20px;
+  position: relative;
+  margin: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+/* 设置导航栏切换按钮动画图标的样式 */
+.navbar .animated-icon span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -o-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+  background: #fff;
+}
+
+/* 设置导航栏切换按钮动画图标的三个条纹的位置 */
+.navbar .animated-icon span:nth-child(1) {
+  top: 0;
+}
+.navbar .animated-icon span:nth-child(2) {
+  top: 10px;
+}
+.navbar .animated-icon span:nth-child(3) {
+  top: 20px;
+}
+
+/* 设置打开状态下导航栏切换按钮动画图标的样式 */
+.navbar .animated-icon.open span:nth-child(1) {
+  top: 11px;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+.navbar .animated-icon.open span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+.navbar .animated-icon.open span:nth-child(3) {
+  top: 11px;
+  -webkit-transform: rotate(-135deg);
+  -moz-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+/* 当浏览器支持模糊效果时应用的样式 */
+@supports (-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px)) {
+  .navbar .dropdown-collapse,
+  .top-nav-collapse,
+  .navbar-col-show {
+    background: rgba(47,65,84,0.7);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+  }
+}
+
+/* 当浏览器不支持模糊效果时应用的样式 */
+@supports not ((-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px))) {
+  .navbar .dropdown-collapse,
+  .top-nav-collapse,
+  .navbar-col-show {
+    background: #2f4154;
+  }
+}
+
+/* 在视口宽度小于等于 767px 时应用的样式 */
+@media (max-width: 767px) {
+  /* 调整导航栏字体大小和行高 */
+  .navbar {
+    font-size: 1rem;
+    line-height: 2.5rem;
+  }
+}
+
+
+
+/* 设置横幅文本的样式，包括颜色、最大宽度和换行 */
+.banner-text {
+  color: var(--subtitle-color);
+  max-width: calc(960px - 6rem);
+  width: 80%;
+  overflow-wrap: break-word;
+}
+
+/* 设置横幅文本中类型光标的样式 */
+.banner-text .typed-cursor {
+  margin: 0 0.2rem;
+}
+
+/* 在视口宽度小于等于 767px 时应用的样式 */
+@media (max-width: 767px) {
+  /* 调整字幕和类型光标的字体大小 */
+  #subtitle,
+  .typed-cursor {
+    font-size: 1.5rem;
+  }
+}
+
+/* 在视口宽度小于等于 575px 时应用的样式 */
+@media (max-width: 575px) {
+  /* 调整横幅文本的字体大小 */
+  .banner-text {
+    font-size: 0.9rem;
+  }
+  /* 调整字幕和类型光标的字体大小 */
+  #subtitle,
+  .typed-cursor {
+    font-size: 1.35rem;
+  }
+}
+
+/* 设置模态框内容的样式 */
+.modal-dialog .modal-content {
+  background-color: var(--board-bg-color);
+  border: 0;
+  border-radius: 0.125rem;
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+}
+
+/* 设置模态框头部的样式 */
+.modal-dialog .modal-content .modal-header {
+  border-bottom-color: var(--line-color);
+  transition: border-bottom-color 0.2s ease-in-out;
+}
+
+/* 设置关闭按钮的样式 */
+.close {
+  color: var(--text-color);
+}
+
+/* 设置关闭按钮的鼠标悬停样式 */
+.close:hover {
+  color: var(--link-hover-color);
+}
+
+/* 设置关闭按钮的聚焦样式 */
+.close:focus {
+  outline: 0;
+}
+
+/* 设置模态框头部的样式 */
+.modal-dialog .modal-content .modal-header {
+  border-top-left-radius: 0.125rem;
+  border-top-right-radius: 0.125rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* 设置页面加载进度条的样式 */
+#nprogress .bar {
+  height: 3px !important;
+  background-color: #29d !important;
+}
+#nprogress .peg {
+  box-shadow: 0 0 14px #29d, 0 0 8px #29d !important;
+}
+
+/* 在视口宽度小于等于 575px 时隐藏加载进度条 */
+@media (max-width: 575px) {
+  #nprogress .bar {
+    display: none;
+  }
+}
+
+/* 滚动至底部的提示条 */
+.scroll-down-bar {
+  position: absolute;
+  width: 100%;
+  height: 6rem;
+  text-align: center;
+  cursor: pointer;
+  bottom: 0;
+}
+
+/* 滚动至底部的提示条图标 */
+.scroll-down-bar i.iconfont {
+  font-size: 2rem;
+  font-weight: bold;
+  display: inline-block;
+  position: relative;
+  padding-top: 2rem;
+  color: var(--subtitle-color);
+  transform: translateZ(0);
+  animation: scroll-down 1.5s infinite;
+}
+
+/* 返回顶部按钮 */
+#scroll-top-button {
+  position: fixed;
+  z-index: 99;
+  background: var(--board-bg-color);
+  transition: background-color 0.2s ease-in-out, bottom 0.3s ease;
+  border-radius: 4px;
+  min-width: 40px;
+  min-height: 40px;
+  bottom: -60px;
+  outline: none;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+/* 返回顶部按钮图标 */
+#scroll-top-button i {
+  font-size: 32px;
+  margin: auto;
+  color: var(--sec-text-color);
+}
+
+/* 返回顶部按钮图标悬停/激活 */
+#scroll-top-button:hover i,
+#scroll-top-button:active i {
+  animation-name: scroll-top;
+  animation-duration: 1s;
+  animation-delay: 0.1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+}
+
+/* 本地搜索结果标题 */
+#local-search-result .search-list-title {
+  border-left: 3px solid #0d47a1;
+}
+
+/* 本地搜索结果内容 */
+#local-search-result .search-list-content {
+  padding: 0 1.25rem;
+}
+
+/* 本地搜索结果关键词 */
+#local-search-result .search-word {
+  color: #ff4500;
+}
+
+/* 目录 */
+#toc {
+  visibility: hidden;
+}
+
+/* 目录标题 */
+.toc-header {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.toc-header,
+.toc-header > i {
+  font-size: 1.25rem;
+}
+
+/* 目录内容 */
+.toc-body {
+  max-height: 75vh;
+  overflow-y: auto;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+}
+
+/* 目录内容列表 */
+.toc-body ol {
+  list-style: none;
+  padding-inline-start: 1rem;
+}
+
+/* 目录滚动条 */
+.toc-body::-webkit-scrollbar {
+  display: none;
+}
+
+/* 目录列表 */
+.tocbot-list {
+  position: relative;
+}
+
+/* 目录列表有序列表 */
+.tocbot-list ol {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+/* 目录链接 */
+.tocbot-list a {
+  font-size: 0.95rem;
+}
+
+/* 目录链接 */
+.tocbot-link {
+  color: var(--text-color);
+}
+
+/* 目录激活链接 */
+.tocbot-active-link {
+  font-weight: bold;
+  color: var(--link-hover-color);
+}
+
+/* 目录折叠状态 */
+.tocbot-is-collapsed {
+  max-height: 0;
+}
+
+/* 目录可折叠 */
+.tocbot-is-collapsible {
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+/* 目录列表项 */
+.toc-list-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 目录激活列表项 */
+.toc-list-item.is-active-li::before {
+  height: 1rem;
+  margin: 0.25rem 0;
+  visibility: visible;
+}
+
+/* 目录列表项前缀 */
+.toc-list-item::before {
+  width: 0.15rem;
+  height: 0.2rem;
+  position: absolute;
+  left: 0.25rem;
+  content: "";
+  border-radius: 2px;
+  margin: 0.65rem 0;
+  background: var(--link-hover-color);
+  visibility: hidden;
+  transition: height 0.1s ease-in-out, margin 0.1s ease-in-out, visibility 0.1s ease-in-out;
+}
+
+
+
+/* 侧边栏样式 */
+.sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 2rem;
+  padding: 3rem 0;
+}
+
+/* HTML全局样式 */
+html {
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+
+/* HTML和body样式 */
+html,
+body {
+  height: 100%;
+  font-family: HarmonyOS Sans SC;
+  overflow-wrap: break-word;
+}
+
+/* body样式 */
+body {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  background-color: var(--body-bg-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* body中的链接样式 */
+body a {
+  color: var(--text-color);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+/* 链接悬停时的样式 */
+body a:hover {
+  color: var(--link-hover-color);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+/* 代码样式 */
+code {
+  color: inherit;
+}
+
+/* 表格样式 */
+table {
+  font-size: inherit;
+  color: var(--post-text-color);
+}
+
+/* 图片懒加载样式 */
+img[lazyload] {
+  object-fit: cover;
+}
+
+/* 左对齐样式 */
+*[align="left"] {
+  text-align: left;
+}
+
+/* 居中对齐样式 */
+*[align="center"] {
+  text-align: center;
+}
+
+/* 右对齐样式 */
+*[align="right"] {
+  text-align: right;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* 滚动条拖拽手柄样式 */
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color);
+  border-radius: 6px;
+}
+
+/* 悬停时滚动条拖拽手柄样式 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-hover-color);
+}
+
+/* 滚动条角落样式 */
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+
+
+/* 图标样式 */
+i.iconfont {
+  font-size: 1em;
+  line-height: 1;
+}
+
+/* 根变量设置 */
+:root {
+  --color-mode: "light";
+  --body-bg-color: #eee;
+  --board-bg-color: #fff;
+  --text-color: #3c4858;
+  --sec-text-color: #718096;
+  --post-text-color: #2c3e50;
+  --post-heading-color: #1a202c;
+  --post-link-color: #0366d6;
+  --link-hover-color: #30a9de;
+  --link-hover-bg-color: #f8f9fa;
+  --line-color: #eaecef;
+  --navbar-bg-color: #2f4154;
+  --navbar-text-color: #fff;
+  --subtitle-color: #fff;
+  --scrollbar-color: #c4c6c9;
+  --scrollbar-hover-color: #a6a6a6;
+  --button-bg-color: transparent;
+  --button-hover-bg-color: #f2f3f5;
+  --highlight-bg-color: #fafafa;
+  --inlinecode-bg-color: rgba(175,184,193,0.2);
+}
+
+/* 暗色主题下的根变量设置 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-mode: "dark";
+  }
+  :root:not([data-user-color-scheme]) {
+    --body-bg-color: #181c27;
+    --board-bg-color: #252d38;
+    --text-color: #c4c6c9;
+    --sec-text-color: #a7a9ad;
+    --post-text-color: #c4c6c9;
+    --post-heading-color: #c4c6c9;
+    --post-link-color: #1589e9;
+    --link-hover-color: #30a9de;
+    --link-hover-bg-color: #364151;
+    --line-color: #435266;
+    --navbar-bg-color: #1f3144;
+    --navbar-text-color: #d0d0d0;
+    --subtitle-color: #d0d0d0;
+    --scrollbar-color: #687582;
+    --scrollbar-hover-color: #9da8b3;
+    --button-bg-color: transparent;
+    --button-hover-bg-color: #46647e;
+    --highlight-bg-color: #282c34;
+    --inlinecode-bg-color: rgba(99,110,123,0.4);
+  }
+  :root:not([data-user-color-scheme]) img {
+    -webkit-filter: brightness(0.9);
+    filter: brightness(0.9);
+    transition: filter 0.2s ease-in-out;
+  }
+  @supports (-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px)) {
+    :root:not([data-user-color-scheme]) .navbar .dropdown-collapse,
+    :root:not([data-user-color-scheme]) .top-nav-collapse,
+    :root:not([data-user-color-scheme]) .navbar-col-show {
+      background: rgba(31,49,68,0.7);
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+    }
+  }
+  @supports not ((-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px))) {
+    :root:not([data-user-color-scheme]) .navbar .dropdown-collapse,
+    :root:not([data-user-color-scheme]) .top-nav-collapse,
+    :root:not([data-user-color-scheme]) .navbar-col-show {
+      background: #1f3144;
+    }
+  }
+  :root:not([data-user-color-scheme]) .license-box {
+    background-color: rgba(62,75,94,0.35);
+    transition: background-color 0.2s ease-in-out;
+  }
+  :root:not([data-user-color-scheme]) .gt-comment-admin .gt-comment-content {
+    background-color: transparent;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+
+/* 暗色主题下的根变量设置 */
+[data-user-color-scheme="dark"] {
+  --body-bg-color: #181c27;
+  --board-bg-color: #252d38;
+  --text-color: #c4c6c9;
+  --sec-text-color: #a7a9ad;
+  --post-text-color: #c4c6c9;
+  --post-heading-color: #c4c6c9;
+  --post-link-color: #1589e9;
+  --link-hover-color: #30a9de;
+  --link-hover-bg-color: #364151;
+  --line-color: #435266;
+  --navbar-bg-color: #1f3144;
+  --navbar-text-color: #d0d0d0;
+  --subtitle-color: #d0d0d0;
+  --scrollbar-color: #687582;
+  --scrollbar-hover-color: #9da8b3;
+  --button-bg-color: transparent;
+  --button-hover-bg-color: #46647e;
+  --highlight-bg-color: #282c34;
+  --inlinecode-bg-color: rgba(99,110,123,0.4);
+}
+
+/* 暗色主题下的图片亮度样式 */
+[data-user-color-scheme="dark"] img {
+  -webkit-filter: brightness(0.9);
+  filter: brightness(0.9);
+  transition: filter 0.2s ease-in-out;
+}
+
+
+
+/* 支持背景模糊滤镜的样式 */
+@supports (-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px)) {
+  [data-user-color-scheme="dark"] .navbar .dropdown-collapse,
+  [data-user-color-scheme="dark"] .top-nav-collapse,
+  [data-user-color-scheme="dark"] .navbar-col-show {
+    background: rgba(31,49,68,0.7);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+  }
+}
+
+/* 不支持背景模糊滤镜的样式 */
+@supports not ((-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px))) {
+  [data-user-color-scheme="dark"] .navbar .dropdown-collapse,
+  [data-user-color-scheme="dark"] .top-nav-collapse,
+  [data-user-color-scheme="dark"] .navbar-col-show {
+    background: #1f3144;
+  }
+}
+
+/* 暗色主题下的许可框样式 */
+[data-user-color-scheme="dark"] .license-box {
+  background-color: rgba(62,75,94,0.35);
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* 暗色主题下的评论管理样式 */
+[data-user-color-scheme="dark"] .gt-comment-admin .gt-comment-content {
+  background-color: transparent;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* 淡入向上动画样式 */
+.fade-in-up {
+  -webkit-animation-name: fade-in-up;
+  animation-name: fade-in-up;
+}
+
+/* 移动端隐藏和显示样式 */
+.hidden-mobile {
+  display: block;
+}
+
+.visible-mobile {
+  display: none;
+}
+
+/* 小屏幕下的样式 */
+@media (max-width: 575px) {
+  .hidden-mobile {
+    display: none;
+  }
+  .visible-mobile {
+    display: block;
+  }
+}
+
+/* 无边距样式 */
+.nomargin-x {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* 无内边距样式 */
+.nopadding-x {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* 小屏幕下的无内边距样式 */
+@media (max-width: 767px) {
+  .nopadding-x-md {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* 居中显示样式 */
+.flex-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.icon-groups {
+  display: flex;
+  justify-content: center;
+}
+
+.img-icon {
+  flex: 1;
+  margin: 100px;
+}
+
+
+/* 带背景颜色的鼠标悬停样式 */
+.hover-with-bg {
+  display: inline-block;
+  line-height: 1;
+}
+
+.hover-with-bg:hover {
+  background-color: var(--link-hover-bg-color);
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  border-radius: 0.2rem;
+}
+
+
+
+@-moz-keyframes fade-in-up {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@-webkit-keyframes fade-in-up {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@-o-keyframes fade-in-up {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@-moz-keyframes scroll-down {
+  0% {
+    opacity: 0.8;
+    top: 0;
+  }
+  50% {
+    opacity: 0.4;
+    top: -1em;
+  }
+  100% {
+    opacity: 0.8;
+    top: 0;
+  }
+}
+@-webkit-keyframes scroll-down {
+  0% {
+    opacity: 0.8;
+    top: 0;
+  }
+  50% {
+    opacity: 0.4;
+    top: -1em;
+  }
+  100% {
+    opacity: 0.8;
+    top: 0;
+  }
+}
+@-o-keyframes scroll-down {
+  0% {
+    opacity: 0.8;
+    top: 0;
+  }
+  50% {
+    opacity: 0.4;
+    top: -1em;
+  }
+  100% {
+    opacity: 0.8;
+    top: 0;
+  }
+}
+@keyframes scroll-down {
+  0% {
+    opacity: 0.8;
+    top: 0;
+  }
+  50% {
+    opacity: 0.4;
+    top: -1em;
+  }
+  100% {
+    opacity: 0.8;
+    top: 0;
+  }
+}
+@-moz-keyframes scroll-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  50% {
+    -webkit-transform: translateY(-0.35rem);
+    transform: translateY(-0.35rem);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes scroll-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  50% {
+    -webkit-transform: translateY(-0.35rem);
+    transform: translateY(-0.35rem);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@-o-keyframes scroll-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  50% {
+    -webkit-transform: translateY(-0.35rem);
+    transform: translateY(-0.35rem);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@keyframes scroll-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  50% {
+    -webkit-transform: translateY(-0.35rem);
+    transform: translateY(-0.35rem);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+
+/* 首页卡片样式 */
+.index-card {
+  margin-bottom: 2.5rem;
+}
+
+/* 图片样式 */
+.index-img img {
+  display: block;
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+  border-radius: 0.25rem;
+  background-color: transparent;
+}
+
+/* 信息区域样式 */
+.index-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* 标题样式 */
+.index-header {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.25rem;
+}
+
+.index-header .index-pin {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  margin-right: 0.15rem;
+}
+
+/* 底部信息样式 */
+.index-btm {
+  color: var(--sec-text-color);
+}
+
+.index-btm a {
+  color: var(--sec-text-color);
+}
+
+/* 摘要样式 */
+.index-excerpt {
+  color: var(--sec-text-color);
+  margin: 0.5rem 0 0.5rem 0;
+  height: calc(1.4rem * 3);
+  overflow: hidden;
+  display: flex;
+}
+
+.index-excerpt > div {
+  width: 100%;
+  line-height: 1.4rem;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* 无图片的摘要样式 */
+.index-excerpt__noimg {
+  height: auto;
+  max-height: calc(1.4rem * 3);
+}
+
+/* 响应式样式 */
+@media (max-width: 767px) {
+  .index-info {
+    padding-top: 1.25rem;
+  }
+
+  .index-header {
+    font-size: 1.25rem;
+    white-space: normal;
+    overflow: hidden;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .index-header .index-pin {
+    font-size: 1.25rem;
+  }
+}
+
+
+/* Valine 样式 */
+#valine.v[data-class=v] .status-bar,
+#valine.v[data-class=v] .veditor,
+#valine.v[data-class=v] .vinput,
+#valine.v[data-class=v] .vbtn,
+#valine.v[data-class=v] p,
+#valine.v[data-class=v] pre code {
+  color: var(--text-color);
+}
+
+#valine.v[data-class=v] .vinput::placeholder {
+  color: var(--sec-text-color);
+}
+
+#valine.v[data-class=v] .vicon {
+  fill: var(--text-color);
+}
+
+/* 鼠标悬停时去除评论框阴影效果 */
+.gt-container .gt-comment-content:hover {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/* 评论区文字颜色 */
+.gt-container .gt-comment-body {
+  color: var(--text-color) !important;
+  transition: color 0.2s ease-in-out;
+}
+
+/* 提示框 z-index */
+#remark-km423lmfdslkm34-back {
+  z-index: 1030;
+}
+
+/* 节点 z-index */
+#remark-km423lmfdslkm34-node {
+  z-index: 1031;
+}
+
+
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 1.45rem 1rem;
+}
+.markdown-body pre code.hljs {
+  padding: 0;
+}
+.markdown-body pre[class*="language-"] {
+  padding-top: 1.45rem;
+  padding-bottom: 1.45rem;
+  padding-right: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+.markdown-body .code-wrapper {
+  position: relative;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.markdown-body .hljs,
+.markdown-body .highlight pre,
+.markdown-body .code-wrapper pre,
+.markdown-body figure.highlight td.gutter {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  background-color: var(--highlight-bg-color);
+}
+pre[class*=language-].line-numbers {
+  position: initial;
+}
+
+
+figure {
+  margin: 1rem 0;
+}
+figure.highlight {
+  position: relative;
+}
+figure.highlight table {
+  border: 0;
+  margin: 0;
+  width: auto;
+  border-radius: 4px;
+}
+figure.highlight td {
+  border: 0;
+  padding: 0;
+}
+figure.highlight tr {
+  border: 0;
+}
+figure.highlight td.code {
+  width: 100%;
+}
+figure.highlight td.gutter {
+  display: table-cell;
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+figure.highlight td.gutter pre {
+  text-align: right;
+  padding: 0 0.75rem;
+  border-radius: initial;
+  border-right: 1px solid #999;
+}
+figure.highlight td.gutter pre span.line {
+  color: #999;
+}
+figure.highlight td.code > pre {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+
+
+.markdown-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: HarmonyOS Sans SC;
+  margin-bottom: 2rem;
+  color: var(--post-text-color);
+}
+.markdown-body > h1,
+.markdown-body h2 {
+  border-bottom-color: var(--line-color);
+}
+.markdown-body > h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  color: var(--post-heading-color);
+  transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+  font-weight: bold;
+  margin-bottom: 0.75em;
+  margin-top: 2em;
+}
+.markdown-body > h1::before,
+.markdown-body h2::before,
+.markdown-body h3::before,
+.markdown-body h4::before,
+.markdown-body h5::before,
+.markdown-body h6::before {
+  display: block;
+  content: "";
+  margin-top: -5rem;
+  height: 5rem;
+  width: 1px;
+  visibility: hidden;
+}
+.markdown-body > h1:focus,
+.markdown-body h2:focus,
+.markdown-body h3:focus,
+.markdown-body h4:focus,
+.markdown-body h5:focus,
+.markdown-body h6:focus {
+  outline: none;
+}
+.markdown-body a {
+  color: var(--post-link-color);
+}
+.markdown-body strong {
+  font-weight: bold;
+}
+.markdown-body code {
+  tab-size: 4;
+  background-color: var(--inlinecode-bg-color);
+  transition: background-color 0.2s ease-in-out;
+}
+.markdown-body table tr {
+  background-color: var(--board-bg-color);
+  transition: background-color 0.2s ease-in-out;
+}
+.markdown-body table tr:nth-child(2n) {
+  background-color: var(--board-bg-color);
+  transition: background-color 0.2s ease-in-out;
+}
+.markdown-body table th,
+.markdown-body table td {
+  border-color: var(--line-color);
+  transition: border-color 0.2s ease-in-out;
+}
+.markdown-body pre {
+  font-size: 85% !important;
+}
+.markdown-body pre .mermaid {
+  text-align: center;
+}
+.markdown-body pre .mermaid > svg {
+  min-width: 100%;
+}
+.markdown-body p > img,
+.markdown-body p > a > img,
+.markdown-body figure > img,
+.markdown-body figure > a > img {
+  max-width: 90%;
+  margin: 1.5rem auto;
+  display: block;
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+  border-radius: 4px;
+  background-color: transparent;
+}
+.markdown-body blockquote {
+  color: var(--sec-text-color);
+}
+.markdown-body details {
+  cursor: pointer;
+}
+.markdown-body details summary {
+  outline: none;
+}
+hr,
+.markdown-body hr {
+  background-color: initial;
+  border-top: 1px solid var(--line-color);
+  transition: border-top-color 0.2s ease-in-out;
+}
+.markdown-body hr {
+  height: 0;
+  margin: 2rem 0;
+}
+.markdown-body figcaption.image-caption {
+  font-size: 0.8rem;
+  color: var(--post-text-color);
+  opacity: 0.65;
+  line-height: 1;
+  margin: -0.75rem auto 2rem;
+  text-align: center;
+}
+.markdown-body figcaption:not(.image-caption) {
+  display: none;
+}
+.post-content,
+post-custom {
+  box-sizing: border-box;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+@media (max-width: 767px) {
+  .post-content,
+  post-custom {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+@media (max-width: 424px) {
+  .post-content,
+  post-custom {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .anchorjs-link-left {
+    opacity: 0 !important;
+  }
+}
+.page-content strong,
+.post-content strong {
+  font-weight: bold;
+}
+.page-content > *:first-child,
+.post-content > *:first-child {
+  margin-top: 0;
+}
+.page-content img,
+.post-content img {
+  object-fit: cover;
+  max-width: 100%;
+}
+@media (max-width: 767px) {
+  .page-content,
+  .post-content {
+    overflow-x: hidden;
+  }
+}
+.post-metas {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+.post-meta > *:not(.hover-with-bg) {
+  margin-right: 0.2rem;
+}
+.post-prevnext {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-left: -0.35rem;
+  margin-right: -0.35rem;
+}
+.post-prevnext .post-prev,
+.post-prevnext .post-next {
+  display: flex;
+  padding-left: 0;
+  padding-right: 0;
+}
+.post-prevnext .post-prev i,
+.post-prevnext .post-next i {
+  font-size: 1.5rem;
+}
+.post-prevnext .post-prev a,
+.post-prevnext .post-next a {
+  display: flex;
+  align-items: center;
+}
+.post-prevnext .post-prev .hidden-mobile,
+.post-prevnext .post-next .hidden-mobile {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+@media (max-width: 575px) {
+  .post-prevnext .post-prev .hidden-mobile,
+  .post-prevnext .post-next .hidden-mobile {
+    display: none;
+  }
+}
+.post-prevnext .post-prev:hover i,
+.post-prevnext .post-prev:active i,
+.post-prevnext .post-next:hover i,
+.post-prevnext .post-next:active i {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
+}
+.post-prevnext .post-prev:hover i,
+.post-prevnext .post-prev:active i {
+  -webkit-animation-name: post-prev-anim;
+  animation-name: post-prev-anim;
+}
+.post-prevnext .post-next:hover i,
+.post-prevnext .post-next:active i {
+  -webkit-animation-name: post-next-anim;
+  animation-name: post-next-anim;
+}
+.post-prevnext .post-next {
+  justify-content: flex-end;
+}
+.post-prevnext .fa-chevron-left {
+  margin-right: 0.5rem;
+}
+.post-prevnext .fa-chevron-right {
+  margin-left: 0.5rem;
+}
+.custom,
+#comments {
+  margin-top: 2rem;
+}
+#comments noscript {
+  display: block;
+  text-align: center;
+  padding: 2rem 0;
+}
+.visitors {
+  font-size: 0.8em;
+  padding: 0.45rem;
+  float: right;
+}
+a.fancybox:hover {
+  text-decoration: none;
+}
+mjx-container,
+.mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden !important;
+  padding: 0.5em 0;
+}
+mjx-container:focus,
+.mjx-container:focus,
+mjx-container svg:focus,
+.mjx-container svg:focus {
+  outline: none;
+}
+.mjx-char {
+  line-height: 1;
+}
+.katex-block {
+  overflow-x: auto;
+}
+.katex,
+.mjx-mrow {
+  white-space: pre-wrap !important;
+}
+.footnote-ref [class*=hint--][aria-label]:after {
+  max-width: 12rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@-moz-keyframes post-prev-anim {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(-0.35rem);
+    transform: translateX(-0.35rem);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes post-prev-anim {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(-0.35rem);
+    transform: translateX(-0.35rem);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-o-keyframes post-prev-anim {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(-0.35rem);
+    transform: translateX(-0.35rem);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes post-prev-anim {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(-0.35rem);
+    transform: translateX(-0.35rem);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-moz-keyframes post-next-anim {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(0.35rem);
+    transform: translateX(0.35rem);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes post-next-anim {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(0.35rem);
+    transform: translateX(0.35rem);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-o-keyframes post-next-anim {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(0.35rem);
+    transform: translateX(0.35rem);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes post-next-anim {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  50% {
+    -webkit-transform: translateX(0.35rem);
+    transform: translateX(0.35rem);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+.note {
+  padding: 0.75rem;
+  border-left: 0.35rem solid;
+  border-radius: 0.25rem;
+  margin: 1.5rem 0;
+  color: var(--text-color);
+  transition: color 0.2s ease-in-out;
+  font-size: 0.9rem;
+}
+.note a {
+  color: var(--text-color);
+  transition: color 0.2s ease-in-out;
+}
+.note *:last-child {
+  margin-bottom: 0;
+}
+.note-primary {
+  background-color: rgba(183,160,224,0.25);
+  border-color: #6f42c1;
+}
+.note-secondary,
+note-default {
+  background-color: rgba(187,187,187,0.25);
+  border-color: #777;
+}
+.note-success {
+  background-color: rgba(174,220,174,0.25);
+  border-color: #5cb85c;
+}
+.note-danger {
+  background-color: rgba(236,169,167,0.25);
+  border-color: #d9534f;
+}
+.note-warning {
+  background-color: rgba(248,214,166,0.25);
+  border-color: #f0ad4e;
+}
+.note-info {
+  background-color: rgba(160,197,228,0.25);
+  border-color: #428bca;
+}
+.note-light {
+  background-color: rgba(254,254,254,0.25);
+  border-color: #0f0f0f;
+}
+.label {
+  display: inline;
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  padding: 0.2em 0.4em;
+  color: var(--text-color);
+  transition: color 0.2s ease-in-out;
+}
+.label-default {
+  background: rgba(187,187,187,0.25);
+}
+.label-primary {
+  background: rgba(183,160,224,0.25);
+}
+.label-info {
+  background: rgba(160,197,228,0.25);
+}
+.label-success {
+  background: rgba(174,220,174,0.25);
+}
+.label-warning {
+  background: rgba(248,214,166,0.25);
+}
+.label-danger {
+  background: rgba(236,169,167,0.25);
+}
+.markdown-body .btn {
+  border: 1px solid var(--line-color);
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  transition: color 0.2s ease-in-out, background 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  border-radius: 0.25rem;
+  display: inline-block;
+  font-size: 0.875em;
+  line-height: 2;
+  padding: 0 0.75rem;
+  margin-bottom: 1rem;
+}
+.markdown-body .btn:hover {
+  background-color: var(--button-hover-bg-color);
+  text-decoration: none;
+}
+.group-image-container {
+  margin: 1.5rem auto;
+}
+.group-image-container img {
+  margin: 0 auto;
+  border-radius: 3px;
+  background-color: transparent;
+  box-shadow: 0 3px 9px 0 rgba(0,0,0,0.15), 0 3px 9px 0 rgba(0,0,0,0.15);
+}
+.group-image-row {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+.group-image-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.group-image-wrap:not(:last-child) {
+  margin-right: 0.25rem;
+}
+input[type=checkbox] {
+  margin: 0 0.2em 0.2em 0;
+  vertical-align: middle;
+}
+.list-group a ~ p.h5 {
+  margin-top: 1rem;
+}
+.list-group-item {
+  display: flex;
+  background-color: transparent;
+  border: 0;
+}
+.list-group-item time {
+  flex: 0 0 5rem;
+}
+.list-group-item .list-group-item-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 575px) {
+  .list-group-item {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+  }
+  .list-group-item time {
+    flex: 0 0 4rem;
+  }
+}
+.list-group-item-action {
+  color: var(--text-color);
+}
+.list-group-item-action:focus,
+.list-group-item-action:hover {
+  color: var(--link-hover-color);
+  background-color: var(--link-hover-bg-color);
+}
+.about-avatar {
+  position: relative;
+  margin: -8rem auto 1rem;
+  width: 10rem;
+  height: 10rem;
+  z-index: 3;
+}
+.about-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: transparent;
+  object-fit: cover;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.about-info > div {
+  margin-bottom: 0.5rem;
+}
+.about-name {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+.about-intro {
+  font-size: 1rem;
+}
+.about-icons > a:not(:last-child) {
+  margin-right: 0.5rem;
+}
+.about-icons > a > i {
+  font-size: 1.5rem;
+}
+.category-bar .category-list {
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.category-bar .category-list::-webkit-scrollbar {
+  display: none;
+}
+.category-bar .category-list > .category-sub > a {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.category-bar .category-list .category-item-action i {
+  margin: 0;
+}
+.category-bar .category-list .category-subitem.list-group-item {
+  padding-left: 0.5rem;
+  padding-right: 0;
+}
+.category-bar .category-list .category-collapse .category-post-list {
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+.category-bar .category-list .category-collapse .category-post {
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+.category-bar .category-list .category-item-action:hover {
+  background-color: initial;
+}
+.category-bar .list-group-item {
+  padding: 0;
+}
+.category-bar .list-group-item.active {
+  color: var(--link-hover-color);
+  background-color: initial;
+  font-weight: bold;
+  font-family: "iconfont";
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+}
+.category-bar .list-group-item.active::before {
+  content: "\e61f";
+  font-weight: initial;
+  margin-right: 0.25rem;
+}
+.category-bar .list-group-count {
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  font-size: 0.9em;
+}
+.category-bar .list-group-item-action:focus,
+.category-bar .list-group-item-action:hover {
+  background-color: initial;
+}
+.category-chains {
+  display: flex;
+  flex-wrap: wrap;
+}
+.category-chains > *:not(:last-child) {
+  margin-right: 1em;
+}
+.category:not(:last-child) {
+  margin-bottom: 1rem;
+}
+.category .category-item,
+.category .category-subitem {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.category .category-item {
+  font-size: 1.25rem;
+}
+.category .category-subitem {
+  font-size: 1.1rem;
+}
+.category .category-collapse {
+  padding-left: 1.25rem;
+  width: 100%;
+}
+.category .category-count {
+  font-size: 0.9rem;
+  font-weight: initial;
+  min-width: 1.3em;
+  line-height: 1.3em;
+  display: flex;
+  align-items: center;
+}
+.category .category-count i {
+  padding-right: 0.25rem;
+}
+.category .category-count span {
+  width: 2rem;
+}
+.category .category-post {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.category .category-item-action:not(.collapsed) > i {
+  transform: rotate(90deg);
+  transform-origin: center center;
+}
+.category .category-item-action i {
+  transition: transform 0.3s ease-out;
+  display: inline-block;
+  margin-left: 0.25rem;
+}
+.category .category-item-action .category:hover {
+  z-index: 1;
+  color: var(--link-hover-color);
+  text-decoration: none;
+  background-color: var(--link-hover-bg-color);
+}
+.category .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.tagcloud {
+  padding: 1rem 5%;
+}
+.tagcloud a {
+  display: inline-block;
+  padding: 0.5rem;
+}
+.tagcloud a:hover {
+  color: var(--link-hover-color) !important;
+}
+.links .card {
+  box-shadow: none;
+  min-width: 33%;
+  background-color: transparent;
+  border: 0;
+}
+.links .card-body {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.links .card-body:hover .link-avatar {
+  transform: scale(1.1);
+}
+.links .card-content {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 3.5rem;
+}
+.link-avatar {
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.75rem;
+  object-fit: cover;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+.link-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: transparent;
+  object-fit: cover;
+}
+.link-text {
+  flex: 1;
+  display: grid;
+  flex-direction: column;
+  line-height: 1.5;
+}
+.link-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-color);
+  font-weight: bold;
+}
+.link-intro {
+  max-height: 2rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  color: var(--sec-text-color);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+@media (max-width: 767px) {
+  .links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .links .card {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+@media (min-width: 768px) {
+  .link-text:only-child {
+    margin-left: 1rem;
+  }
+}
