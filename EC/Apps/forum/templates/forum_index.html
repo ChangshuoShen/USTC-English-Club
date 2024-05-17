@@ -49,66 +49,66 @@
                     <div id="main">
 
                         <input id="tab1" type="radio" name="tabs" checked>
-                        <label for="tab1">Recent Question</label>
+                        <label for="tab1">Recently Published</label>
 
                         <input id="tab2" type="radio" name="tabs">
-                        <label for="tab2">Most Response</label>
+                        <label for="tab2">Most Commented</label>
 
                         <input id="tab3" type="radio" name="tabs">
-                        <label for="tab3">Recently Answered</label>
+                        <label for="tab3">Most Liked</label>
 
                         <input id="tab4" type="radio" name="tabs">
-                        <label for="tab4">No Answer</label>
+                        <label for="tab4">No Comment/</label>
                         
                         <input id="tab5" type="radio" name="tabs">
-                        <label for="tab5">Recent Post</label>
+                        <label for="tab5">Riddles</label>
 
                         <input id="tab6" name="tabs" onclick="window.location.href='{% url 'forum:share' %}'">
                         <label for="tab6">Share sth.</label>
                         
                         <!-- 从这里开始是下面的主要内容 -->
 
-                        {% for i in contents_list %}
-                        <section id="content{{i}}">
+                        {% for single_page in all_contents %}
+                        <section id="content{{single_page.0}}">
                             <!--Recent Question Content Section -->
-
-                            <div class="question-type2033">
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <div class="left-user12923 left-user12923-repeat">
-                                            <a href="#"><img src="{% static 'imgs/images.png' %}" alt="image"> </a>
-                                             <a href="{% url 'forum:post_detail' %}><i class="fa fa-check" aria-hidden="true"></i></a> 
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="right-description893">
-                                            <div id="que-hedder2983">
-                                                <h3><a href="{% url 'forum:post_detail' %}">Why Do You Want to Work at This Company?</a></h3> </div>
-                                            <div class="ques-details10018">
-                                                <p>{{i}}Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.</p>
+                            {% for single_post in single_page%}
+                                <div class="question-type2033">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <div class="left-user12923 left-user12923-repeat">
+                                                <a href="#"><img src="{% static 'imgs/images.png' %}" alt="image"> </a>
+                                                <a href="{% url 'forum:post_detail' %}><i class="fa fa-check" aria-hidden="true"></i></a> 
                                             </div>
-                                            <hr>
-                                            <div class="ques-icon-info3293"> 
-                                                <a href="#"><i class="fa fa-star" aria-hidden="true"> 5 </i> </a> 
-                                                {% comment %} <a href="#"><i class="fa fa-folder" aria-hidden="true"> wordpress</i> {% endcomment %}
-                                                </a> <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> 4 min ago</i></a> 
-                                                <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Question</i></a> 
-                                                <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a> </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="ques-type302">
-                                            <a href="{% url 'forum:post_detail' %}>
-                                                <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> 333335 answer</i></button>
-                                            </a>
-                                            <a href="{% url 'forum:post_detail' %}" >
-                                                <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true"> 70 view</i> </button>
-                                            </a>
+                                        <div class="col-md-9">
+                                            <div class="right-description893">
+                                                <div id="que-hedder2983">
+                                                    <h3><a href="{% url 'forum:post_detail' %}">Why Do You Want to Work at This Company?</a></h3> </div>
+                                                <div class="ques-details10018">
+                                                    <p>{{i}}Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.</p>
+                                                </div>
+                                                <hr>
+                                                <div class="ques-icon-info3293"> 
+                                                    <a href="#"><i class="fa fa-star" aria-hidden="true"> 5 </i> </a> 
+                                                    {% comment %} <a href="#"><i class="fa fa-folder" aria-hidden="true"> wordpress</i> {% endcomment %}
+                                                    </a> <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> 4 min ago</i></a> 
+                                                    <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Question</i></a> 
+                                                    <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a> </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="ques-type302">
+                                                <a href="{% url 'forum:post_detail' %}>
+                                                    <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> 333335 answer</i></button>
+                                                </a>
+                                                <a href="{% url 'forum:post_detail' %}" >
+                                                    <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true"> 70 view</i> </button>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
+                            {% endfor %}
                             <nav aria-label="Page navigation">
                                 <ul class="pagination">
                                   <li>

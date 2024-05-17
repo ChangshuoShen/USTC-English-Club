@@ -17,6 +17,7 @@ class Command(BaseCommand):
                 riddle_text = row['Riddle']
                 answer_text = row['Answer']
                 difficulty = row['Difficulty']
+                
                 # 创建谜语实例并保存到数据库中
                 riddles.objects.create(
                     main_category=main_category,

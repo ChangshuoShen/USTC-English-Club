@@ -2,8 +2,19 @@ from django.shortcuts import render, HttpResponse
 
 
 def forum_index(request):
+    '''
+    返回的是长度为5的列表，其中再涵盖对应页的数据，对应的分别是：
+    * Recently Published
+    * Most Commented
+    * Most Liked
+    * No Comment
+    * Riddles
+    '''
+    all_contents = []
+    for i in range(1, 5+1):
+        all_contents.append((i, ['contents'] * 3))
     return render(request, 'forum_index.html', {
-        'contents_list': [1, 2, 3, 4, 5],
+        'all_contents': all_contents,
     })
 
 
@@ -28,9 +39,9 @@ def submit_sharing(request):
     if request.method == 'POST':
         print('request.POST.get', request.POST.get)
         upload_file(request)
-        return HttpResponse(request.POST.get('content_copy'), request.FILES['imageFile'])
-        
-    return HttpResponse('Submitted')
+        return HttpResponse(request.POST.get('content_copy'))
+    else:
+        return HttpResponse('Submitted')
 
 
 def show_post_detail(request):
