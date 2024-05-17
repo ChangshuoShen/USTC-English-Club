@@ -35,7 +35,16 @@ def submit_sharing(request):
 
 def show_post_detail(request):
     # return HttpResponse('Show More Information Here')
-    return render(request, 'post-details.html')
+    main_comments = [
+        {
+            'main': 'mainmainmain',
+            'replys': ["123"] * 3,
+        }
+    ] * 3
+    
+    return render(request, 'post_details.html', {
+        'main_comments': main_comments,
+    })
 
 
 def user_question(request):
@@ -43,5 +52,14 @@ def user_question(request):
 
 
 def users(request):
-    return render(request, 'user.html')
+    num = 6
+    users_info = [{'name': 'Runge',
+              'rank': 'Top',
+              'main_contents': '6666666666666666666666',
+              }
+            ] * num
+    
+    return render(request, 'user.html', {
+        'users_info': users_info
+    })
 
