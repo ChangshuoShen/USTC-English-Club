@@ -35,13 +35,16 @@ def submit_sharing(request):
 
 def show_post_detail(request):
     # return HttpResponse('Show More Information Here')
-    main_comments = [
-        {
-            'main': 'mainmainmain',
-            'replys': ["123"] * 3,
-        }
-    ] * 3
-    
+    main_comments = []
+    for i in range(2):
+        main_comments.append(
+            {
+                'main': 'mainmainmain',
+                'id': i,
+                'replys': ["123"] * 3,
+            }
+        )
+
     return render(request, 'post_details.html', {
         'main_comments': main_comments,
     })

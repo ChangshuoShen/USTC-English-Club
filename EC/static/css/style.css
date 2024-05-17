@@ -2343,3 +2343,16 @@ h5:hover {
 .category2781 {
     margin-top: 70px;
 }
+
+.show-comment-box {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    width: 80%;
+    transform: translateX(-50%);
+    background-color: rgb(18, 36, 105);
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(65, 11, 11, 0.1);
+    z-index: 999;
+}

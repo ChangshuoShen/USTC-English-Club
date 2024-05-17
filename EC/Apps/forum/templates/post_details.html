@@ -12,7 +12,22 @@
     <link rel="stylesheet" href="{% static 'css/responsive.css'%}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}"  type="text/css">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css"> 
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+
+    <style>
+        .show-comment-box {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            width: 77%;
+            transform: translateX(-50%);
+            background-color: rgb(18, 36, 105);
+            padding: 10px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(65, 11, 11, 0.1);
+            z-index: 999;
+        }
+    </style>
 </head>
 
 <body>
@@ -99,7 +114,7 @@
                                 <div class="comments-container">
                                     
                                     <ul id="comments-list" class="comments-list">
-                                        
+
                                         {% for main_comment in main_comments %}
                                         <li>
                                             <!-- main-level针对的是对整个post的评论 -->
@@ -113,7 +128,7 @@
                                                         <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> 
                                                         <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> 
                                                     </div>
-                                                    <div class="comment-content"> {{ main_comment.main }} </div>
+                                                    <div class="comment-content main_comment" data-comment-id="{{ main_comment.id }}"> {{ main_comment.main }} </div>
                                                 </div>
                                             </div>
                                                 
@@ -141,8 +156,7 @@
                         </div>
                     </div>
 
-
-                    <div class="comment289-box">
+                    <div class="comment289-box" id='comment_box'>
                         <!-- 这里是给一个评论或评论评论的地方 -->
                         <h3>Leave A Reply</h3>
                             <div class="col-md-12">
@@ -165,5 +179,48 @@
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/editor.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+
+            function replyToComment() {
+                // 添加一个类，改变评论框的位置和样式
+                var commentBox = document.getElementById('comment_box');
+                commentBox.classList.add('show-comment-box');
+            }
+
+            function submitComment() {
+                // 从评论框中获取用户输入的内容
+                var commentContent = document.querySelector('.comment-input219882').value;
+                
+                // 这里可以进行提交评论的操作，比如将评论内容发送给服务器
+                // 移除添加的类，恢复评论框原来的位置和样式
+                var commentBox = document.getElementById('comment_box');
+                commentBox.classList.remove('show-comment-box');
+            }
+
+            var replyButton = document.querySelector('.pos393-submit');
+            replyButton.addEventListener('click', submitComment);
+
+            // 点击主要评论文本时触发事件
+            $('.main_comment').click(function() {
+                // 获取被回复的主要评论ID
+                var commentId = $(this).data('comment-id');
+                replyToComment();
+                // 弹出文本框，这里使用简单的alert代替
+                // 你可以使用模态框或自定义的文本框来实现
+                
+                /* var replyContent = prompt('Reply to this comment:');
+                
+                // 用户输入回复内容后，可以将回复内容POST给服务器
+                // 这里只是简单地打印出回复内容和被回复的主要评论ID
+                if (replyContent !== null && replyContent.trim() !== '') {
+                    console.log('Reply to comment ' + commentId + ': ' + replyContent);
+                    // 在这里发送POST请求给服务器，将回复内容和被回复的主要评论ID一起发送
+                } */
+            });
+        });
+    </script>
 </body>
 </html>
+
+
