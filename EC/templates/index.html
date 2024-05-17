@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
   </head>
 
-
-
   <body>
     <header>
       <div class="header-inner" >
@@ -45,18 +43,21 @@
                     <span>Archive</span>
                   </a>
                 </li>
+
                 <li class="nav-item">
                   <a class="nav-link" href="#">
                     <i class="iconfont icon-category-fill"></i>
                     <span>Categories</span>
                   </a>
                 </li>
+
                 <li class="nav-item">
                   <a class="nav-link" href="#">
                     <i class="iconfont icon-tags-fill"></i>
                     <span>Tags</span>
                   </a>
                 </li>
+                
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'accounts:signup_login' %}">
                     <i class="iconfont icon-user-fill"></i>
@@ -90,47 +91,66 @@
             
             <div class="icon-groups">
               <div class="img-icon">
-                <a href="#">
-                  <img src="./static/imgs/icons/icon001.png" alt="123" width="100">
+                <a href="{% url 'forum:forum_index' %}">
+                  <figure class="img-container">
+                    <img src="./static/imgs/icons/icon001.png" alt="Forum" width="120">
+                    <figcaption>Forum</figcaption>
+                    </figure>
                 </a>
               </div>
 
               <div class="img-icon">
-                <a href="#">
-                  <img src="./static/imgs/icons/icon002.png" alt="123" width="100">
+                <a href="{% url 'forum:forum_index' %}">
+                  <figure class="img-container">
+                    <img src="./static/imgs/icons/icon002.png" alt="Riddles" width="120">
+                    <figcaption>Riddles</figcaption>
+                    </figure>
                 </a>
               </div>
 
               <div class="img-icon">
-                <a href="#">
-                  <img src="./static/imgs/icons/icon003.png" alt="123" width="100">
+                <a href="{% url 'accounts:signup_login' %}">
+                  <figure class="img-container">
+                  <img src="./static/imgs/icons/icon003.png" alt="123" width="120">
+
+                  <figcaption>Login</figcaption>
+                  </figure>
                 </a>
               </div>
             </div>
 
             <div class="banner-text text-center fade-in-up">
               <div class="h2">
-                <span id="subtitle" data-typed-text="Love and Share" style="color: yellow"></span>
+                <span id="subtitle" data-typed-text="Love and Share" style="color: yellow">Love And Share</span>
                 <span class="typed-cursor" aria-hidden="true"></span>
               </div>
             </div>
 
             <div class="icon-groups">
               <div class="img-icon">
-                <a href="#">
-                  <img src="./static/imgs/icons/icon004.png" alt="123" width="100">
+                <a href="{% url 'forum:forum_index' %}">
+                  <figure class="img-container">
+                    <img src="./static/imgs/icons/icon004.png" alt="Activities" width="120">
+                    <figcaption>Activities</figcaption>
+                    </figure>
                 </a>
               </div>
 
               <div class="img-icon">
-                <a href="#">
-                  <img src="./static/imgs/icons/icon005.png" alt="123" width="100">
+                <a href="{% url 'forum:forum_index' %}">
+                  <figure class="img-container">
+                    <img src="./static/imgs/icons/icon005.png" alt="Raffle" width="120">
+                    <figcaption>Raffle</figcaption>
+                    </figure>
                 </a>
               </div>
 
               <div class="img-icon">
-                <a href="#">
-                  <img src="./static/imgs/icons/icon006.png" alt="123" width="100">
+                <a href="{% url 'forum:forum_index' %}">
+                  <figure class="img-container">
+                    <img src="./static/imgs/icons/icon006.png" alt="Administrator" width="120">
+                    <figcaption>Administrator</figcaption>
+                    </figure>
                 </a>
               </div>
             </div>
@@ -166,5 +186,7 @@
       <div class="peg"></div>
     </div>
   </div>
+
+
   </body>
 </html>

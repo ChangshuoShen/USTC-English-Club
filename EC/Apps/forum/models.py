@@ -2,9 +2,10 @@ from django.db import models
 from django.utils import timezone
 # Create your models here.
 class riddles(models.Model):
-    riddle_id = models.CharField(verbose_name = 'riddle_id', maxlength = 20, blank = False)
+    riddle_id = models.CharField(verbose_name = 'riddle_id', max_length = 20, blank = False)
     main_category = models.CharField(verbose_name = 'main_category', max_length = 64, blank = False)
     riddles_text = models.CharField(verbose_name = 'riddles_text', max_length = 512, blank = False)
+    # riddles_text = models.TextField(_(""))
     answer_text =  models.CharField(verbose_name = 'answer_text', max_length = 512, blank = False)
     writein_date = models.DateTimeField(verbose_name='writein_date', default=timezone.now)
 

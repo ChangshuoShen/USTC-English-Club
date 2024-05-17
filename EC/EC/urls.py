@@ -17,15 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='home'), # 这是一个主页
     path("admin/", admin.site.urls),
     path('accounts/', include('Apps.accounts.urls', namespace='accounts')),
-    path('activities/', include('Apps.activities.urls')),
-    path('admin_panel/', include('Apps.admin_panel.urls')),
-    path('feedback/', include('Apps.feedback.urls')),
-    path('forum/', include('Apps.forum.urls')),
-    path('learning/', include('Apps.learning.urls')),
-    path('mystery_hunt/', include('Apps.mystery_hunt.urls')),
-    path('settings/', include('Apps.settings.urls')),
-    path('socialize/', include('Apps.socialize.urls')),
+    
+    path('forum/', include('Apps.forum.urls', namespace='forum')),
+    
+    # path('activities/', include('Apps.activities.urls', namespace='activities')),
+    # path('admin_panel/', include('Apps.admin_panel.urls', namespace='admin_panel')),
+    # path('feedback/', include('Apps.feedback.urls', namespace='feedback')),
+    
+    # path('learning/', include('Apps.learning.urls', namespace='learning')),
+    # path('mystery_hunt/', include('Apps.mystery_hunt.urls', namespace='mystery_hunt')),
+    # path('settings/', include('Apps.settings.urls', namespace='settings')),
+    # path('socialize/', include('Apps.socialize.urls', namespace='socialize')),
 ]

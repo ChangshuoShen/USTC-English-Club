@@ -195,9 +195,11 @@ def confirm_signup(request):
 
 
 def profile(request):
-    return HttpResponse('SHOW PROFILE HERE')
+    return render(request, 'profile.html')
 
 
 def logout(reqeust):
     return HttpResponse('LOGOUT HERE')
 
+def change_profile(request):
+    return HttpResponse('Profile changed Successfully')

@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Ask online Form">
+    <meta name="language" content="English">
+    <title>Share</title>
+
+    <link rel="stylesheet" href="{% static 'css/responsive.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/editor.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet"href="{% static 'css/style.css' %}"  type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css"> 
+</head>
+
+<body>
+    <section class="header-descriptin329">
+        <div class="container">
+            <h3>Share Something Interesting</h3>
+            <ol class="breadcrumb breadcrumb839">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="active">Share</li>
+            </ol>
+        </div>
+
+    </section>
+
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="ask-question-input-part032">
+                        <h4>share sth.</h4>
+                        <hr>
+                        <form action="{% url 'forum:submit_sharing' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="question-title39">
+                                <span class="form-description433">Title* </span>
+                                <input type="text" name="title" class="question-ttile32" placeholder="Wrote your Title Here">
+                            </div>
+                            <div class="categori49">
+                                <span class="form-description43305">Category*</span>
+                                <label>
+                                    <input list="browsers" name="category" class="list-category53"/>
+                                </label>
+                                <datalist id="browsers">
+                                    <option value="Front_End Web Developer">
+                                    <option value="Back-End develoer">
+                                    <option value="Andriod Developer">
+                                    <option value="Web Application">
+                                    <option value="System Analyst">
+                                    <option value="Security">
+                                </datalist>
+                            </div>
+
+                            <div class="button-group-addfile3239">
+                                <span class="form-description23993">Attach an Image</span>
+                                <input type="file" name="imageFile" accept="image/*" class="question-ttile3226">
+
+                            </div>
+
+                            <div class="details2-239">
+                                <div class="col-md-12 nopadding">
+                                    <textarea id="txtEditor" name='content'></textarea>
+                                    <input type="hidden" name="content_copy" id="content_copy">
+                                </div>
+                            </div>
+
+                            <div class="publish-button2389">
+                                <button type="submit" class="publis1291">Publish</button>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/editor.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#txtEditor").Editor();
+
+            // 在表单提交之前，将富文本编辑器中的内容同步到隐藏的 input 中
+            $("form").submit(function() {
+            var content = $("#txtEditor").Editor("getText");
+            $("#content_copy").val(content);
+            });
+        });
+    </script>
+</body>
+</html>
+<textarea name="content"></textarea>

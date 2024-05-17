@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="{% static 'css/signup_login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/msg_for_all.css' %}">
+</head>
+
+<body>
+    <h1>Edit Profile</h1>
+
+    {% if messages %}
+    <div class="message-container">
+      {% for message in messages %}
+        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="{% url 'accounts:change_profile' %}" method="post">
+        {% csrf_token %}
+
+        <label for="avator">Avator:</label>
+        <input type="file" id="avator" name="avator">
+        <br>
+
+        <label for="username">name:</label>
+        <input type="text" id="username" name="username" placeholder="{{ profile.username }}">
+        <br>
+        
+        <label for="email">Email:</label>
+        <span id="email">{{ profile.email }}</span>
+        <br>
+        
+        <label for="gender">Gender:</label>
+        <input type="radio" id="male" name="gender" value="male" {% if profile.gender == 'male' %} checked {% endif %}>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female" {% if profile.gender == 'female' %} checked {% endif %}>
+        <label for="female">Female</label>
+        <br>
+
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="birthday" value="{{ profile.birthday }}">
+        <br>
+
+        <label for="bio">Biography:</label>
+        <br>
+        <textarea id="bio" name="bio" rows="4" cols="50" placeholder="{{ profile.bio }}"></textarea>
+        <br>
+
+        <!-- 下面这部分只给看 -->
+        <label for="likes">Likes:</label>
+        <span id="likes">{{ profile.likes|default_if_none:"0" }}</span>
+        <br>
+
+        <label for="liked_by">Liked By:</label>
+        <span id="liked_by">{{ profile.liked_by|default_if_none:"0" }}</span>
+        <br>
+
+        <label for="followers">Followers:</label>
+        <span id="followers">{{ profile.followers|default_if_none:"0" }}</span>
+        <br>
+
+        <label for="following">Following:</label>
+        <span id="following">{{ profile.following|default_if_none:"0" }}</span>
+        <br>
+
+        <input type="submit" value="Confirm">
+    </form>
+
+</body>
+</html>
+

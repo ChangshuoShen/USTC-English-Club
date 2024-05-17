@@ -15,5 +15,8 @@ urlpatterns = [
     path('login/', views.login, name='login'),
 
     path('logout/', views.logout, name='logout'),
+    
     path('profile/', views.profile, name='profile'), # 这里实现用户信息的展示和修改
+    path('change_profile/', views.change_profile, name='change_profile'),
+    
 ]

@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Ask online Form">
+    <meta name="language" content="English">
+    <title>Forum</title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"  type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/editor.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}" type="text/css">
+</head>
+
+<body>
+    <section class="welcome-part-one">
+        <div class="container">
+            <div class="welcome-demop102 text-center">
+                <h1 style="font-weight: bold; color: #fff;">Forum</h1>
+                <h2>English Club</h2>
+                <p>Ask Some Questions Here or Find some interesting things around you
+                    <br>bala bala 
+                </p>
+
+                <div class="form-style8292">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control form-control8392" placeholder="Find Some Interesting Things Here?">
+                        <span class="input-group-addon">
+                            <a href="#">Ask Now</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======content section/body=====-->
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div id="main">
+
+                        <input id="tab1" type="radio" name="tabs" checked>
+                        <label for="tab1">Recent Question</label>
+
+                        <input id="tab2" type="radio" name="tabs">
+                        <label for="tab2">Most Response</label>
+
+                        <input id="tab3" type="radio" name="tabs">
+                        <label for="tab3">Recently Answered</label>
+
+                        <input id="tab4" type="radio" name="tabs">
+                        <label for="tab4">No Answer</label>
+                        
+                        <input id="tab5" type="radio" name="tabs">
+                        <label for="tab5">Recent Post</label>
+
+                        <input id="tab6" name="tabs" onclick="window.location.href='{% url 'forum:share' %}'">
+                        <label for="tab6">Share sth.</label>
+                        
+                        <!-- 从这里开始是下面的主要内容 -->
+
+                        {% for i in contents_list %}
+                        <section id="content{{i}}">
+                            <!--Recent Question Content Section -->
+
+                            <div class="question-type2033">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="left-user12923 left-user12923-repeat">
+                                            <a href="#"><img src="{% static 'imgs/images.png' %}" alt="image"> </a>
+                                             <a href="{% url 'forum:post_detail' %}><i class="fa fa-check" aria-hidden="true"></i></a> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="right-description893">
+                                            <div id="que-hedder2983">
+                                                <h3><a href="{% url 'forum:post_detail' %}">Why Do You Want to Work at This Company?</a></h3> </div>
+                                            <div class="ques-details10018">
+                                                <p>{{i}}Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.</p>
+                                            </div>
+                                            <hr>
+                                            <div class="ques-icon-info3293"> 
+                                                <a href="#"><i class="fa fa-star" aria-hidden="true"> 5 </i> </a> 
+                                                {% comment %} <a href="#"><i class="fa fa-folder" aria-hidden="true"> wordpress</i> {% endcomment %}
+                                                </a> <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> 4 min ago</i></a> 
+                                                <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Question</i></a> 
+                                                <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="ques-type302">
+                                            <a href="{% url 'forum:post_detail' %}>
+                                                <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> 333335 answer</i></button>
+                                            </a>
+                                            <a href="{% url 'forum:post_detail' %}" >
+                                                <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true"> 70 view</i> </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                  <li>
+                                    <a href="#" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                  </li>
+                                  <li><a href="#">1</a></li>
+                                  <li><a href="#">2</a></li>
+                                  <li><a href="#">3</a></li>
+                                  <li><a href="#">4</a></li>
+                                  <li><a href="#">5</a></li>
+                                  <li>
+                                    <a href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </nav>
+                        </section>
+                        <!--  End of content-i------>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!--end of col-md-9 -->
+            </div>
+        </div>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/editor.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#txtEditor").Editor();
+        });
+    </script>
+</body>
+</html>

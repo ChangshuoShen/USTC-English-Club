@@ -80,6 +80,11 @@ TEMPLATES = [
 WSGI_APPLICATION = "EC.wsgi.application"
 
 
+# 这里设置MEDIA相关内容
+MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
