@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from accounts.models import User
+from Apps.accounts.models import User
 # Create your models here.
 
 
@@ -23,7 +23,7 @@ class post(models.Model):
         blank=False
     )
     publish_date = models.DateTimeField(verbose_name='published_date', default=timezone.now)
-    likes = models.IntegerField(default=0, verbose_name='likes')
+    post_likes = models.IntegerField(default=0, verbose_name='likes')
 
     def __str__(self):
         return self.post_title
@@ -40,17 +40,23 @@ class post(models.Model):
             self.likes -= 1
             self.save()
 
-    
+
 class Comment(models.Model):
     post = models.ForeignKey(post, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     content = models.TextField(verbose_name='comment_content', blank=False)
-    comment_time = models.DateTimeField(verbose_name='created_at', default=timezone.now)
-    likes = models.IntegerField(default=0, verbose_name='likes')
+    comment_date = models.DateTimeField(verbose_name='created_at', default=timezone.now)
+    
+    comment_likes = models.IntegerField(default=0, verbose_name='likes')
 
     def __str__(self):
         return f'Comment by {self.user.name} on {self.post.post_title}'
 
+    
+    @classmethod
+    def find_comments_on_pecific_post(cls, post):
+        pass
 
 class Like(models.Model):
     post = models.ForeignKey(post, related_name='likes', on_delete=models.CASCADE)
@@ -59,7 +65,6 @@ class Like(models.Model):
 
     def __str__(self):
         return f'Like by {self.user.name} on {self.post.post_title}'
-
 
 
 class CommentLike(models.Model):
@@ -86,25 +91,25 @@ class CommentLike(models.Model):
 
 
 
-class riddles(models.Model):
-    riddle_id = models.CharField(verbose_name = 'riddle_id', max_length = 20, blank = False)
-    main_category = models.CharField(verbose_name = 'main_category', max_length = 64, blank = False)
-    riddles_text = models.TextField(verbose_name = 'riddles_text', blank = False)
-    # riddles_text = models.TextField(_(""))
-    answer_text =  models.CharField(verbose_name = 'answer_text', max_length = 512, blank = False)
-    writein_date = models.DateTimeField(verbose_name='writein_date', default=timezone.now)
+# class riddles(models.Model):
+#     riddle_id = models.CharField(verbose_name = 'riddle_id', max_length = 20, blank = False)
+#     main_category = models.CharField(verbose_name = 'main_category', max_length = 64, blank = False)
+#     riddles_text = models.TextField(verbose_name = 'riddles_text', blank = False)
+#     # riddles_text = models.TextField(_(""))
+#     answer_text =  models.CharField(verbose_name = 'answer_text', max_length = 512, blank = False)
+#     writein_date = models.DateTimeField(verbose_name='writein_date', default=timezone.now)
 
-    @classmethod
-    def create_riddles(cls, name='offical_riddles', main_category=None, riddles_text=None, answer_text=None, writein_date=None):
-        """
-        创建riddles
-        """
-        riddles = cls(
-            main_category = main_category,
-            riddles_text = riddles_text,
-            answer_text = answer_text,
-            writein_date = timezone.now()
-        )
+#     @classmethod
+#     def create_riddles(cls, name='offical_riddles', main_category=None, riddles_text=None, answer_text=None, writein_date=None):
+#         """
+#         创建riddles
+#         """
+#         riddles = cls(
+#             main_category = main_category,
+#             riddles_text = riddles_text,
+#             answer_text = answer_text,
+#             writein_date = timezone.now()
+#         )
 
-        riddles.save()
-        return riddles
+#         riddles.save()
+#         return riddles
