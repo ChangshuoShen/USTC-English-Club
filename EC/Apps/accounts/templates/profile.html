@@ -11,7 +11,7 @@
 
 <body>
     <h1>Profile</h1>
-    
+
     {% if messages %}
     <div class="message-container">
       {% for message in messages %}
@@ -27,6 +27,8 @@
         {% csrf_token %}
 
         <label for="avator">Avator:</label>
+        <img src="{{ MEDIA_URL }}avators/default.png">
+        <br>
         <input type="file" id="avator" name="avator">
         <br>
 

@@ -135,7 +135,7 @@ def send_verification_code(request, action='register'):
     else:
         return None
     
-    
+
 def verify_verification_code(request, verification_code):
     saved_code = request.session.get('verification_code')
     print('saved code:', saved_code)

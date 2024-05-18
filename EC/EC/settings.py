@@ -72,6 +72,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.media",
             ],
         },
     },
@@ -81,7 +82,8 @@ WSGI_APPLICATION = "EC.wsgi.application"
 
 
 # 这里设置MEDIA相关内容
-MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
+MEDIA_DIR = Path.joinpath(BASE_DIR, 'media')
+MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
 
@@ -134,7 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 
 STATICFILES_DIRS = [
