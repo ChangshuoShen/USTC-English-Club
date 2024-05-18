@@ -57,9 +57,11 @@ def login_check(request):
         print('email: ', email)
 
         forget_btn = request.POST.get('forget_btn')
+        
         if forget_btn:
             messages.success(request, 'Verification Sent')
             return send_verification_code(request, action='change_pwd')
+            
 
         # 如果不是那就是正常的执行登陆的逻辑咯
         password = request.POST.get('password')
@@ -69,12 +71,18 @@ def login_check(request):
             # 调用自定义的 authenticate_user 函数验证用户凭据
             user = authenticate_user(email, password)
             if user:
-                print('success')
                 # 验证成功，将用户对象存储在 session 中表示用户已登录
                 request.session['user_id'] = user.id
                 request.session['email'] = user.email
                 messages.success(request, 'Login successful!')
-                return redirect('accounts:profile')
+                
+                # del request.session['verification_code']
+                
+                # 设置用户的cookie，以便下次访问时自动登录
+                response = redirect('accounts:profile')
+                response.set_cookie('user_id', user.id)
+                response.set_cookie('email', user.email)
+                return response
 
             else:
                 # 验证失败，显示错误消息并重定向回登录页面
@@ -124,6 +132,24 @@ def send_verification_code(request, action='register'):
                 return render(request, 'signup_login.html', {'change_pwd_verification_sent': True})
         else:
             messages.error(request, 'Email is required!')
+    else:
+        return None
+    
+    
+def verify_verification_code(request, verification_code):
+    saved_code = request.session.get('verification_code')
+    print('saved code:', saved_code)
+    if saved_code == verification_code:
+        # del request.session['verification_code']
+        user_data = request.session.get('user_data')
+        if user_data:
+            return user_data
+        else:
+            messages.error(request, 'User data not found in session.')
+            return True
+    else:
+        messages.error(request, 'Invalid verification code! Please Try Again')
+        return False
 
 
 def change_pwd(request):
@@ -132,7 +158,8 @@ def change_pwd(request):
         new_password = request.POST.get('new_password')
 
         # 验证验证码是否正确
-        if 'verification_code' in request.session and request.session['verification_code'] == verification_code:
+        user_data = verify_verification_code(request, verification_code)
+        if user_data:
             # 从session中获取用户的email
             email = request.session.get('email')
             # 根据email查找用户
@@ -140,8 +167,7 @@ def change_pwd(request):
 
             if user:
                 # 重置用户密码
-                user.set_password(new_password)
-                user.save()
+                user.update_password(new_password)
                 # 清除验证码和email的session信息
                 del request.session['verification_code']
                 del request.session['email']
@@ -162,40 +188,56 @@ def confirm_signup(request):
         # email = request.POST.get('email')
         verification_code = request.POST.get('verification_code')
         print('verification code input: ', verification_code)
-        saved_code = request.session.get('verification_code')
-        print('saved code:', saved_code)
+        user_data = verify_verification_code(request, verification_code)
 
-        if saved_code == verification_code:
-            user_data = request.session.get('user_data')
-            if user_data:
-                print(user_data)
-                # 检查该邮箱是否已经注册：
-                email_registered = User.get_user_by_email(user_data['email'])
-                if email_registered:
-                    messages.error(request, 'Email has been registered, please login directly')
-                    return render(request, 'signup_login.html')
-                # 使用检索到的数据创建用户
-                User.create_user(
-                    name=user_data['name'],
-                    raw_password=user_data['password'],
-                    email=user_data['email']
-                )
-                # 注册成功后清除 session 中的相关数据
-                del request.session['verification_code']
-                del request.session['user_data']
-                messages.success(request, 'Signup successful! Now Please Login~')
-                return redirect('accounts:signup_login')
-            else:
-                messages.error(request, 'User data not found in session.')
+        if user_data:
+            print(user_data)
+            # 检查该邮箱是否已经注册：
+            email_registered = User.get_user_by_email(user_data['email'])
+            if email_registered:
+                messages.error(request, 'Email has been registered, please login directly')
+                return render(request, 'signup_login.html')
+            # 使用检索到的数据创建用户
+            User.create_user(
+                name=user_data['name'],
+                raw_password=user_data['password'],
+                email=user_data['email']
+            )
+            # 注册成功后清除 session 中的相关数据
+            del request.session['verification_code']
+            del request.session['user_data']
+            messages.success(request, 'Signup successful! Now Please Login~')
+            return redirect('accounts:signup_login')
         else:
-            messages.error(request, 'Invalid verification code! Please Try Again')
+            messages.error(request, 'User data not found in session.')
+
     else:
         messages.error(request, 'Invalid request method.')
     return redirect('accounts:signup_login')
 
 
 def profile(request):
-    return render(request, 'profile.html')
+    request.session.save()  # 强制保存session
+    print(request.session.__dict__) # 只是打印在服务器端看看，不使用log日志
+    
+    email = request.session.get('email')
+    user = User.get_user_by_email(email)
+    
+    user_info = {
+        'username': user.name,
+        'email': user.email,
+        'gender': user.gender,
+        'birthday': user.birthday,
+        'bio': user.bio,
+        'likes': user.likes_num,
+        'liked_by': user.liked_num,
+        'followers': user.followers_num,
+        'following': user.follows_num,
+    }
+    
+    
+    # print(request.COOKIES)
+    return render(request, 'profile.html', user_info)
 
 
 def logout(reqeust):

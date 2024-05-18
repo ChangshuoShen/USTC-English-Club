@@ -5,34 +5,71 @@ from django.utils import timezone
 
 # 用户信息
 class User(models.Model):
+    MALE = 'male'
+    FEMALE = 'female'
+    UNCERTAIN = 'uncertain'
+    GENDER_CHOICES = [
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+        (UNCERTAIN, 'Uncertain'),
+    ]
+    
     # 一些用户的相关属性
-    name = models.CharField(verbose_name='name', max_length=64, blank=False, )
-    gender = models.CharField(verbose_name='gender', max_length=10, null=True, blank=True)
-
     email = models.EmailField(verbose_name='email', unique=True)
     password = models.CharField(verbose_name='password', max_length=256, blank=False)
-
-    birthdate = models.DateField(verbose_name='birthdate', null=True, blank=True)
     register_date = models.DateTimeField(verbose_name='register_date', default=timezone.now)
+    
+    
+    avatar = models.ImageField(verbose_name='Avatar', upload_to='avatars/', null=True, blank=True)
+    name = models.CharField(verbose_name='name', max_length=64, blank=False, )
+    gender = models.CharField(verbose_name='gender', max_length=10, choices=GENDER_CHOICES, default=UNCERTAIN)
+    birthday = models.DateField(verbose_name='birthday', null=True, blank=True)
+    bio = models.TextField(verbose_name='Bio', null=True, blank=True)
+    
+    # 下面的一些属性默认都是0,在数据库中建立相关的trigger，从其他table中实现下面内容的更新
+    likes_num = models.IntegerField(default=0, verbose_name='likes_num')
+    comments_num = models.IntegerField(default=0, verbose_name='comments_num')
+    liked_num = models.IntegerField(default=0, verbose_name='liked_num')
+    follows_num = models.IntegerField(default=0, verbose_name='follows_num')
+    followers_num = models.IntegerField(default=0, verbose_name='followers_num')
 
+    is_active = models.BooleanField(verbose_name='Active', default=True)
+    is_admin = models.BooleanField(verbose_name='Admin', default=False)
+
+    def __str__(self):
+        return self.email
+    
     @classmethod
-    def create_user(cls, name='guest', gender='male', email=None, raw_password=None, birthdate=None):
+    def create_user(cls, name='guest', email=None, raw_password=None, is_admin=False):
         """
-        创建用户并设置密码
+        创建用户并设置密码，此时只需要传入名字邮箱、原始密码
         """
         user = cls(
             name=name,
-            gender=gender,
             email=email,
-            birthdate=birthdate,
             register_date=timezone.now()
         )
 
         # 使用 make_password 函数对密码进行哈希处理
         user.set_password(raw_password)
         # 注意之后进行验证的时候使用check_password方法，而不是使用
+        
+        if is_admin:
+            user.set_admin()
         user.save()
         return user
+
+    def edit_profile(self, name=None, gender=None, birthday=None):
+        '''
+        此处完善用户的信息
+        '''
+        if name:
+            self.name = name
+        if gender:
+            self.gender = gender
+        if birthday:
+            self.birthday = birthday
+        self.save()
 
     @classmethod
     def get_user_by_email(cls, email):
@@ -79,11 +116,85 @@ class User(models.Model):
             print(result_dict)
             return result_dict
 
+    def set_password(self, raw_password):
+        """
+        设置用户密码并进行哈希处理
+        """
+        self.password = make_password(raw_password)
+        self.save()
+        
     def check_password(self, raw_password):
         """
         检查密码是否匹配
         """
         return raw_password == self.password
+    
+    def authenticate_user(self, password):
+        """
+        根据提供的密码验证用户。
+        """
+        return self.check_password(password)
+
+    def set_admin(self):
+        """
+        将用户设置为管理员。
+        """
+        self.is_admin = True
+        self.save()
+        
+    def unset_admin(self):
+        """
+        取消用户的管理员权限。
+        """
+        self.is_admin = False
+        self.save()
+
+    
+    def is_admin(self):
+        """
+        检查用户是否是管理员。
+        """
+        return self.is_admin
+
+    def update_email(self, new_email):
+        """
+        更新用户的电子邮件地址。
+        """
+        self.email = new_email
+        self.save()
+
+    def update_password(self, new_password):
+        """
+        更新用户的密码。
+        """
+        self.set_password(new_password)
+
+    def update_avatar(self, new_avatar):
+        """
+        更新用户的头像。
+        """
+        self.avatar = new_avatar
+        self.save()
+        
+    def deactivate_account(self):
+        """
+        停用用户帐户。
+        """
+        self.is_active = False
+        self.save()
+
+    def delete_account(self):
+        """
+        删除用户帐户。
+        """
+        self.delete()
+
+    def send_password_reset_email(self):
+        """
+        发送密码重置电子邮件。
+        """
+        # 实现逻辑在这里
+        pass
 
     def get_age(self):
         """
@@ -97,21 +208,12 @@ class User(models.Model):
         else:
             return None
 
-    def set_password(self, raw_password):
-        """
-        设置用户密码并进行哈希处理
-        """
-        self.password = make_password(raw_password)
-        self.save()
-
     def get_full_name(self):
         """
         获取用户完整姓名
         """
         return self.name
 
-    # class Meta:
-    #     db_table = "accounts_user"
 
 '''
 # 邮箱验证
