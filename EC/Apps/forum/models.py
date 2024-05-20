@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from Apps.accounts.models import User
+from django.shortcuts import get_object_or_404
 # Create your models here.
 
 
@@ -28,18 +29,37 @@ class post(models.Model):
     def __str__(self):
         return self.post_title
     
-    def like_post(self, User):
-        if not Like.objects.filter(post=self, user=User).exists():
-            Like.objects.create(post=self, user=User)
-            self.likes += 1
-            self.save()
+    @classmethod
+    def create_post(cls, publisher_id, post_title, post_content, theme):
+        post_object = cls.objects.create(
+            publisher_id=publisher_id,
+            post_title=post_title,
+            post_content=post_content,
+            theme=theme
+        )
+        return post_object
 
-    def unlike_post(self, user):
-        if Like.objects.filter(post=self, user=user).exists():
-            Like.objects.filter(post=self, user=user).delete()
-            self.likes -= 1
-            self.save()
+    @classmethod
+    def get_post_by_id(cls, post_id):
+        post_object = get_object_or_404(cls, id=post_id)
+        return post_object
 
+    @classmethod
+    def update_post(cls, post_id, post_title=None, post_content=None, theme=None):
+        post_object = get_object_or_404(cls, id=post_id)
+        if post_title:
+            post_object.post_title = post_title
+        if post_content:
+            post_object.post_content = post_content
+        if theme:
+            post_object.theme = theme
+        post_object.save()
+        return post_object
+
+    @classmethod
+    def delete_post(cls, post_id):
+        post_object = get_object_or_404(cls, id=post_id)
+        post_object.delete()
 
 class Comment(models.Model):
     post = models.ForeignKey(post, related_name='comments', on_delete=models.CASCADE)
@@ -53,10 +73,29 @@ class Comment(models.Model):
     def __str__(self):
         return f'Comment by {self.user.name} on {self.post.post_title}'
 
-    
     @classmethod
-    def find_comments_on_pecific_post(cls, post):
-        pass
+    def find_comments_on_specific_post(cls, post):
+        return cls.objects.filter(post=post)
+
+    @classmethod
+    def create_comment(cls, post, user, content):
+        comment = cls.objects.create(post=post, user=user, content=content)
+        return comment
+
+    @classmethod
+    def delete_comment(cls, comment_id):
+        comment = cls.objects.get(id=comment_id)
+        comment.delete()
+
+    @classmethod
+    def update_comment(cls, comment_id, content):
+        comment = cls.objects.get(id=comment_id)
+        comment.content = content
+        comment.save()
+
+    @classmethod
+    def get_comment_by_id(cls, comment_id):
+        return cls.objects.get(id=comment_id)
 
 class Like(models.Model):
     post = models.ForeignKey(post, related_name='likes', on_delete=models.CASCADE)
@@ -65,7 +104,25 @@ class Like(models.Model):
 
     def __str__(self):
         return f'Like by {self.user.name} on {self.post.post_title}'
+    def like_post(self, User):
+        if not Like.objects.filter(post=self, user=User).exists():
+            Like.objects.create(post=self, user=User)
+            self.likes += 1
+            self.save()
 
+    def unlike_post(self, user):
+        if Like.objects.filter(post=self, user=user).exists():
+            Like.objects.filter(post=self, user=user).delete()
+            self.likes -= 1
+            self.save()
+    
+    @classmethod
+    def count_likes_for_post(cls, post_id):
+        return cls.objects.filter(post_id=post_id).count()
+
+    @classmethod
+    def count_likes_by_user(cls, user_id):
+        return cls.objects.filter(user_id=user_id).count()
 
 class CommentLike(models.Model):
     liker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_likes')
@@ -88,6 +145,14 @@ class CommentLike(models.Model):
             cls.objects.filter(liker=user, liked_comment=comment).delete()
             comment.likes -= 1
             comment.save()
+    
+    @classmethod
+    def count_likes_for_comment(cls, comment_id):
+        return cls.objects.filter(id=comment_id).values_list('comment_likes', flat=True).first()
+
+    @classmethod
+    def count_likes_by_user(cls, user_id):
+        return cls.objects.filter(user_id=user_id).aggregate(sum('comment_likes'))['comment_likes__sum']
 
 
 
