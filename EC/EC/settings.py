@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "Apps.mystery_hunt.apps.MysteryHuntConfig",
     "Apps.settings.apps.SettingsConfig",
     "Apps.socialize.apps.SocializeConfig",
+    "Apps.chat_image.apps.ChatImageConfig",
 ]
 
 MIDDLEWARE = [

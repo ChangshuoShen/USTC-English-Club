@@ -27,7 +27,7 @@ urlpatterns = [
     path('accounts/', include('Apps.accounts.urls', namespace='accounts')),
     
     path('forum/', include('Apps.forum.urls', namespace='forum')),
-    
+    path('chat_image/', include('Apps.chat_image.urls', namespace='chat_image')),
     # path('activities/', include('Apps.activities.urls', namespace='activities')),
     # path('admin_panel/', include('Apps.admin_panel.urls', namespace='admin_panel')),
     # path('feedback/', include('Apps.feedback.urls', namespace='feedback')),

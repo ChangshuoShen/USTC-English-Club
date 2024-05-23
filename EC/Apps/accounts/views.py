@@ -240,8 +240,12 @@ def profile(request):
     return render(request, 'profile.html', user_info)
 
 
+def change_profile(request):
+    '''
+    这个函数用于在profile页面提交之后用于修改用户对应的一些相关资料
+    '''
+    return HttpResponse('Profile changed Successfully')
+
+
 def logout(reqeust):
     return HttpResponse('LOGOUT HERE')
-
-def change_profile(request):
-    return HttpResponse('Profile changed Successfully')
