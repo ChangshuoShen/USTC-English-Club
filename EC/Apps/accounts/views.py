@@ -222,7 +222,7 @@ def profile(request):
     
     email = request.session.get('email')
     user = User.get_user_by_email(email)
-    
+    print('user;s birthday: ', user.birthday)
     user_info = {
         'username': user.name,
         'email': user.email,
@@ -239,12 +239,48 @@ def profile(request):
     # print(request.COOKIES)
     return render(request, 'profile.html', user_info)
 
-
 def change_profile(request):
     '''
     这个函数用于在profile页面提交之后用于修改用户对应的一些相关资料
     '''
-    return HttpResponse('Profile changed Successfully')
+    if request.method == 'POST':
+        # 获取表单数据
+        print(request.POST)  # 打印表单的普通字段数据
+        email = request.session.get('email')  # 获取当前登录用户的email
+        user = User.get_user_by_email(email)
+        
+        if not user:
+            return HttpResponse('User not found')
+        
+        username = request.POST.get('username')
+        gender = request.POST.get('gender')
+        birthday = request.POST.get('birthday')
+        bio = request.POST.get('bio')
+        
+        # 更新用户信息
+        if username:
+            user.name = username
+        if gender:
+            user.gender = gender
+        if birthday:
+            user.birthday = birthday
+        if bio:
+            user.bio = bio
+        user.save()
+        messages.success(request, 'Profile changed successfully!')
+        print('信息修改成功')
+    user_info = {
+        'username': user.name,
+        'email': user.email,
+        'gender': user.gender,
+        'birthday': user.birthday,
+        'bio': user.bio,
+        'likes': user.likes_num,
+        'liked_by': user.liked_num,
+        'followers': user.followers_num,
+        'following': user.follows_num,
+    }
+    return render(request, 'profile.html', user_info)
 
 
 def logout(reqeust):

@@ -7,10 +7,11 @@
     <title>Profile</title>
     {% comment %} <link rel="stylesheet" href="{% static 'css/signup_login.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/msg_for_all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile_style.css' %}">
 </head>
 
 <body>
-    <h1>Profile</h1>
+    {% comment %} <h1>Profile</h1> {% endcomment %}
 
     {% if messages %}
     <div class="message-container">
@@ -25,12 +26,15 @@
     <!-- 这里是主要部分，用于展示用户信息，修改用户信息 -->
     <form action="{% url 'accounts:change_profile' %}" method="post">
         {% csrf_token %}
-
-        <label for="avator">Avator:</label>
-        <img src="{{ MEDIA_URL }}avators/default.png">
+        {% if gender == 'female' %}
+            <img src="{{ MEDIA_URL }}avators/for_female.png" alt="Avator">
+        {% else %}
+            <img src="{{ MEDIA_URL }}avators/for_male.png" alt="Avator">
+        {% endif %}
         <br>
-        <input type="file" id="avator" name="avator">
-        <br>
+        {% comment %} <label for="avator"> Change Avator:</label>
+        <input type="file" id="avator" accept="image/*" name="avator" style="width: auto;" enctype="multipart/form-data">
+        <br> {% endcomment %}
 
         <label for="username">name:</label>
         <input type="text" id="username" name="username" placeholder="{{ username }}">
@@ -41,15 +45,17 @@
         <br>
         
         <label for="gender">Gender:</label>
-        <input type="radio" id="male" name="gender" value="male" {% if gender == 'male' %} checked {% endif %}>
-        <label for="male">Male</label>
-        <input type="radio" id="female" name="gender" value="female" {% if gender == 'female' %} checked {% endif %}>
-        <label for="female">Female</label>
-        <input type="radio" id="female" name="gender" value="female" {% if gender == 'uncertain' %} checked {% endif %}>
-        <label for="female">Uncertain</label>
+        <div class='gender-options'> 
+          <input type="radio" id="male" name="gender" value="male" {% if gender == 'male' %} checked {% endif %}>
+          <label for="male">Male</label>
+          <input type="radio" id="female" name="gender" value="female" {% if gender == 'female' %} checked {% endif %}>
+          <label for="female">Female</label>
+          <input type="radio" id="uncertain" name="gender" value="uncertain" {% if gender == 'uncertain' %} checked {% endif %}>
+          <label for="uncertain">Uncertain</label>
+        </div>
         <br>
 
-        <label for="birthday">Birthday:</label>
+        <label for="birthday">Birthday:{{ birthday }}</label>
         <input type="date" id="birthday" name="birthday" value="{{ birthday }}">
         <br>
 
@@ -78,6 +84,18 @@
         <input type="submit" value="Confirm">
     </form>
 
+    <script>
+      function formatDate(dateString) {
+          // 只是用来转换日期的存储格式
+          var date = new Date(dateString);
+          var year = date.getFullYear();
+          var month = ('0' + (date.getMonth() + 1)).slice(-2); // 补零
+          var day = ('0' + date.getDate()).slice(-2); // 补零
+          return year + '-' + month + '-' + day;
+      }
+      // 将生日字段的值格式化为 YYYY-MM-DD
+      var birthday = formatDate('{{ birthday }}');
+      document.getElementById('birthday').value = birthday;
+  </script>
 </body>
 </html>
-
