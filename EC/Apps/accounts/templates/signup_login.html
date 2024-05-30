@@ -28,9 +28,9 @@
       <form action="{% url 'accounts:send_verification_code' %}" method="post" class="form" id="form1">
         {% csrf_token %}
         <h2 class="form__title">Sign Up</h2>
-        <input type="text" placeholder="Name" name="name" class="input">
-        <input type="email" placeholder="Email" name="email" class="input">
-        <input type="password" placeholder="Password" name="password" class="input">
+        <input type="text" placeholder="Name" name="name" class="input" required>
+        <input type="email" placeholder="Email" name="email" class="input" required>
+        <input type="password" placeholder="Password" name="password" class="input" required>
         <input type="submit" value="Sign Up" class="btn">
       </form>
 
