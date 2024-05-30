@@ -4,18 +4,22 @@ from Apps.accounts.models import User
 from django.shortcuts import get_object_or_404
 # Create your models here.
 
-
 class post(models.Model):
     class ThemeChoices(models.TextChoices):
+        '''
+        这里是五类post
+        '''
         THEME_ONE = 'Riddle', 'Riddle'
         THEME_TWO = 'Share Something Interesting', 'Share Something Interesting'
         THEME_THREE = 'Ask For Help', 'Ask For Help'
         THEME_FOUR = 'Find Friends', 'Find Friends'
         THEME_FIVE = 'Else', 'Else'
     # post_id = models.CharField(verbose_name='post_id', max_length = 20, blank = False)
+    
     publisher_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.TextField(verbose_name='title', blank = False)
     post_content = models.TextField(verbose_name='post_content', blank = False)
+    
     theme = models.CharField(
         verbose_name='theme',
         max_length=50,
@@ -23,6 +27,7 @@ class post(models.Model):
         default=ThemeChoices.THEME_FIVE,
         blank=False
     )
+    
     publish_date = models.DateTimeField(verbose_name='published_date', default=timezone.now)
     post_likes = models.IntegerField(default=0, verbose_name='likes')
 
@@ -60,6 +65,22 @@ class post(models.Model):
     def delete_post(cls, post_id):
         post_object = get_object_or_404(cls, id=post_id)
         post_object.delete()
+        
+    @classmethod
+    def get_posts_by_theme(cls):
+        """
+        获取所有帖子，并按照主题分类
+        """
+        # 创建一个空字典用于存储帖子按主题分类
+        posts_by_theme = {}
+
+        # 遍历所有主题选项
+        for theme_choice in cls.ThemeChoices.choices:
+            theme_name = theme_choice[0]  # 主题名称
+            theme_posts = cls.objects.filter(theme=theme_name)
+            posts_by_theme[theme_name] = list(theme_posts)
+
+        return posts_by_theme
 
 class Comment(models.Model):
     post = models.ForeignKey(post, related_name='comments', on_delete=models.CASCADE)
