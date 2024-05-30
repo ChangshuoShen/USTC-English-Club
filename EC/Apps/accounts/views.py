@@ -1,11 +1,13 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.hashers import make_password, check_password
-
+# from django.utils import timezone
 
 # 这一部分是实现邮件发送的包依赖
 from django.core.mail import send_mail
 from django.conf import settings
 from Apps.accounts.models import User
+# from Apps.forum.models import post
+
 from django.contrib import messages
 import random
 import string
