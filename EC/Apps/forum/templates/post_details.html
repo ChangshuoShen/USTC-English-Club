@@ -19,13 +19,18 @@
             position: fixed;
             bottom: 20px;
             left: 50%;
+            background: linear-gradient(135deg, #f4f4f9, #c9d6ff);
             width: 77%;
             transform: translateX(-50%);
-            background-color: rgb(18, 36, 105);
             padding: 10px;
-            border: 1px solid #ccc;
-            box-shadow: 0 2px 5px rgba(65, 11, 11, 0.1);
             z-index: 999;
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 5px; /* 距离容器顶部的距离 */
+            right: 5px; /* 距离容器右侧的距离 */
+            cursor: pointer;
         }
     </style>
 </head>
@@ -114,45 +119,43 @@
                             <div class="row">
                                 <div class="comments-container">
                                     <ul id="comments-list" class="comments-list">
-                                        {% for single_comment in main_comments %}
-                                        <li>
-                                            <!-- main-level针对的是对整个post的评论 -->
-                                             <div class="comment-main-level">
-                                                <!-- Avatar -->
-                                                <div class="comment-avatar"><img src="{% static 'imgs/images.png'%}" alt=""></div>
-                                                <!-- Contenedor del Comentario -->
-                                                <div class="comment-box">
-                                                    <div class="comment-head" >
-                                                        <h6 class="comment-name"><a href="#">{{single_comment.commenter}}</a></h6> 
-                                                        <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> 
-                                                        <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> 
-                                                    </div>
-                                                    <div class="comment-content main_comment" data-comment-id="{{ main_comment.id }}"> {{ single_comment.detail }} 
-                                                        <br>
-                                                    </div>
-                                                    <i class="fa fa-clock-o clock2" aria-hidden="true"> {{ single_comment.date }}</i><br>
-                                                    <i class="fa fa-thumbs-o-up " aria-hidden="true">  {{single_comment.likes}}  </i>
-                                                </div>
-                                            </div>
+            {% for single_comment in main_comments %}
+            <li>
+            <!-- main-level针对的是对整个post的评论 -->
+            <div class="comment-main-level">
+                <!-- Avatar -->
+                <div class="comment-avatar"><img src="{% static 'imgs/images.png'%}" alt=""></div>
+                <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                    <div class="comment-head" >
+                        <h6 class="comment-name"><a href="#">{{single_comment.commenter}}</a></h6> 
+                    </div>
+                    <div class="comment-content main_comment" data-comment-id="{{ single_comment.id }}"> {{ single_comment.comment_detail }} 
+                        <br>
+                    </div>
+                    <i class="fa fa-clock-o clock2" aria-hidden="true"> {{ single_comment.date }}</i><br>
+                    <i class="fa fa-thumbs-o-up " aria-hidden="true">  {{single_comment.likes}}  </i>
+                </div>
+            </div>
                                                 
                                             
-                                            <ul class="comments-list reply-list">
-                                                <!-- 这里的comments-list, reply-list表示的是对本评论的回复 -->
-                                                {% for reply in main_comment.replys %}
-                                                <li>
-                                                    <div class="comment-avatar"><img src="{% static 'imgs/images.png'%}" alt=""></div>
-                                                    <div class="comment-box">
-                                                        <div class="comment-head">
-                                                            <h6 class="comment-name"><a href="#">Lorena Rojero</a></h6>
-                                                             <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span>
-
-                                                             <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
-                                                        
-                                                             <div class="comment-content"> {{reply}} </div>
-                                                    </div>
-                                                </li>
-                                                {% endfor %}
-                                            </ul>
+            <ul class="comments-list reply-list">
+                <!-- 这里的comments-list, reply-list表示的是对本评论的回复 -->
+                {% for reply in single_comment.replies %}
+                <li>
+                    <div class="comment-avatar"><img src="{% static 'imgs/images.png'%}" alt=""></div>
+                    <div class="comment-box">
+                        <div class="comment-head">
+                            <h6 class="comment-name"><a href="#">{{ reply.replier }}</a></h6>
+                                <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span>
+                                <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
+                                <div class="comment-content"> {{reply.reply_detail}}<br>
+                                    <i class="fa fa-clock-o clock2" aria-hidden="true"> {{ reply.date }}</i><br>
+                                </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
                                         </li>
                                         {% endfor %}
                                     </ul>
@@ -166,12 +169,16 @@
                         <h3>Leave A Reply</h3>
                             <div class="col-md-12">
                                 <div class="post9320-box">
-                                    <input type="text" class="comment-input219882" placeholder="Enter Your Comments">
+                                    <span class="close-icon" onclick="closeCommentBox()">&#10006;</span>
+                                    <form action="{% url 'forum:comment_or_reply' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" class="comment-input219882" placeholder="Enter Your Comments/Replies" name="comment_or_reply">
+                                        <input type="hidden" name="reply" id="reply" value="False">
+                                        <input type="hidden" name="comment_id" id="comment_id" value="-1">
+                                        <button type="submit" class="pos393-submit">Leave a Comment/Reply</button>
+                                    </form>                                    
                                 </div>
-                                <button type="button" class="pos393-submit">Post Your Answer</button>
-                                <br>
-                                <br>
-                                <br>
+                                <br><br><br>
                             </div>
                     </div>
                     
@@ -185,46 +192,28 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/editor.js' %}"></script>
     <script>
-        $(document).ready(function() {
+        function closeCommentBox() {
+            var commentBox = document.getElementById('comment_box');
+            commentBox.classList.remove('show-comment-box');
+            document.getElementById('reply').value = 'False';
+            document.getElementById('comment_id').value = 'None';
+        }
 
-            function replyToComment() {
-                // 添加一个类，改变评论框的位置和样式
+        $(document).ready(function() {
+            function replyToComment(commentId) {
                 var commentBox = document.getElementById('comment_box');
                 commentBox.classList.add('show-comment-box');
+                document.getElementById('reply').value = 'true';
+                document.getElementById('comment_id').value = commentId;
             }
 
-            function submitComment() {
-                // 从评论框中获取用户输入的内容
-                var commentContent = document.querySelector('.comment-input219882').value;
-                
-                // 这里可以进行提交评论的操作，比如将评论内容发送给服务器
-                // 移除添加的类，恢复评论框原来的位置和样式
-                var commentBox = document.getElementById('comment_box');
-                commentBox.classList.remove('show-comment-box');
-            }
-
-            var replyButton = document.querySelector('.pos393-submit');
-            replyButton.addEventListener('click', submitComment);
-
-            // 点击主要评论文本时触发事件
             $('.main_comment').click(function() {
-                // 获取被回复的主要评论ID
                 var commentId = $(this).data('comment-id');
-                replyToComment();
-                // 弹出文本框，这里使用简单的alert代替
-                // 你可以使用模态框或自定义的文本框来实现
-                
-                /* var replyContent = prompt('Reply to this comment:');
-                
-                // 用户输入回复内容后，可以将回复内容POST给服务器
-                // 这里只是简单地打印出回复内容和被回复的主要评论ID
-                if (replyContent !== null && replyContent.trim() !== '') {
-                    console.log('Reply to comment ' + commentId + ': ' + replyContent);
-                    // 在这里发送POST请求给服务器，将回复内容和被回复的主要评论ID一起发送
-                } */
+                replyToComment(commentId);
             });
         });
     </script>
+    
 </body>
 </html>
 

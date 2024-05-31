@@ -1,6 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
+
 <html lang="en" data-default-color-scheme="auto" data-user-color-scheme="dark" class="nprogress-busy">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -31,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto text-center">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="{% url "home" %}">
                     <i class="iconfont icon-home-fill"></i>
                     <span>Home</span>
                   </a>
@@ -40,28 +41,28 @@
                 <li class="nav-item">
                   <a class="nav-link" href="#">
                     <i class="iconfont icon-archive-fill"></i>
-                    <span>Archive</span>
+                    <span>Activities</span>
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="{% url "forum:forum_index"%}">
                     <i class="iconfont icon-category-fill"></i>
-                    <span>Categories</span>
+                    <span>Forum</span>
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="{% url "raffle:draw"%}">
                     <i class="iconfont icon-tags-fill"></i>
-                    <span>Tags</span>
+                    <span>Raffle</span>
                   </a>
                 </li>
                 
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'accounts:signup_login' %}">
                     <i class="iconfont icon-user-fill"></i>
-                    <span>Login</span>
+                    <span>Accounts</span>
                   </a>
                 </li>
 

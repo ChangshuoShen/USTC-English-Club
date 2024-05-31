@@ -10,6 +10,7 @@ class post(models.Model):
         '''
         这里是五类post
         '''
+        
         THEME_ONE = 'Riddle', 'Riddle'
         THEME_TWO = 'Share Something Interesting', 'Share Something Interesting'
         THEME_THREE = 'Ask For Help', 'Ask For Help'
@@ -61,6 +62,10 @@ class post(models.Model):
         except Http404:
             return None
 
+    @classmethod
+    def get_post_instance_by_id(cls, post_id):
+        return get_object_or_404(cls, id=post_id)
+    
     @classmethod
     def get_all_posts(cls):
         return cls.objects.all()
@@ -131,7 +136,7 @@ class Comment(models.Model):
 
     @classmethod
     def find_comments_on_specific_post_through_post_id(cls, post_id):
-        return cls.objects.filter(post=post_id)
+        return cls.objects.filter(post=post_id).order_by('-comment_date')
     
 
     @classmethod
@@ -170,7 +175,7 @@ class Reply(models.Model):
 
     @classmethod
     def find_replies_on_specific_comment_through_comment_id(cls, comment_id):
-        return cls.objects.filter(comment=comment_id)
+        return cls.objects.filter(comment=comment_id).order_by('-reply_date')
     
     @classmethod
     def create_reply(cls, comment, user, content):

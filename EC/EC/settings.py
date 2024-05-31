@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "Apps.settings.apps.SettingsConfig",
     "Apps.socialize.apps.SocializeConfig",
     "Apps.chat_image.apps.ChatImageConfig",
+    "Apps.raffle.apps.RaffleConfig",
 ]
 
 MIDDLEWARE = [
