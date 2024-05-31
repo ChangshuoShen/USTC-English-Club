@@ -62,18 +62,17 @@
                         </div>
 
                         <div class="post-details-info1982">
-                            <p>Lorem ipsum dolor sit amet</p>
-                            <p>Lorem ipsum dolor sit amet</p>
+                            <p>{{post_content.post_detail}}</p>                            
                             <hr>
 
                             <div class="post-footer29032">
                                 <div class="l-side2023"> 
 
-                                    <i class="fa fa-check check2" aria-hidden="true"> solved</i>
-                                     <a href="#"><i class="fa fa-star star2" aria-hidden="true">5</i></a> 
-                                     <i class="fa fa-folder folder2" aria-hidden="true"> wordpress</i> 
-                                     <i class="fa fa-clock-o clock2" aria-hidden="true"> 4 min ago</i> 
-                                     <a href="#"><i class="fa fa-commenting commenting2" aria-hidden="true"> 5 answer</i></a> 
+                                    <i class="fa fa-check check2" aria-hidden="true">solved</i>
+                                     <a href="#"><i class="fa fa-star star2" aria-hidden="true">{{post_content.post_likes}}</i></a> 
+                                     <!--<i class="fa fa-folder folder2" aria-hidden="true"> wordpress</i> -->
+                                     <i class="fa fa-clock-o clock2" aria-hidden="true"> {{ post_content.publish_date }}</i> 
+                                     <a href="#"><i class="fa fa-commenting commenting2" aria-hidden="true">{{ comment.comments }}</i></a> 
                                      <i class="fa fa-user user2" aria-hidden="true"> 70 views</i> </div>
 
                                 <div class="l-rightside39">
@@ -83,19 +82,21 @@
                                     <button type="button" class="tolltip-button  thumbs-down2" data-toggle="tooltip" data-placement="bottom" title="Dislike">
                                         <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
                                     </button> 
-                                    <span class="single-question-vote-result">+22</span>
+                                    <span class="single-question-vote-result">{{ post_content.post_likes }}</span>
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
 
 
                     <div class="author-details8392">
                         <!-- 这里是作者的信息 -->
                         <div class="author-img202l"> 
-                            <img src="{% static 'imgs/images.png'%}" alt="image">
+                            {% if publisher.gender == 'female' %}
+                                <img src="{{ MEDIA_URL }}avators/for_female.png" alt="Avator">
+                            {% else %}
+                                <img src="{{ MEDIA_URL }}avators/for_male.png" alt="Avator">
+                            {% endif %}
                             <div class="au-image-overlay text-center"> 
                                 <a href="#">
                                     <i class="fa fa-plus-square-o" aria-hidden="true">
@@ -103,8 +104,8 @@
                                 </a> 
                             </div>
                         </div>
-                        <h5>About the Author</h5>
-                        <p>Description</p>
+                        <h5>{{publisher.username}}</h5>
+                        <p>{{publisher.bio}}</p>
                     </div>
                     
                     <div class="comment-list12993">
@@ -112,10 +113,8 @@
                         <div class="container">
                             <div class="row">
                                 <div class="comments-container">
-                                    
                                     <ul id="comments-list" class="comments-list">
-
-                                        {% for main_comment in main_comments %}
+                                        {% for single_comment in main_comments %}
                                         <li>
                                             <!-- main-level针对的是对整个post的评论 -->
                                              <div class="comment-main-level">
@@ -124,11 +123,15 @@
                                                 <!-- Contenedor del Comentario -->
                                                 <div class="comment-box">
                                                     <div class="comment-head" >
-                                                        <h6 class="comment-name"><a href="#">Lorena Rojero</a></h6> 
+                                                        <h6 class="comment-name"><a href="#">{{single_comment.commenter}}</a></h6> 
                                                         <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> 
                                                         <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> 
                                                     </div>
-                                                    <div class="comment-content main_comment" data-comment-id="{{ main_comment.id }}"> {{ main_comment.main }} </div>
+                                                    <div class="comment-content main_comment" data-comment-id="{{ main_comment.id }}"> {{ single_comment.detail }} 
+                                                        <br>
+                                                    </div>
+                                                    <i class="fa fa-clock-o clock2" aria-hidden="true"> {{ single_comment.date }}</i><br>
+                                                    <i class="fa fa-thumbs-o-up " aria-hidden="true">  {{single_comment.likes}}  </i>
                                                 </div>
                                             </div>
                                                 
@@ -141,9 +144,11 @@
                                                     <div class="comment-box">
                                                         <div class="comment-head">
                                                             <h6 class="comment-name"><a href="#">Lorena Rojero</a></h6>
-                                                             <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> 
+                                                             <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span>
+
                                                              <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
-                                                        <div class="comment-content"> {{reply}} </div>
+                                                        
+                                                             <div class="comment-content"> {{reply}} </div>
                                                     </div>
                                                 </li>
                                                 {% endfor %}
@@ -155,7 +160,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="comment289-box" id='comment_box'>
                         <!-- 这里是给一个评论或评论评论的地方 -->
                         <h3>Leave A Reply</h3>

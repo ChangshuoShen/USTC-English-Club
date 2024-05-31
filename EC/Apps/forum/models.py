@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from Apps.accounts.models import User
 from django.shortcuts import get_object_or_404
+from django.http import Http404
 # Create your models here.
 
 class post(models.Model):
@@ -46,9 +47,25 @@ class post(models.Model):
 
     @classmethod
     def get_post_by_id(cls, post_id):
-        post_object = get_object_or_404(cls, id=post_id)
-        return post_object
+        try:
+            post_object = get_object_or_404(cls, id=post_id)
+            return {
+                'id': post_object.id,
+                'publisher_id': post_object.publisher_id.id,  # Assuming you want the ID of the publisher
+                'post_title': post_object.post_title,
+                'post_detail': post_object.post_content,  # post_content key renamed to post_detail
+                'theme': post_object.theme,
+                'publish_date': post_object.publish_date,
+                'post_likes': post_object.post_likes
+            }
+        except Http404:
+            return None
 
+    @classmethod
+    def get_all_posts(cls):
+        return cls.objects.all()
+    
+    
     @classmethod
     def update_post(cls, post_id, post_title=None, post_content=None, theme=None):
         post_object = get_object_or_404(cls, id=post_id)
@@ -66,6 +83,7 @@ class post(models.Model):
         post_object = get_object_or_404(cls, id=post_id)
         post_object.delete()
         
+        
     @classmethod
     def get_posts_by_theme(cls):
         """
@@ -75,12 +93,26 @@ class post(models.Model):
         posts_by_theme = {}
 
         # 遍历所有主题选项
-        for theme_choice in cls.ThemeChoices.choices:
+        for i, theme_choice in enumerate(cls.ThemeChoices.choices, start=1):
             theme_name = theme_choice[0]  # 主题名称
             theme_posts = cls.objects.filter(theme=theme_name)
-            posts_by_theme[theme_name] = list(theme_posts)
+
+            # 将每个帖子的内容存储在字典中
+            posts_by_theme[i] = [
+                {
+                    'id': post.id,
+                    'publisher_id': post.publisher_id.id,
+                    'post_title': post.post_title,
+                    'post_detail': post.post_content,
+                    'theme': post.theme,
+                    'publish_date': post.publish_date,
+                    'post_likes': post.post_likes
+                }
+                for post in theme_posts
+            ]
 
         return posts_by_theme
+
 
 class Comment(models.Model):
     post = models.ForeignKey(post, related_name='comments', on_delete=models.CASCADE)
@@ -88,7 +120,6 @@ class Comment(models.Model):
     
     content = models.TextField(verbose_name='comment_content', blank=False)
     comment_date = models.DateTimeField(verbose_name='created_at', default=timezone.now)
-    
     comment_likes = models.IntegerField(default=0, verbose_name='likes')
 
     def __str__(self):
@@ -97,6 +128,11 @@ class Comment(models.Model):
     @classmethod
     def find_comments_on_specific_post(cls, post):
         return cls.objects.filter(post=post)
+
+    @classmethod
+    def find_comments_on_specific_post_through_post_id(cls, post_id):
+        return cls.objects.filter(post=post_id)
+    
 
     @classmethod
     def create_comment(cls, post, user, content):
@@ -117,6 +153,46 @@ class Comment(models.Model):
     @classmethod
     def get_comment_by_id(cls, comment_id):
         return cls.objects.get(id=comment_id)
+
+
+class Reply(models.Model):
+    '''
+    专指针对某个评论的reply
+    '''
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    reply_content = models.TextField(verbose_name='reply_content', blank=False)
+    reply_date = models.DateTimeField(verbose_name='created_at', default=timezone.now)
+
+    def __str__(self):
+        return f'Reply by {self.user.name}'
+
+    @classmethod
+    def find_replies_on_specific_comment_through_comment_id(cls, comment_id):
+        return cls.objects.filter(comment=comment_id)
+    
+    @classmethod
+    def create_reply(cls, comment, user, content):
+        reply = cls.objects.create(comment=comment, user=user, reply_content=content)
+        return reply
+
+    @classmethod
+    def delete_reply(cls, reply_id):
+        reply = cls.objects.get(id=reply_id)
+        reply.delete()
+
+    @classmethod
+    def update_reply(cls, reply_id, content):
+        reply = cls.objects.get(id=reply_id)
+        reply.reply_content = content
+        reply.save()
+
+    @classmethod
+    def get_reply_by_id(cls, reply_id):
+        return cls.objects.get(id=reply_id)
+
+
 
 class Like(models.Model):
     post = models.ForeignKey(post, related_name='likes', on_delete=models.CASCADE)

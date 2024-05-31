@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponse
-from .models import post
+from django.shortcuts import render, HttpResponse, get_object_or_404
+from .models import post, Comment
+from Apps.accounts.models import User
 
 def forum_index(request):
     '''
@@ -12,13 +13,10 @@ def forum_index(request):
     '''
     contents = post.get_posts_by_theme()
     print(contents)
-    all_contents = []
-    
-    for i in range(1, 5+1):
-        all_contents.append((i, ['contents'] * 3))
+
     return render(request, 'forum_index.html', {
-        'all_contents': all_contents,
-    })
+        'contents': contents.items(),
+        })
 
 
 def share(request):
@@ -47,24 +45,47 @@ def submit_sharing(request):
         return HttpResponse('Submitted')
 
 
-def show_post_detail(request):
+def show_post_detail(request, post_id):
     # return HttpResponse('Show More Information Here')
+    post_content = post.get_post_by_id(post_id=post_id)
+    print(post_content)
+    
+    if post_content:
+        # 获取发布者的详细信息
+        publisher_id = post_content.get('publisher_id')
+        user = User.get_user_by_id(publisher_id)
+        publisher = {
+            'id': user.id,
+            'username': user.name,
+            'email': user.email,
+            'bio': user.bio,
+            'gender': user.gender,
+        }
+    else:
+        publisher = None
+    # 这里开始找所有的comment
+    relevant_comments = Comment.find_comments_on_specific_post_through_post_id(post_id=post_id)
     main_comments = []
-    for i in range(2):
+    for single_comment in relevant_comments:
         main_comments.append(
             {
-                'main': 'mainmainmain',
-                'id': i,
-                'replys': ["123"] * 3,
+                'commenter': single_comment.user.name,
+                'detail': single_comment.content,
+                'date': single_comment.comment_date,
+                'likes': single_comment.comment_likes,
             }
         )
 
     return render(request, 'post_details.html', {
         'main_comments': main_comments,
+        'post_content': post_content,
+        'publisher': publisher,
+        # 'relevant_comments': relevant_comments,
     })
 
-
+# from .utils.add_some_comments import create_comments_for_all_users_and_posts
 def user_question(request):
+    # create_comments_for_all_users_and_posts()
     return render(request, 'user_question.html')
 
 

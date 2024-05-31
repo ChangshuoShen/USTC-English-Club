@@ -72,9 +72,21 @@ class User(models.Model):
         self.save()
 
     @classmethod
+    def get_all_users(cls):
+        return cls.objects.all()
+    
+    @classmethod
     def get_user_by_email(cls, email):
         try:
             user = cls.objects.get(email=email)
+            return user
+        except cls.DoesNotExist:
+            return None
+        
+    @classmethod
+    def get_user_by_id(cls, user_id):
+        try:
+            user = cls.objects.get(id=user_id)
             return user
         except cls.DoesNotExist:
             return None

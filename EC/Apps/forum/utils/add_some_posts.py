@@ -1,4 +1,4 @@
-from .models import post
+from ..models import post
 from Apps.accounts.models import User
 from django.utils import timezone
 '''
@@ -6,7 +6,7 @@ from django.utils import timezone
 记得别重复使用
 '''
 
-def handle():
+def add_posts():
     # 创建或获取一个示例用户
     user, created = User.objects.get_or_create(
         email='example@example.com',
@@ -36,4 +36,3 @@ def handle():
                 post_content=f"{content} This is post number {i+1} in the {theme} category.",
                 theme=theme
             )
-# handle()
