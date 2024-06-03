@@ -33,6 +33,21 @@ class post(models.Model):
     publish_date = models.DateTimeField(verbose_name='published_date', default=timezone.now)
     post_likes = models.IntegerField(default=0, verbose_name='likes')
 
+    main_category = models.CharField(max_length=100, blank=True, null=True)
+    answer_text = models.TextField(blank=True, null=True)
+    difficulty = models.CharField(max_length=50, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.theme == self.ThemeChoices.THEME_ONE:
+            # 主题为 "Riddle" 时，这些字段是必需的
+            if not (self.main_category and self.answer_text and self.difficulty):
+                raise ValueError("For Riddle posts, main_category, answer_text, and difficulty are required.")
+        else:
+            self.main_category = None
+            self.answer_text = None
+            self.difficulty = None
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.post_title
     
@@ -117,6 +132,67 @@ class post(models.Model):
             ]
 
         return posts_by_theme
+
+    @classmethod
+    def get_riddles_by_difficulty(cls):
+
+        riddles_by_difficulty = {}
+
+        difficulties = ['Easy', 'Medium', 'Hard']
+
+        for difficulty in difficulties:
+            riddle_posts = cls.objects.filter(theme=cls.ThemeChoices.THEME_ONE, difficulty=difficulty)
+
+            riddles_by_difficulty[difficulty] = [
+                {
+                    'id': post.id,
+                    'publisher_id': post.publisher_id.id,
+                    'post_title': post.post_title,
+                    'post_detail': post.post_content,
+                    'theme': post.theme,
+                    'publish_date': post.publish_date,
+                    'post_likes': post.post_likes,
+                    'main_category': post.main_category,
+                    'answer_text': post.answer_text,
+                    'difficulty': post.difficulty
+                }
+                for post in riddle_posts
+            ]
+
+        return riddles_by_difficulty
+    
+    @classmethod
+    def get_riddles_by_main_category(cls):
+        """
+        获取所有Riddle帖子，并按照主题（main_category）分类
+        """
+        # 创建一个空字典用于存储帖子按主题分类
+        riddles_by_category = {}
+
+        # 首先筛选出所有的Riddle帖子
+        riddles = cls.objects.filter(theme=cls.ThemeChoices.THEME_ONE)
+
+        # 遍历所有筛选出的Riddle帖子
+        for riddle in riddles:
+            category = riddle.main_category  # 获取帖子的主题分类
+            if category not in riddles_by_category:
+                riddles_by_category[category] = []
+
+        # 将每个Riddle的详细信息存储在字典中
+            riddles_by_category[category].append({
+                'id': riddle.id,
+                'publisher_id': riddle.publisher_id.id,
+                'post_title': riddle.post_title,
+                'post_detail': riddle.post_content,
+                'theme': riddle.theme,
+                'publish_date': riddle.publish_date,
+                'post_likes': riddle.post_likes,
+                'main_category': riddle.main_category,
+                'answer_text': riddle.answer_text,
+                'difficulty': riddle.difficulty
+            })
+
+        return riddles_by_category
 
 
 class Comment(models.Model):

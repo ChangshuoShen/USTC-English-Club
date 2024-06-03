@@ -20,6 +20,71 @@ def forum_index(request):
         })
 
 
+def riddle_difficulty_index(request):
+    '''
+    返回一个长度为3的列表，包括不同难度等级的Riddle帖子：
+    0 - 'Easy'
+    1 - 'Medium'
+    2 - 'Hard'
+    '''
+    riddles_by_difficulty = post.get_riddles_by_difficulty()
+
+    difficulties_ordered = ['easy', 'medium', 'hard']
+    riddle_contents = [riddles_by_difficulty.get(difficulty, []) for difficulty in difficulties_ordered]
+
+    return render(request, 'riddle_index.html', {
+        'riddle_difficulty_contents': riddle_contents,
+    })
+# 我没找到你forum的index.html，只能先放在这里了，你要是看见这段代码就加上（稍加改动）
+
+# <head>
+#     <meta charset="UTF-8">
+#     <title>Riddle Posts by Difficulty</title>
+# </head>
+# <body>
+#     <h1>Riddle Posts by Difficulty</h1>
+#     {% for difficulty, riddles in riddle_contents %}
+#         <h2>{{ difficulty|capfirst }} Riddles</h2>
+#         <ul>
+#             {% for riddle in riddles %}
+#                 <li>
+#                     <strong>{{ riddle.post_title }}</strong> - {{ riddle.post_detail }} (Likes: {{ riddle.post_likes }})
+#                 </li>
+#             {% endfor %}
+#         </ul>
+#     {% empty %}
+#         <p>No riddles available.</p>
+#     {% endfor %}
+# </body>
+
+def riddle_category_index(request):
+    riddles_by_category = post.get_riddles_by_main_category()
+    return render(request, 'riddle_category_index.html', {
+        'riddles_by_category': riddles_by_category.items(),
+    })
+
+
+# <head>
+#     <meta charset="UTF-8">
+#     <title>Riddle Posts by Category</title>
+# </head>
+# <body>
+#     <h1>Riddle Posts by Category</h1>
+#     {% for category, riddles in riddles_by_category %}
+#         <h2>{{ category|capfirst }} Riddles</h2>
+#         <ul>
+#             {% for riddle in riddles %}
+#                 <li>
+#                     <strong>{{ riddle.post_title }}</strong> - {{ riddle.post_detail }} (Likes: {{ riddle.post_likes }})
+#                 </li>
+#             {% endfor %}
+#         </ul>
+#     {% empty %}
+#         <p>No riddles available.</p>
+#     {% endfor %}
+
+
+
 def share(request):
     return render(request, 'share.html')
 
