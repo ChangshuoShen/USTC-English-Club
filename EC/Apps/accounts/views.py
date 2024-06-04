@@ -19,6 +19,8 @@ def login(request):
 
 
 def signup_login(request):
+    if 'user_id' in request.session and 'email' in request.session:
+        return redirect('accounts:profile')
     return render(request, 'signup_login.html')
 
 
@@ -224,7 +226,7 @@ def profile(request):
     
     email = request.session.get('email')
     user = User.get_user_by_email(email)
-    print('user;s birthday: ', user.birthday)
+    print("user's birthday: ", user.birthday)
     user_info = {
         'username': user.name,
         'email': user.email,

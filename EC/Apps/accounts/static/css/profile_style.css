@@ -106,3 +106,27 @@ span {
 .gender-options label {
     margin-right: 5px; /* 标签与单选按钮之间的间距 */
 }
+
+/* 回到主页按钮样式 */
+.back-to-home {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.back-to-home .btn {
+    background: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+}
+
+.back-to-home .btn:hover {
+    background: #0056b3;
+}

@@ -19,6 +19,10 @@
 <body>
     <section class="welcome-part-one">
         <div class="container">
+            <ol class="breadcrumb breadcrumb839">
+                <li><a href="{% url "home"%}">Home</a></li>
+                <li><a href="{% url "forum:forum_index"%}">Forum</a></li>
+            </ol>
             <div class="welcome-demop102 text-center">
                 <h1 style="font-weight: bold; color: #fff;">Forum</h1>
                 <h2>English Club</h2>
@@ -90,7 +94,7 @@
                             <h3><a href="{% url 'forum:post_detail' post_id=single_post.id %}">{{ single_post.post_title }}</a></h3>
                         </div>
                         <div class="ques-details10018">
-                            <p>{{ single_post.post_detail }}.</p>
+                            <p>{{ single_post.post_detail|safe }}.</p>
                         </div>
                         <hr>
                         <div class="ques-icon-info3293">

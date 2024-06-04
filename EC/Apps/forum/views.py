@@ -86,6 +86,13 @@ def riddle_category_index(request):
 
 
 def share(request):
+    # 检查用户是否已登录
+    if 'user_id' not in request.session or 'email' not in request.session:
+            # 用户未登录，重定向到登录页面
+            messages.error(request, 'Please log in to leave a comment or reply.')
+            return redirect('accounts:signup_login')
+    
+    print(request.session.__dict__)
     return render(request, 'share.html')
 
 
@@ -105,8 +112,16 @@ def upload_file(request):
 def submit_sharing(request):
     if request.method == 'POST':
         print('request.POST.get', request.POST.get)
+        user_id = request.session.get('user_id')
+        user = User.get_user_by_id(user_id=user_id)
+        title = request.POST.get('title')
+        theme = request.POST.get('theme')
+        content = request.POST.get('content_copy')
+        new_post = post.create_post(publisher_id=user, post_title=title, post_content=content, theme=theme)
+        messages.success(request, 'post successfully')
+        return show_post_detail(request=request, post_id=new_post.id)
         # upload_file(request)
-        return HttpResponse(request.POST.get('content_copy'))
+        # return HttpResponse(request.POST.get('content_copy'))
     else:
         return HttpResponse('Submitted')
 

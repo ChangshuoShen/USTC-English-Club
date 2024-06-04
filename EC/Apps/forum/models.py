@@ -11,6 +11,7 @@ class post(models.Model):
         这里是五类post
         '''
         
+        
         THEME_ONE = 'Riddle', 'Riddle'
         THEME_TWO = 'Share Something Interesting', 'Share Something Interesting'
         THEME_THREE = 'Ask For Help', 'Ask For Help'
@@ -115,7 +116,7 @@ class post(models.Model):
         # 遍历所有主题选项
         for i, theme_choice in enumerate(cls.ThemeChoices.choices, start=1):
             theme_name = theme_choice[0]  # 主题名称
-            theme_posts = cls.objects.filter(theme=theme_name)
+            theme_posts = cls.objects.filter(theme=theme_name).order_by('-publish_date')
 
             # 将每个帖子的内容存储在字典中
             posts_by_theme[i] = [
