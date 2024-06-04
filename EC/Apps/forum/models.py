@@ -11,7 +11,6 @@ class post(models.Model):
         这里是五类post
         '''
         
-        
         THEME_ONE = 'Riddle', 'Riddle'
         THEME_TWO = 'Share Something Interesting', 'Share Something Interesting'
         THEME_THREE = 'Ask For Help', 'Ask For Help'
@@ -34,9 +33,9 @@ class post(models.Model):
     publish_date = models.DateTimeField(verbose_name='published_date', default=timezone.now)
     post_likes = models.IntegerField(default=0, verbose_name='likes')
 
-    main_category = models.CharField(max_length=100, blank=True, null=True)
-    answer_text = models.TextField(blank=True, null=True)
-    difficulty = models.CharField(max_length=50, blank=True, null=True)
+    # main_category = models.CharField(max_length=100, blank=True, null=True)
+    # answer_text = models.TextField(blank=True, null=True)
+    # difficulty = models.CharField(max_length=50, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if self.theme == self.ThemeChoices.THEME_ONE:
