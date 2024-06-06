@@ -273,6 +273,7 @@ def change_profile(request):
         user.save()
         messages.success(request, 'Profile changed successfully!')
         print('信息修改成功')
+        
     user_info = {
         'username': user.name,
         'email': user.email,
