@@ -4,6 +4,7 @@ from Apps.accounts.models import User
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.core.paginator import Paginator
+from django.db import transaction # 做一些事务锁
 # Create your models here.
 
 class post(models.Model):
@@ -222,7 +223,6 @@ class Comment(models.Model):
     def find_comments_on_specific_post_through_post_id(cls, post_id):
         return cls.objects.filter(post=post_id).order_by('-comment_date')
     
-
     @classmethod
     def create_comment(cls, post, user, content):
         comment = cls.objects.create(post=post, user=user, content=content)
@@ -242,7 +242,6 @@ class Comment(models.Model):
     @classmethod
     def get_comment_by_id(cls, comment_id):
         return cls.objects.get(id=comment_id)
-
 
 class Reply(models.Model):
     '''
@@ -281,64 +280,83 @@ class Reply(models.Model):
     def get_reply_by_id(cls, reply_id):
         return cls.objects.get(id=reply_id)
 
-
-
 class Like(models.Model):
+    '''
+    这里记录点赞关系
+    '''
     post = models.ForeignKey(post, related_name='likes', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(verbose_name='created_at', default=timezone.now)
 
     def __str__(self):
         return f'Like by {self.user.name} on {self.post.post_title}'
-    def like_post(self, User):
-        if not Like.objects.filter(post=self, user=User).exists():
-            Like.objects.create(post=self, user=User)
-            self.likes += 1
-            self.save()
-
-    def unlike_post(self, user):
-        if Like.objects.filter(post=self, user=user).exists():
-            Like.objects.filter(post=self, user=user).delete()
-            self.likes -= 1
-            self.save()
     
     @classmethod
+    def like_post(cls, post_instance, user_instance):
+        '''
+        注意传入的两个参数都是实例
+        '''
+        if not cls.objects.filter(post=post_instance, user=user_instance).exists():
+            new_like = cls.objects.create(post=post_instance, user=user_instance)
+            # 这一行相当于是trigger了
+            # post_instance.likes = cls.count_likes_for_post(post_id=post_instance)
+            post_instance.likes += 1
+            new_like.save()
+            post_instance.save()
+
+    @classmethod
+    def unlike_post(cls, post_instance, user_instance):
+        like_queryset = cls.objects.filter(post=post_instance, user=user_instance)
+        if like_queryset.exists():
+            like_queryset.delete()
+            # post_instance.likes = cls.count_likes_for_post(post_id=post_instance)
+            post_instance.likes -= 1
+            post_instance.save()
+
+    @classmethod
     def count_likes_for_post(cls, post_id):
+        # 暂时用处不大，但是后面可能会用到 
         return cls.objects.filter(post_id=post_id).count()
 
     @classmethod
     def count_likes_by_user(cls, user_id):
         return cls.objects.filter(user_id=user_id).count()
 
-class CommentLike(models.Model):
-    liker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_likes')
-    like_time = models.DateTimeField(default=timezone.now)
-    liked_comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='likes')
 
-    def __str__(self):
-        return f"{self.liker.name} liked {self.liked_comment_id}"
 
-    @classmethod
-    def like_comment(cls, user, comment):
-        if not cls.objects.filter(liker=user, liked_comment=comment).exists():
-            cls.objects.create(liker=user, liked_comment=comment)
-            comment.likes += 1
-            comment.save()
 
-    @classmethod
-    def unlike_comment(cls, user, comment):
-        if cls.objects.filter(liker=user, liked_comment=comment).exists():
-            cls.objects.filter(liker=user, liked_comment=comment).delete()
-            comment.likes -= 1
-            comment.save()
+
+'''
+# 下面这部分课程中先不用了
+# class CommentLike(models.Model):
+#     liker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_likes')
+#     like_time = models.DateTimeField(default=timezone.now)
+#     liked_comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='likes')
+
+#     def __str__(self):
+#         return f"{self.liker.name} liked {self.liked_comment_id}"
+
+#     @classmethod
+#     def like_comment(cls, user, comment):
+#         if not cls.objects.filter(liker=user, liked_comment=comment).exists():
+#             cls.objects.create(liker=user, liked_comment=comment)
+#             comment.likes += 1
+#             comment.save()
+
+#     @classmethod
+#     def unlike_comment(cls, user, comment):
+#         if cls.objects.filter(liker=user, liked_comment=comment).exists():
+#             cls.objects.filter(liker=user, liked_comment=comment).delete()
+#             comment.likes -= 1
+#             comment.save()
     
-    @classmethod
-    def count_likes_for_comment(cls, comment_id):
-        return cls.objects.filter(id=comment_id).values_list('comment_likes', flat=True).first()
+#     @classmethod
+#     def count_likes_for_comment(cls, comment_id):
+#         return cls.objects.filter(id=comment_id).values_list('comment_likes', flat=True).first()
 
-    @classmethod
-    def count_likes_by_user(cls, user_id):
-        return cls.objects.filter(user_id=user_id).aggregate(sum('comment_likes'))['comment_likes__sum']
+#     @classmethod
+#     def count_likes_by_user(cls, user_id):
+#         return cls.objects.filter(user_id=user_id).aggregate(sum('comment_likes'))['comment_likes__sum']
 
 
 
@@ -364,3 +382,4 @@ class CommentLike(models.Model):
 
 #         riddles.save()
 #         return riddles
+'''

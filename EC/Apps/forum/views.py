@@ -189,6 +189,16 @@ def show_post_detail(request, post_id):
     })
 
 
+def like_post(request):
+    post_id = request.POST.get('post_id')
+    post_instance = post.get_post_by_id(post_id=post_id)
+    
+    # Increment the likes count
+    post_instance.post_likes += 1
+    post_instance.save()
+
+
+
 def comment_or_reply(request):
     if request.method == 'POST':
         # 检查用户是否已登录
