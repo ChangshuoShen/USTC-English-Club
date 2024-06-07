@@ -29,8 +29,9 @@ urlpatterns = [
     path('forum/', include('Apps.forum.urls', namespace='forum')),
     path('chat_image/', include('Apps.chat_image.urls', namespace='chat_image')),
     path('raffle', include('Apps.raffle.urls', namespace='raffle')),
+    path('admin_panel/', include('Apps.admin_panel.urls', namespace='admin_panel')),
+    
     # path('activities/', include('Apps.activities.urls', namespace='activities')),
-    # path('admin_panel/', include('Apps.admin_panel.urls', namespace='admin_panel')),
     # path('feedback/', include('Apps.feedback.urls', namespace='feedback')),
     
     # path('learning/', include('Apps.learning.urls', namespace='learning')),
