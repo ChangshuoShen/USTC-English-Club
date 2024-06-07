@@ -9,7 +9,7 @@ from django.utils import timezone
 def add_posts():
     # 创建或获取一个示例用户
     user, created = User.objects.get_or_create(
-        email='example@example.com',
+        email='shenchangshuo@icloud.com',
         defaults={
             'password': 'examplepassword',
             'name': 'Example User',
@@ -29,7 +29,7 @@ def add_posts():
     ]
 
     for theme, title, content in themes:
-        for i in range(3):
+        for i in range(4, 30):
             post.create_post(
                 publisher_id=user,
                 post_title=f"{title} {i+1}",

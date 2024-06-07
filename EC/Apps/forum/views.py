@@ -12,12 +12,18 @@ def forum_index(request):
     THEME_FOUR = 'Find Friends'
     THEME_FIVE = 'Else'
     '''
-    contents = post.get_posts_by_theme()
+    # contents = post.get_posts_by_theme()
     # print(contents)
+    page = request.GET.get('page', 1)  # 获取页码
+    items_per_page = 10  # 每页显示10个帖子
+
+    # 获取按主题分类并分页后的数据，直接就是各个列都转到对应的页
+    contents = post.get_posts_by_theme(page, items_per_page)
 
     return render(request, 'forum_index.html', {
         'contents': contents.items(),
-        })
+    })
+
 
 
 def riddle_difficulty_index(request):

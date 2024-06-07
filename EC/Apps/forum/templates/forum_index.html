@@ -45,7 +45,6 @@
         </div>
     </section>
 
-    <!-- ======content section/body=====-->
     <section class="main-content920">
         <div class="container">
             <div class="row">
@@ -72,79 +71,104 @@
                         
                         <!-- 从这里开始是下面的主要内容 -->
 
-                        {% for single_page in contents %}
-                        <!-- 一个single——page对应一个完整的主题 -->
-                        <section id="content{{single_page.0}}">
-                        <!--Recent Question Content Section -->
-
-
-        {% for single_post in single_page.1 %}
-        <div class="question-type2033">
-            <div class="row">
-                <div class="col-md-1">
-                    <div class="left-user12923 left-user12923-repeat">
-                        <a href="#"><img src="{% static 'imgs/images.png' %}" alt="image"> </a>
-                        <a href="{% url 'forum:post_detail' post_id=single_post.id %}"><i class="fa fa-check" aria-hidden="true"></i></a> 
-                    </div>
-                </div>
-                
-                <div class="col-md-9">
-                    <div class="right-description893">
-                        <div id="que-hedder2983">
-                            <h3><a href="{% url 'forum:post_detail' post_id=single_post.id %}">{{ single_post.post_title }}</a></h3>
-                        </div>
-                        <div class="ques-details10018">
-                            <p>{{ single_post.post_detail|safe }}.</p>
-                        </div>
-                        <hr>
-                        <div class="ques-icon-info3293">
-                            <a href="#"><i class="fa fa-star" aria-hidden="true"> {{ single_post.post_likes }} </i> </a>
-                            <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> {{ single_post.publish_date }} </i></a>
-                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> {{ single_post.theme }} </i></a>
-                            <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="ques-type302">
-                        <a href="{% url 'forum:post_detail' post_id=single_post.id %}">
-                            <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> {{single_post.comments}} comments </i></button>
-                        </a>
-                        <a href="{% url 'forum:post_detail' post_id=single_post.id %}">
-                            <button type="button" class="q-type23 button-ques2973"><i class="fa fa-user-circle-o" aria-hidden="true"> {{single_post.likes}} likes </i></button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-
+                        {% for theme_id, data in contents %}
+                        <section id="content{{theme_id}}">
+                            {% for single_post in data.posts %}
+                            <div class="question-type2033">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="left-user12923 left-user12923-repeat">
+                                            <a href="#"><img src="{% static 'imgs/images.png' %}" alt="image"> </a>
+                                            <a href="{% url 'forum:post_detail' post_id=single_post.id %}"><i class="fa fa-check" aria-hidden="true"></i></a> 
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-9">
+                                        <div class="right-description893">
+                                            <div id="que-hedder2983">
+                                                <h3><a href="{% url 'forum:post_detail' post_id=single_post.id %}">{{ single_post.post_title }}</a></h3>
+                                            </div>
+                                            <div class="ques-details10018">
+                                                <p>{{ single_post.post_detail|safe }}.</p>
+                                            </div>
+                                            <hr>
+                                            <div class="ques-icon-info3293">
+                                                <a href="#"><i class="fa fa-star" aria-hidden="true"> {{ single_post.post_likes }} </i> </a>
+                                                <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> {{ single_post.publish_date }} </i></a>
+                                                <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> {{ single_post.theme }} </i></a>
+                                                <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="ques-type302">
+                                            <a href="{% url 'forum:post_detail' post_id=single_post.id %}">
+                                                <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> {{single_post.comments}} comments </i></button>
+                                            </a>
+                                            <a href="{% url 'forum:post_detail' post_id=single_post.id %}">
+                                                <button type="button" class="q-type23 button-ques2973"><i class="fa fa-user-circle-o" aria-hidden="true"> {{single_post.likes}} likes </i></button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
 
                             <nav aria-label="Page navigation">
                                 <ul class="pagination">
-                                  <li>
-                                    <a href="#" aria-label="Previous">
-                                      <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                  </li>
-                                  <li><a href="#">1</a></li>
-                                  <li><a href="#">2</a></li>
-                                  <li><a href="#">3</a></li>
-                                  <li><a href="#">4</a></li>
-                                  <li><a href="#">5</a></li>
-                                  <li>
-                                    <a href="#" aria-label="Next">
-                                      <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                  </li>
+                                    {% if data.page_obj.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=1" aria-label="First">
+                                                <span aria-hidden="true">&laquo;&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ data.page_obj.previous_page_number }}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled">
+                                            <span class="page-link" aria-hidden="true">&laquo;&laquo;</span>
+                                        </li>
+                                        <li class="page-item disabled">
+                                            <span class="page-link" aria-hidden="true">&laquo;</span>
+                                        </li>
+                                    {% endif %}
+
+                                    {% for num in data.paginator.page_range %}
+                                        {% if data.page_obj.number == num %}
+                                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                                        {% elif num > data.page_obj.number|add:'-3' and num < data.page_obj.number|add:'3' %}
+                                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if data.page_obj.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ data.page_obj.next_page_number }}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ data.paginator.num_pages }}" aria-label="Last">
+                                                <span aria-hidden="true">&raquo;&raquo;</span>
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled">
+                                            <span class="page-link" aria-hidden="true">&raquo;</span>
+                                        </li>
+                                        <li class="page-item disabled">
+                                            <span class="page-link" aria-hidden="true">&raquo;&raquo;</span>
+                                        </li>
+                                    {% endif %}
                                 </ul>
-                              </nav>
+                            </nav>
                         </section>
-                        <!--  End of content-i------>
                         {% endfor %}
                     </div>
                 </div>
-                <!--end of col-md-9 -->
             </div>
         </div>
     </section>

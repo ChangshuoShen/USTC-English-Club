@@ -3,6 +3,7 @@ from django.utils import timezone
 from Apps.accounts.models import User
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from django.core.paginator import Paginator
 # Create your models here.
 
 class post(models.Model):
@@ -38,14 +39,14 @@ class post(models.Model):
     # difficulty = models.CharField(max_length=50, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if self.theme == self.ThemeChoices.THEME_ONE:
-            # 主题为 "Riddle" 时，这些字段是必需的
-            if not (self.main_category and self.answer_text and self.difficulty):
-                raise ValueError("For Riddle posts, main_category, answer_text, and difficulty are required.")
-        else:
-            self.main_category = None
-            self.answer_text = None
-            self.difficulty = None
+        # if self.theme == self.ThemeChoices.THEME_ONE:
+        #     # 主题为 "Riddle" 时，这些字段是必需的
+        #     if not (self.main_category and self.answer_text and self.difficulty):
+        #         raise ValueError("For Riddle posts, main_category, answer_text, and difficulty are required.")
+        # else:
+            # self.main_category = None
+            # self.answer_text = None
+            # self.difficulty = None
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -105,19 +106,22 @@ class post(models.Model):
         
         
     @classmethod
-    def get_posts_by_theme(cls):
+    def get_posts_by_theme(cls, page, items_per_page = 10):
         """
-        获取所有帖子，并按照主题分类
+        获取所有帖子，并按照主题分类，支持分页
         """
         # 创建一个空字典用于存储帖子按主题分类
         posts_by_theme = {}
+        paginated_posts_by_theme = {}
 
         # 遍历所有主题选项
         for i, theme_choice in enumerate(cls.ThemeChoices.choices, start=1):
             theme_name = theme_choice[0]  # 主题名称
             theme_posts = cls.objects.filter(theme=theme_name).order_by('-publish_date')
+            paginator = Paginator(theme_posts, items_per_page)
+            # 获取对应页的数据
+            page_obj = paginator.get_page(page)
 
-            # 将每个帖子的内容存储在字典中
             posts_by_theme[i] = [
                 {
                     'id': post.id,
@@ -128,16 +132,20 @@ class post(models.Model):
                     'publish_date': post.publish_date,
                     'post_likes': post.post_likes
                 }
-                for post in theme_posts
+                for post in page_obj
             ]
 
-        return posts_by_theme
+            paginated_posts_by_theme[i] = {
+                'posts': posts_by_theme[i],
+                'paginator': paginator,
+                'page_obj': page_obj
+            }
+
+        return paginated_posts_by_theme
 
     @classmethod
     def get_riddles_by_difficulty(cls):
-
         riddles_by_difficulty = {}
-
         difficulties = ['Easy', 'Medium', 'Hard']
 
         for difficulty in difficulties:
