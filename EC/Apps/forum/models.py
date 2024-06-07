@@ -67,8 +67,9 @@ class post(models.Model):
     def get_post_by_id(cls, post_id):
         try:
             post_object = get_object_or_404(cls, id=post_id)
+            
             return {
-                'id': post_object.id,
+                'post_id': post_id,
                 'publisher_id': post_object.publisher_id.id,  # Assuming you want the ID of the publisher
                 'post_title': post_object.post_title,
                 'post_detail': post_object.post_content,  # post_content key renamed to post_detail
@@ -79,6 +80,11 @@ class post(models.Model):
         except Http404:
             return None
 
+    @classmethod
+    def get_post_instance_by_id(cls, post_id):
+        return get_object_or_404(cls, id=post_id)
+    
+    
     @classmethod
     def get_post_instance_by_id(cls, post_id):
         return get_object_or_404(cls, id=post_id)
@@ -300,7 +306,7 @@ class Like(models.Model):
             new_like = cls.objects.create(post=post_instance, user=user_instance)
             # 这一行相当于是trigger了
             # post_instance.likes = cls.count_likes_for_post(post_id=post_instance)
-            post_instance.likes += 1
+            post_instance.post_likes += 1
             new_like.save()
             post_instance.save()
 
@@ -310,7 +316,7 @@ class Like(models.Model):
         if like_queryset.exists():
             like_queryset.delete()
             # post_instance.likes = cls.count_likes_for_post(post_id=post_instance)
-            post_instance.likes -= 1
+            post_instance.post_likes -= 1
             post_instance.save()
 
     @classmethod

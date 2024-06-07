@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.contrib import messages
-from .models import post, Comment, Reply
+from .models import post, Comment, Reply, Like
 from Apps.accounts.models import User
 
 def forum_index(request):
@@ -139,6 +139,7 @@ def show_post_detail(request, post_id):
     # create_random_replies()
     # return HttpResponse('Show More Information Here')
     post_content = post.get_post_by_id(post_id=post_id)
+    post_content['post_id'] = post_id
     
     if post_content:
         # 获取发布者的详细信息
@@ -190,12 +191,29 @@ def show_post_detail(request, post_id):
 
 
 def like_post(request):
-    post_id = request.POST.get('post_id')
-    post_instance = post.get_post_by_id(post_id=post_id)
+    if request.method == 'POST':
+        # 检查用户是否已登录
+        # print(request.session.__dict__)
+        if 'user_id' not in request.session or 'email' not in request.session:
+            # 用户未登录，重定向到登录页面
+            messages.error(request, 'Please log in to like it.')
+            return redirect('accounts:signup_login')        
+
+        user_id = int(request.session.get('user_id'))
+        user_instance = User.get_user_by_id(user_id=user_id)
+        
+        post_id = int(request.POST.get('post_id'))
+        # print('\n\n\n\n\n\n\n\n\n')
+        # print(post_id, type(post_id))
+        
+        post_instance = post.get_post_instance_by_id(post_id=post_id)
+        # print(post_instance, type(post_instance))
+        # print('\n\n\n\n\n\n\n\n\n')
+        Like.like_post(post_instance=post_instance, user_instance=user_instance)
+        return show_post_detail(request, post_id=post_id)
     
-    # Increment the likes count
-    post_instance.post_likes += 1
-    post_instance.save()
+    else:
+        return HttpResponse('Error???')
 
 
 

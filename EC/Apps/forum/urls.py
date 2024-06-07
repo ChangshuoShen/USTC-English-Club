@@ -11,5 +11,6 @@ urlpatterns = [
     path('comment_or_reply/', views.comment_or_reply, name="comment_or_reply"),
     path('user_question/', views.user_question, name="user_question"), # 一个user的相关信息
     path('users/', views.users, name='users'), # 展示所有的user
+    path('like_post/', view=views.like_post, name='like_post') # 这个实现对一个post点赞的
 ]
 

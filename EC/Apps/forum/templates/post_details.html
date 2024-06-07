@@ -82,10 +82,19 @@
                                      <i class="fa fa-user user2" aria-hidden="true"> 70 views</i> </div>
 
                                 <div class="l-rightside39">
-                                    <button type="button" class="tolltip-button thumbs-up2" data-toggle="tooltip" data-placement="bottom" title="Like">
+                                    <!--
+                                    <button type="button"  class="like-button tolltip-button thumbs-up2" data-post-id="{{ post_id }}" data-toggle="tooltip" data-placement="bottom" title="Like">
                                         <i class="fa fa-thumbs-o-up " aria-hidden="true"></i>
                                     </button>
+                                    -->
 
+                                    <form id="likeForm " action="{% url "forum:like_post"%}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="post_id" value="{{post_content.post_id}}">
+                                        <button type="input" class="like-button tolltip-button thumbs-up2">
+                                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
                                     <span class="single-question-vote-result">{{ post_content.post_likes }}</span>
                                 </div>
                             </div>
@@ -190,6 +199,7 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/editor.js' %}"></script>
     <script>
+        /* 这里是评论 */
         function closeCommentBox() {
             var commentBox = document.getElementById('comment_box');
             commentBox.classList.remove('show-comment-box');
@@ -210,6 +220,8 @@
                 replyToComment(commentId);
             });
         });
+
+       
     </script>
     
 </body>
