@@ -1,4 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 # from django.utils import timezone
 
@@ -19,6 +21,8 @@ def login(request):
 
 
 def signup_login(request):
+    print(request.session.__dict__)
+    print(request.COOKIES)
     if 'user_id' in request.session and 'email' in request.session:
         return redirect('accounts:profile')
     return render(request, 'signup_login.html')
@@ -223,10 +227,10 @@ def confirm_signup(request):
 def profile(request):
     request.session.save()  # 强制保存session
     print(request.session.__dict__) # 只是打印在服务器端看看，不使用log日志
-    
+    print("COOKIES", request.COOKIES)
     email = request.session.get('email')
     user = User.get_user_by_email(email)
-    print("user's birthday: ", user.birthday)
+    # print("user's birthday: ", user.birthday)
     user_info = {
         'username': user.name,
         'email': user.email,
@@ -235,8 +239,6 @@ def profile(request):
         'bio': user.bio,
         'likes': user.likes_num,
         'liked_by': user.liked_num,
-        'followers': user.followers_num,
-        'following': user.follows_num,
     }
     
     
@@ -282,11 +284,29 @@ def change_profile(request):
         'bio': user.bio,
         'likes': user.likes_num,
         'liked_by': user.liked_num,
-        'followers': user.followers_num,
-        'following': user.follows_num,
     }
     return render(request, 'profile.html', user_info)
 
 
-def logout(reqeust):
-    return HttpResponse('LOGOUT HERE')
+
+def logout(request):
+    # request.session.flush()
+    # 清除 session 中的用户信息
+    if 'user_id' in request.session:
+        del request.session['user_id']
+    if 'email' in request.session:
+        del request.session['email']
+    
+    # 删除相关的 cookie
+    response = HttpResponseRedirect(reverse('accounts:signup_login'))  # 替换 'login' 为你的登录页面的 URL 名称
+    if 'user_id' in request.COOKIES:
+        response.delete_cookie('user_id')
+    if 'email' in request.COOKIES:
+        response.delete_cookie('email')
+        
+    return response
+    
+    response = HttpResponseRedirect(reverse('accounts:signup_login'))
+    response.delete_cookie('your_cookie_name')  # 替换 'your_cookie_name' 为你的 cookie 名称
+    return response
+

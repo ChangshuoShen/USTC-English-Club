@@ -28,6 +28,7 @@
                             <a href="{% url "admin_panel:dashboard" %}" class="pure-menu-link">Dashboard</a>
                         </li>
 
+                        <p style="font-size:1.5em; display: inline;">Posts</p>
                         <li class="pure-menu-item menu-item-divided">
                             <a href="{% url "admin_panel:riddles" %}" class="pure-menu-link">Riddles</a>
                         </li>
@@ -44,13 +45,28 @@
                             <a href="{% url "admin_panel:else" %}" class="pure-menu-link">Else</a>
                         </li>
                         
+                        <p style="font-size:1.5em; display: inline;">Comments</p>
 
+                        <li class="pure-menu-item menu-item-divided">
+                            <a href="{% url "admin_panel:show_comments" %}" class="pure-menu-link">All Comments</a>
+                        </li>
+
+                        <p style="font-size:1.5em; display: inline;">Users</p>
+
+                        <li class="pure-menu-item menu-item-divided">
+                            <a href="{% url "admin_panel:user_list" %}" class="pure-menu-link">All Users</a>
+                        </li>
+
+                        <p style="font-size:1.5em; display: inline;">Raffles</p>
                         <li class="pure-menu-item menu-item-divided">
                             <a href="#" class="pure-menu-link">Edit Prizes <br>For Raffle</a>
                         </li>
 
+                        
                         <li class="pure-menu-item menu-item-divided">
-                            <a href="#" class="pure-menu-link">Users</a>
+                            <a href="{% url "home"%}" class="pure-menu-link">
+                                <p style="font-size:2em; display: inline;">Home</p>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -168,9 +184,9 @@
                 <div class="footer">
                     <div class="pure-menu pure-menu-horizontal">
                         <ul>
-                            <li class="pure-menu-item"><a href="http://purecss.io/" class="pure-menu-link">PURE CSS</a></li>
-                            <li class="pure-menu-item"><a href="http://fikiruretgeci.com" class="pure-menu-link">FIKIR URETGECI</a></li>
-                            <li class="pure-menu-item"><a href="http://pure-themes.com" class="pure-menu-link">PURE THEMES</a></li>
+                            <li class="pure-menu-item"><a href="#" class="pure-menu-link">1</a></li>
+                            <li class="pure-menu-item"><a href="#" class="pure-menu-link">2</a></li>
+                            <li class="pure-menu-item"><a href="#" class="pure-menu-link">3</a></li>
                         </ul>
                     </div>
                 </div>

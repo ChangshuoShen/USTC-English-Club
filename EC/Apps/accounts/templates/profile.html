@@ -8,15 +8,16 @@
     {% comment %} <link rel="stylesheet" href="{% static 'css/signup_login.css' %}"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/msg_for_all.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile_style.css' %}">
-    <style>
+<style>
         /* 回到主页按钮样式 */
-.back-to-home {
+    .back-to-home {
     position: fixed;
     top: 20px;
     right: 20px;
-}
+    }
 
-.back-to-home .btn {
+
+    .back-to-home .btn {
     background: #007bff;
     color: #fff;
     padding: 10px 20px;
@@ -27,12 +28,36 @@
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background 0.3s ease;
-}
+    }
 
-.back-to-home .btn:hover {
+    .back-to-home .btn:hover {
     background: #0056b3;
-}
-    </style>
+    }
+
+    /* 注销按钮样式 */
+    .logout {
+    position: fixed;
+    top: 60px; /* Adjust as needed */
+    right: 20px;
+    }
+
+    .logout .btn {
+    background: #dc3545; /* Red color */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+    }
+
+    .logout .btn:hover {
+    background: #c82333; /* Darker red on hover */
+    }
+</style>
 </head>
 
 <body>
@@ -98,20 +123,15 @@
         <span id="liked_by">{{ liked_by }}</span>
         <br>
 
-        <label for="followers">Followers:</label>
-        <span id="followers">{{ followers }}</span>
-        <br>
-
-        <label for="following">Following:</label>
-        <span id="following">{{ following }}</span>
-        <br>
-
         <input type="submit" value="Change">
     </form>
 
-    <!-- 添加回到主页按钮 -->
     <div class="back-to-home">
-        <a href="{% url 'home' %}" class="btn">Back to Home</a>
+        <a href="{% url "home" %}" class="btn">Back to Home</a>
+    </div>
+
+    <div class="logout">
+        <a href="{% url "accounts:logout" %}" class="btn">Logout</a>
     </div>
 
     <script>

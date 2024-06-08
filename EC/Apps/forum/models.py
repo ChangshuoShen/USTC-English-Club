@@ -282,6 +282,14 @@ class Comment(models.Model):
     @classmethod
     def get_comment_by_id(cls, comment_id):
         return cls.objects.get(id=comment_id)
+    
+    @classmethod
+    def get_all_comments(cls):
+        return cls.objects.all().order_by('-comment_date')
+
+
+
+
 
 class Reply(models.Model):
     '''

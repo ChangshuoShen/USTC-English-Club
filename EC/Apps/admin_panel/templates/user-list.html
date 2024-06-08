@@ -74,44 +74,35 @@
         <div class="content pure-u-1 pure-u-md-21-24">
             <div class="header-small">
                 <div class="items">
-                    <h1 class="subhead">Comment List</h1>
-                    <!--
-                    <aside class="pure-message message-success">
-                        <p><strong>SUCCESS</strong>: Success message.</p>
-                    </aside>
-                    <aside class="pure-message message-error">
-                        <p><strong>ERROR</strong>: Error message.</p>
-                    </aside>
-                    <aside class="pure-message message-warning">
-                        <p><strong>WARNING</strong>: Warning message.</p>
-                    </aside>
-                    -->
+                    <h1 class="subhead">User List</h1>
 
                     <table class="pure-table pure-table-bordered">
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Post</th>
-                            <th>User</th>
-                            <th>Content</th>
-                            <th>Comment Date</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Register Date</th>
                             <th>Likes</th>
-                            <th>Action</th>
+                            <th>Comments</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                            {% for comment in comments %}
+                            {% for user in users %}
                             <tr>
-                                <td>{{ comment.id }}</td>
-                                <td>{{ comment.post.post_title }}</td>
-                                <td>{{ comment.user.name }}</td>
-                                <td>{{ comment.content }}</td>
-                                <td>{{ comment.comment_date }}</td>
-                                <td>{{ comment.comment_likes }}</td>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.get_gender_display }}</td>
+                                <td>{{ user.register_date }}</td>
+                                <td>{{ user.likes_num }}</td>
+                                <td>{{ user.comments_num }}</td>
                                 <td>
-                                    <form method="post" class="pure-button button-small button-error" action="{% url 'admin_panel:delete_comment' %}">
+                                    <form method="post" class="pure-button button-small button-error" action="{% url 'admin_panel:delete_user' %}">
                                         {% csrf_token %}
-                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                        <input type="hidden" name="user_id" value="{{ user.id }}">
                                         <input type="hidden" name="return_url" value="{{ this_url }}">
                                         <button type="submit" onclick="return confirm('Are you sure?');" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">Delete</button>
                                     </form>
@@ -124,14 +115,14 @@
 
                 <div class="navigation">
                     <div class="pure-button-group">
-                        {% if comments.has_previous %}
+                        {% if users.has_previous %}
                         <a href="?page=1" class="pure-button">First</a>
-                        <a href="?page={{ comments.previous_page_number }}" class="pure-button">Previous</a>
+                        <a href="?page={{ users.previous_page_number }}" class="pure-button">Previous</a>
                         {% endif %}
-                        <span class="pure-button pure-button-disabled">Page {{ comments.number }} of {{ comments.paginator.num_pages }}</span>
-                        {% if comments.has_next %}
-                        <a href="?page={{ comments.next_page_number }}" class="pure-button">Next</a>
-                        <a href="?page={{ comments.paginator.num_pages }}" class="pure-button">Last</a>
+                        <span class="pure-button pure-button-disabled">Page {{ users.number }} of {{ users.paginator.num_pages }}</span>
+                        {% if users.has_next %}
+                        <a href="?page={{ users.next_page_number }}" class="pure-button">Next</a>
+                        <a href="?page={{ users.paginator.num_pages }}" class="pure-button">Last</a>
                         {% endif %}
                     </div>
                 </div>

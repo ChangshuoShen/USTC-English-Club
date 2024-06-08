@@ -30,11 +30,10 @@ class User(models.Model):
     likes_num = models.IntegerField(default=0, verbose_name='likes_num')
     comments_num = models.IntegerField(default=0, verbose_name='comments_num')
     liked_num = models.IntegerField(default=0, verbose_name='liked_num')
-    follows_num = models.IntegerField(default=0, verbose_name='follows_num')
-    followers_num = models.IntegerField(default=0, verbose_name='followers_num')
-
-    is_active = models.BooleanField(verbose_name='Active', default=True)
-    is_admin = models.BooleanField(verbose_name='Admin', default=False)
+    
+    is_admin = models.BooleanField(verbose_name='is_admin', default=False)
+    is_active = models.BooleanField(verbose_name='is_active', default=True)
+    
 
     def __str__(self):
         return self.email
@@ -73,7 +72,7 @@ class User(models.Model):
 
     @classmethod
     def get_all_users(cls):
-        return cls.objects.all()
+        return cls.objects.filter(is_active=True).order_by('-register_date')
     
     @classmethod
     def get_user_counts(cls):
