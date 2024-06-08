@@ -11,5 +11,6 @@ urlpatterns = [
     path('ask_for_help/', views.ask_for_help, name="ask_for_help"),
     path('find_friends', views.find_friends, name="find_friends"),
     path("else/", views.else_list, name="else"),
+    path('delete_post/', views.delete_post, name="delete_post"),
 ]
 

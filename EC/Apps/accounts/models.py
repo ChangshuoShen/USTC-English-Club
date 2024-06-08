@@ -76,6 +76,13 @@ class User(models.Model):
         return cls.objects.all()
     
     @classmethod
+    def get_user_counts(cls):
+        total_accounts = cls.objects.count()
+        accounts_today = cls.objects.filter(register_date__date=timezone.now().date()).count()
+        accounts_yesterday = cls.objects.filter(register_date__date=(timezone.now() - timezone.timedelta(days=1)).date()).count()
+        return total_accounts, accounts_today, accounts_yesterday
+    
+    @classmethod
     def get_user_by_email(cls, email):
         try:
             user = cls.objects.get(email=email)

@@ -81,6 +81,20 @@ class post(models.Model):
             return None
 
     @classmethod
+    def get_post_counts(cls):
+        total_posts = cls.objects.count()
+        posts_today = cls.objects.filter(publish_date__date=timezone.now().date()).count()
+        posts_yesterday = cls.objects.filter(publish_date__date=(timezone.now() - timezone.timedelta(days=1)).date()).count()
+        return total_posts, posts_today, posts_yesterday
+
+    @classmethod
+    def get_latest_posts(cls, post_num=5):
+        if post_num < 1:
+            post_num = 5
+        return list(cls.objects.all().order_by('-publish_date').values('post_title', 'post_content', 'theme', 'publish_date', 'post_likes')[:post_num])
+    
+    
+    @classmethod
     def get_post_instance_by_id(cls, post_id):
         return get_object_or_404(cls, id=post_id)
     
@@ -149,6 +163,11 @@ class post(models.Model):
             }
 
         return paginated_posts_by_theme
+    
+    @classmethod
+    def get_posts_for_single_theme(cls, theme):
+        posts = post.objects.filter(theme=theme).order_by('-publish_date')
+        return list(posts.values('id', 'theme', 'post_title', 'post_content', 'publish_date'))
 
     @classmethod
     def get_riddles_by_difficulty(cls):
@@ -228,6 +247,21 @@ class Comment(models.Model):
     @classmethod
     def find_comments_on_specific_post_through_post_id(cls, post_id):
         return cls.objects.filter(post=post_id).order_by('-comment_date')
+    
+    @classmethod
+    def get_comment_counts(cls):
+        total_accounts = cls.objects.count()
+        accounts_today = cls.objects.filter(comment_date__date=timezone.now().date()).count()
+        accounts_yesterday = cls.objects.filter(comment_date__date=(timezone.now() - timezone.timedelta(days=1)).date()).count()
+        return total_accounts, accounts_today, accounts_yesterday
+    
+    @classmethod
+    def get_latest_comments(cls, comment_num=5):
+        if comment_num < 1:
+            comment_num = 5
+        return list(cls.objects.all().order_by('-comment_date').values('post', 'user', 'content', 'comment_date')[:comment_num])
+    
+        # return cls.objects.order_by('-comment_date')[:comment_num]
     
     @classmethod
     def create_comment(cls, post, user, content):
