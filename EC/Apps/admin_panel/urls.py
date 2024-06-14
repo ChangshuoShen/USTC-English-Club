@@ -19,5 +19,10 @@ urlpatterns = [
     path('user_list/', views.user_list, name='user_list'),
     path('delete_user/', views.delete_user, name='delete_user'),
     
+    path('prizes/', views.prize_list, name='prize_list'),
+    path('delete_prize/', views.delete_prize, name='delete_prize'),
+    path('update_prize/', views.update_prize, name='update_prize'),
+    path('clear_all_prizes/', views.clear_all_prizes, name='clear_all_prizes'),
+    path('update_all_prizes/', views.update_all_prizes, name='update_all_prizes'),
 ]
 

@@ -4,6 +4,8 @@ from django.utils import timezone
 from Apps.accounts.models import User
 from Apps.forum.models import post, Comment, Like
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
+from Apps.raffle.models import Prize
 # Create your views here.
 
 THEME_ONE = 'Riddle', 'Riddle'
@@ -196,3 +198,55 @@ def delete_user(request):
         return redirect(return_url)
     
     return redirect(reverse('admin_panel:user_list'))
+
+
+def prize_list(request):
+    prizes = Prize.get_all_prizes()
+    return render(request, 'prize-list.html', {'prizes': prizes})
+
+def delete_prize(request):
+    if request.method == 'POST':
+        prize_id = request.POST.get('prize_id')
+        try:
+            prize = Prize.objects.get(pk=prize_id)
+            prize.delete()
+            messages.success(request, 'Prize deleted successfully.')
+        except Prize.DoesNotExist:
+            messages.error(request, 'Prize does not exist.')
+    return redirect('admin_panel:prize_list')
+
+def update_prize(request):
+    if request.method == 'POST':
+        prize_id = request.POST.get('prize_id')
+        new_quantity = request.POST.get('new_quantity')
+        if new_quantity.isdigit():
+            Prize.update_prize(prize_id, int(new_quantity))
+            messages.success(request, 'Prize quantity updated successfully.')
+        else:
+            messages.error(request, 'Invalid quantity.')
+    return redirect('admin_panel:prize_list')
+
+def clear_all_prizes(request):
+    if request.method == 'POST':
+        Prize.clear_all_prizes()
+        messages.success(request, 'All prizes cleared successfully.')
+    return redirect('admin_panel:prize_list')
+
+
+def update_all_prizes(request):
+    if request.method == 'POST':
+        # 获取所有表单中提交的奖品信息
+        for key, value in request.POST.items():
+            if key.startswith('name_'):
+                prize_id = key.split('_')[1]
+                try:
+                    prize = Prize.objects.get(pk=prize_id)
+                    prize.quantity = int(value)
+                    prize.save()
+                except (Prize.DoesNotExist, ValueError):
+                    pass
+        # 更新完成后重定向到奖品列表页面
+        return redirect('admin_panel:prize_list')
+    else:
+        # 如果不是POST请求，直接重定向到奖品列表页面
+        return redirect('admin_panel:prize_list')

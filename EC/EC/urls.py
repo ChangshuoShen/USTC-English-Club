@@ -40,4 +40,5 @@ urlpatterns = [
     # path('mystery_hunt/', include('Apps.mystery_hunt.urls', namespace='mystery_hunt')),
     # path('settings/', include('Apps.settings.urls', namespace='settings')),
     # path('socialize/', include('Apps.socialize.urls', namespace='socialize')),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
