@@ -35,7 +35,6 @@ urlpatterns = [
     
     # path('activities/', include('Apps.activities.urls', namespace='activities')),
     # path('feedback/', include('Apps.feedback.urls', namespace='feedback')),
-    
     # path('learning/', include('Apps.learning.urls', namespace='learning')),
     # path('mystery_hunt/', include('Apps.mystery_hunt.urls', namespace='mystery_hunt')),
     # path('settings/', include('Apps.settings.urls', namespace='settings')),
