@@ -41,53 +41,12 @@ def riddle_difficulty_index(request):
     return render(request, 'riddle_index.html', {
         'riddle_difficulty_contents': riddle_contents,
     })
-# 我没找到你forum的index.html，只能先放在这里了，你要是看见这段代码就加上（稍加改动）
-
-# <head>
-#     <meta charset="UTF-8">
-#     <title>Riddle Posts by Difficulty</title>
-# </head>
-# <body>
-#     <h1>Riddle Posts by Difficulty</h1>
-#     {% for difficulty, riddles in riddle_contents %}
-#         <h2>{{ difficulty|capfirst }} Riddles</h2>
-#         <ul>
-#             {% for riddle in riddles %}
-#                 <li>
-#                     <strong>{{ riddle.post_title }}</strong> - {{ riddle.post_detail }} (Likes: {{ riddle.post_likes }})
-#                 </li>
-#             {% endfor %}
-#         </ul>
-#     {% empty %}
-#         <p>No riddles available.</p>
-#     {% endfor %}
-# </body>
 
 def riddle_category_index(request):
     riddles_by_category = post.get_riddles_by_main_category()
     return render(request, 'riddle_category_index.html', {
         'riddles_by_category': riddles_by_category.items(),
     })
-
-
-# <head>
-#     <meta charset="UTF-8">
-#     <title>Riddle Posts by Category</title>
-# </head>
-# <body>
-#     <h1>Riddle Posts by Category</h1>
-#     {% for category, riddles in riddles_by_category %}
-#         <h2>{{ category|capfirst }} Riddles</h2>
-#         <ul>
-#             {% for riddle in riddles %}
-#                 <li>
-#                     <strong>{{ riddle.post_title }}</strong> - {{ riddle.post_detail }} (Likes: {{ riddle.post_likes }})
-#                 </li>
-#             {% endfor %}
-#         </ul>
-#     {% empty %}
-#         <p>No riddles available.</p>
-#     {% endfor %}
 
 
 
@@ -130,8 +89,6 @@ def submit_sharing(request):
         # return HttpResponse(request.POST.get('content_copy'))
     else:
         return HttpResponse('Submitted')
-
-
 
 
 # from .utils.add_some_replies import create_random_replies

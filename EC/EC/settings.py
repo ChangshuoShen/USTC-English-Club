@@ -146,7 +146,7 @@ STATICFILES_DIRS = [
     Path.joinpath(BASE_DIR, 'Apps/accounts/static'),    # 应用程序 accounts 的静态文件目录
     # 添加其他应用程序的静态文件目录，如果有的话
 ]
-
+STATIC_ROOT = Path.joinpath(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
