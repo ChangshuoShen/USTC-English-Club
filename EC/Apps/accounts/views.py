@@ -164,7 +164,7 @@ def change_pwd(request):
     if request.method == 'POST':
         verification_code = request.POST.get('verification_code')
         new_password = request.POST.get('new_password')
-
+        print("Begin changing PWD")
         # 验证验证码是否正确
         user_data = verify_verification_code(request, verification_code)
         if user_data:
@@ -175,6 +175,7 @@ def change_pwd(request):
 
             if user:
                 # 重置用户密码
+                print('User Found')
                 user.update_password(new_password)
                 # 清除验证码和email的session信息
                 del request.session['verification_code']

@@ -47,28 +47,27 @@ class User(models.Model):
         """
         创建用户并设置密码，此时只需要传入名字邮箱、原始密码
         """
-        with user_lock:
-            user = cls(
-                name=name,
-                email=email,
-                register_date=timezone.now()
-            )
+        # with user_lock:
+        user = cls(
+            name=name,
+            email=email,
+            register_date=timezone.now()
+        )
 
-            # 使用 make_password 函数对密码进行哈希处理
-            user.set_password(raw_password)
-            # 注意之后进行验证的时候使用check_password方法，而不是使用
-            
-            if is_admin:
-                user.set_admin()
-            user.save()
-            return user
+        # 使用 make_password 函数对密码进行哈希处理
+        user.set_password(raw_password)
+        # 注意之后进行验证的时候使用check_password方法，而不是使用
+        
+        if is_admin:
+            user.set_admin()
+        user.save()
+        return user
 
     def edit_profile(self, name=None, gender=None, birthday=None):
         '''
         此处完善用户的信息
         '''
         with user_lock:
-            
             if name:
                 self.name = name
             if gender:
@@ -79,35 +78,35 @@ class User(models.Model):
 
     @classmethod
     def get_all_users(cls):
-        with user_lock:
-            return cls.objects.filter(is_active=True).order_by('-register_date')
+        # with user_lock:
+        return cls.objects.filter(is_active=True).order_by('-register_date')
     
     @classmethod
     def get_user_counts(cls):
-        with user_lock:
-            
-            total_accounts = cls.objects.count()
-            accounts_today = cls.objects.filter(register_date__date=timezone.now().date()).count()
-            accounts_yesterday = cls.objects.filter(register_date__date=(timezone.now() - timezone.timedelta(days=1)).date()).count()
-            return total_accounts, accounts_today, accounts_yesterday
-    
+        # with user_lock:
+        
+        total_accounts = cls.objects.count()
+        accounts_today = cls.objects.filter(register_date__date=timezone.now().date()).count()
+        accounts_yesterday = cls.objects.filter(register_date__date=(timezone.now() - timezone.timedelta(days=1)).date()).count()
+        return total_accounts, accounts_today, accounts_yesterday
+
     @classmethod
     def get_user_by_email(cls, email):
-        with user_lock:    
-            try:
-                user = cls.objects.get(email=email)
-                return user
-            except cls.DoesNotExist:
-                return None
+        # with user_lock:    
+        try:
+            user = cls.objects.get(email=email)
+            return user
+        except cls.DoesNotExist:
+            return None
         
     @classmethod
     def get_user_by_id(cls, user_id):
-        with user_lock:
-            try:
-                user = cls.objects.get(id=user_id)
-                return user
-            except cls.DoesNotExist:
-                return None
+        # with user_lock:
+        try:
+            user = cls.objects.get(id=user_id)
+            return user
+        except cls.DoesNotExist:
+            return None
 
 
     @classmethod
@@ -151,23 +150,23 @@ class User(models.Model):
         """
         设置用户密码并进行哈希处理
         """
-        with user_lock:
-            self.password = make_password(raw_password)
-            self.save()
+        # with user_lock:
+        self.password = make_password(raw_password)
+        self.save()
         
     def check_password(self, raw_password):
         """
         检查密码是否匹配
         """
-        with user_lock:
-            return raw_password == self.password
+        # with user_lock:
+        return raw_password == self.password
     
     def authenticate_user(self, password):
         """
         根据提供的密码验证用户。
         """
-        with user_lock:
-            return self.check_password(password)
+        # with user_lock:
+        return self.check_password(password)
 
     def set_admin(self):
         """
@@ -190,23 +189,22 @@ class User(models.Model):
         """
         检查用户是否是管理员。
         """
-        with user_lock:
-            return self.is_admin
+        # with user_lock:
+        return self.is_admin
 
     def update_email(self, new_email):
         """
         更新用户的电子邮件地址。
         """
-        with user_lock:
-            self.email = new_email
-            self.save()
+        
+        self.email = new_email
+        self.save()
 
     def update_password(self, new_password):
         """
         更新用户的密码。
         """
-        with user_lock:
-            self.set_password(new_password)
+        self.set_password(new_password)
 
     def update_avatar(self, new_avatar):
         """
@@ -242,21 +240,20 @@ class User(models.Model):
         """
         获取用户年龄
         """
-        with user_lock:
-            if self.birthdate:
-                today = timezone.now()
-                age = today.year - self.birthdate.year - (
-                            (today.month, today.day) < (self.birthdate.month, self.birthdate.day))
-                return age
-            else:
-                return None
+        if self.birthdate:
+            today = timezone.now()
+            age = today.year - self.birthdate.year - (
+                        (today.month, today.day) < (self.birthdate.month, self.birthdate.day))
+            return age
+        else:
+            return None
 
     def get_full_name(self):
         """
         获取用户完整姓名
         """
-        with user_lock:
-            return self.name
+        # with user_lock:
+        return self.name
 
 
 '''
