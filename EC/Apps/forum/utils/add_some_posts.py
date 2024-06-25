@@ -1,6 +1,3 @@
-
-
-
 from ..models import post
 from Apps.accounts.models import User
 from django.utils import timezone

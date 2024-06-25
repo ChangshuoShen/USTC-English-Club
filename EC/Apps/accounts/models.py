@@ -23,7 +23,6 @@ class User(models.Model):
     password = models.CharField(verbose_name='password', max_length=256, blank=False)
     register_date = models.DateTimeField(verbose_name='register_date', default=timezone.now)
     
-    
     avatar = models.ImageField(verbose_name='Avatar', upload_to='avatars/', null=True, blank=True)
     name = models.CharField(verbose_name='name', max_length=64, blank=False, )
     gender = models.CharField(verbose_name='gender', max_length=10, choices=GENDER_CHOICES, default=UNCERTAIN)
@@ -41,6 +40,19 @@ class User(models.Model):
 
     def __str__(self):
         return self.email
+    
+    def edit_profile(self, name=None, gender=None, birthday=None):
+        '''
+        此处完善用户的信息
+        '''
+        with user_lock:
+            if name:
+                self.name = name
+            if gender:
+                self.gender = gender
+            if birthday:
+                self.birthday = birthday
+            self.save()
     
     @classmethod
     def create_user(cls, name='guest', email=None, raw_password=None, is_admin=False):
@@ -62,19 +74,6 @@ class User(models.Model):
             user.set_admin()
         user.save()
         return user
-
-    def edit_profile(self, name=None, gender=None, birthday=None):
-        '''
-        此处完善用户的信息
-        '''
-        with user_lock:
-            if name:
-                self.name = name
-            if gender:
-                self.gender = gender
-            if birthday:
-                self.birthday = birthday
-            self.save()
 
     @classmethod
     def get_all_users(cls):

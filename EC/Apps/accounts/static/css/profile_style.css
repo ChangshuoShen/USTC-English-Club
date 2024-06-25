@@ -30,7 +30,7 @@ form {
 
 label {
     display: block;
-    margin-top: 10px;
+    margin-top: 5px;
     font-weight: bold;
 }
 
@@ -113,7 +113,7 @@ span {
 /* 回到主页按钮样式 */
 .back-to-home {
     position: fixed;
-    top: 20px;
+    top: 50px;
     right: 20px;
 }
 
@@ -138,7 +138,7 @@ span {
 /* 注销按钮样式 */
 .logout {
     position: fixed;
-    top: 60px; /* Adjust as needed */
+    top: 100px; /* Adjust as needed */
     right: 20px;
 }
 
