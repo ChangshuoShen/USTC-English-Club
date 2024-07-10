@@ -22,7 +22,6 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 
-
 urlpatterns = [
     path('', views.index, name='home'), # 这是一个主页
     path("admin/", admin.site.urls),
@@ -32,11 +31,12 @@ urlpatterns = [
     path('chat_image/', include('Apps.chat_image.urls', namespace='chat_image')),
     path('raffle', include('Apps.raffle.urls', namespace='raffle')),
     path('admin_panel/', include('Apps.admin_panel.urls', namespace='admin_panel')),
+    path('mystery_hunt/', include('Apps.mystery_hunt.urls', namespace='mystery_hunt')),
     
     # path('activities/', include('Apps.activities.urls', namespace='activities')),
     # path('feedback/', include('Apps.feedback.urls', namespace='feedback')),
     # path('learning/', include('Apps.learning.urls', namespace='learning')),
-    # path('mystery_hunt/', include('Apps.mystery_hunt.urls', namespace='mystery_hunt')),
+    
     # path('settings/', include('Apps.settings.urls', namespace='settings')),
     # path('socialize/', include('Apps.socialize.urls', namespace='socialize')),
     

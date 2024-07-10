@@ -61,9 +61,17 @@ git clone git@github.com:Stephen-Shenc/USTC-English-Club.git
 
 ## 二、概念结构设计
 
+### 2.1 实体关系分析
+
+### 2.2 E-R图
+
 
 
 ## 三、逻辑结构设计
+
+### 3.1 关系模式设计
+
+### 3.2 数据类型定义
 
 
 
