@@ -1,0 +1,151 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raffle</title>
+    <style>
+        body {
+            margin: 5px;
+            border: 5px dotted blueviolet;
+            border-radius: 10px;
+            padding: 20px;
+            background: radial-gradient(at left bottom, #8fc7e2, #8475dc);
+        }
+        .container {
+            display: grid;
+            margin: auto;
+            padding: 4%;
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+            color: rgb(216, 229, 81);
+            font-size: 3em;
+        }
+        #result {
+            color: rgb(36, 164, 102);
+        }
+        #participantCount {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 200px;
+            height: 40px;
+            font-size: 1.2em;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px dotted #ccc;
+            background-color: rgba(255, 255, 255, 0.5); /* 半透明白色背景 */
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        img {
+            margin: auto;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        #result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2em;
+            color: yellow;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-container label, .form-container input {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .form-container input {
+            width: 100px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        .return-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.2em;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'home' %}" class="return-button">Return to Desktop</a>
+        <h1>USTC English Club~~Raffle</h1>
+        <div class="form-container">
+            <form action="{% url 'raffle:perform_raffle' %}" method="post" id="raffleForm">
+                {% csrf_token %}
+                <img src="{% static 'imgs/raffle_logo.png' %}" alt="Logo" width="400" id="startBtn">
+                <br>
+                <label for="participant_count">Participant Count:</label>
+                <input type="number" id="participant_count" name="participant_count" value="1" min="1">
+            </form>
+        </div>
+        
+        <p id="result">
+            {% if selected_prizes %}
+            Congratulations! You won: 
+            {% for prize in selected_prizes %}
+                {{ prize }},
+            {% endfor %}
+            {% endif %}
+        </p>
+        <ul>
+        </ul>
+    </div>
+
+    <script>
+        var startBtn = document.getElementById('startBtn');
+        var raffleForm = document.getElementById('raffleForm');
+        var angle = 0;
+        var rotationInterval;
+
+        function raffle() {
+            var participantCountInput = document.getElementById('participant_count');
+            var participantCount = parseInt(participantCountInput.value);
+
+            if (isNaN(participantCount) || participantCount < 1) {
+                alert('Please enter a valid participant count.');
+                return;
+            }
+
+            clearInterval(rotationInterval);
+
+            rotationInterval = setInterval(function() {
+                startBtn.style.transform = "rotate(" + angle + "deg)";
+                angle += 5;  // Increase angle faster to complete rotation in time
+                if (angle >= 360) {
+                    angle = 0;
+                }
+            }, 10);
+
+            setTimeout(function() {
+                clearInterval(rotationInterval);
+                raffleForm.submit();  // Submit the form after the rotation
+            }, 2000);  // Rotate for 2 seconds
+        };
+
+        startBtn.addEventListener('click', raffle);
+        document.addEventListener('keydown', function(event) {
+            if (event.key === ' ') {
+                raffle();
+            }
+        });
+    </script>
+</body>
+</html>

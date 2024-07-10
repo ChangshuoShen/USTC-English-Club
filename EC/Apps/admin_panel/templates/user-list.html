@@ -14,62 +14,7 @@
 </head>
 <body>
     <div id="layout" class="pure-g">
-        <div class="sidebar pure-u-1 pure-u-md-3-24">
-            <div id="menu">
-                <div class="pure-menu">
-                    <p class="pure-menu-heading">
-                        <p style="font-size:2.5em; display: inline;">Admin</p>
-                        <a href="{% url "accounts:signup_login"%}" class="pure-button button-xxsmall">OUT &raquo;</a>
-                    </p>
-                    <ul class="pure-menu-list">
-                        <li class="pure-menu-item">
-                            <a href="{% url "admin_panel:dashboard" %}" class="pure-menu-link">Dashboard</a>
-                        </li>
-
-                        <p style="font-size:1.5em; display: inline;">Posts</p>
-                        <li class="pure-menu-item menu-item-divided">
-                            <a href="{% url "admin_panel:riddles" %}" class="pure-menu-link">Riddles</a>
-                        </li>
-
-                        <li>
-                            <a href="{% url "admin_panel:share_sth_interesting" %}" class="pure-menu-link">Share Sth, Interesting</a>
-                        </li>
-
-                        <li>
-                            <a href="{% url "admin_panel:find_friends" %}" class="pure-menu-link">Find Friends</a>
-                        </li>
-
-                        <li>
-                            <a href="{% url "admin_panel:else" %}" class="pure-menu-link">Else</a>
-                        </li>
-                        
-                        <p style="font-size:1.5em; display: inline;">Comments</p>
-
-                        <li class="pure-menu-item menu-item-divided">
-                            <a href="{% url "admin_panel:show_comments" %}" class="pure-menu-link">All Comments</a>
-                        </li>
-
-                        <p style="font-size:1.5em; display: inline;">Users</p>
-
-                        <li class="pure-menu-item menu-item-divided">
-                            <a href="{% url "admin_panel:user_list" %}" class="pure-menu-link">All Users</a>
-                        </li>
-
-                        <p style="font-size:1.5em; display: inline;">Raffles</p>
-                        <li class="pure-menu-item menu-item-divided">
-                            <a href="#" class="pure-menu-link">Edit Prizes <br>For Raffle</a>
-                        </li>
-
-                        
-                        <li class="pure-menu-item menu-item-divided">
-                            <a href="{% url "home"%}" class="pure-menu-link">
-                                <p style="font-size:2em; display: inline;">Home</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        {% include 'menu.html' %}
 
         <div class="content pure-u-1 pure-u-md-21-24">
             <div class="header-small">

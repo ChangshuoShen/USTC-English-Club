@@ -29,7 +29,7 @@ urlpatterns = [
     
     path('forum/', include('Apps.forum.urls', namespace='forum')),
     path('chat_image/', include('Apps.chat_image.urls', namespace='chat_image')),
-    path('raffle', include('Apps.raffle.urls', namespace='raffle')),
+    path('raffle/', include('Apps.raffle.urls', namespace='raffle')),
     path('admin_panel/', include('Apps.admin_panel.urls', namespace='admin_panel')),
     path('mystery_hunt/', include('Apps.mystery_hunt.urls', namespace='mystery_hunt')),
     

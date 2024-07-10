@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="title" content="Ask online Form">
     <meta name="language" content="English">
-    <title>Forum</title>
+    <title>Mystery Hunt</title>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}"  type="text/css">
@@ -17,16 +17,16 @@
 </head>
 
 <body>
-    <section class="welcome-part-one">
+    <section class="welcome-part-one" style="background-image: url('{% static 'imgs/bgs/banner.png' %}');">
         <div class="container">
             <ol class="breadcrumb breadcrumb839">
                 <li><a href="{% url "home"%}">Home</a></li>
-                <li><a href="{% url "forum:forum_index"%}">Forum</a></li>
+                <li><a href="{% url "mystery_hunt:hunt_index"%}">Mystery Hunt</a></li>
             </ol>
             <div class="welcome-demop102 text-center">
-                <h1 style="font-weight: bold; color: #fff;">Forum</h1>
+                <h1 style="font-weight: bold; color: #fff;">Mystery Hunt</h1>
                 <h2>English Club</h2>
-                <p>Ask Some Questions Here or Find some interesting things around you
+                <p>Find Some Interesting Things Here
                     <br>bala bala 
                 </p>
 
@@ -37,7 +37,7 @@
                         </span>
                         <input type="text" class="form-control form-control8392" placeholder="Find Some Interesting Things Here?">
                         <span class="input-group-addon">
-                            <a href="#">Ask Now</a>
+                            <a href="#">Find</a>
                         </span>
                     </div>
                 </div>
@@ -52,69 +52,62 @@
                 <div class="col-md-9">
                     <div id="main">
                         <input id="tab1" type="radio" name="tabs" checked>
-                        <label for="tab1">Riddles</label>
+                        <label for="tab1">All Riddles</label>
 
                         <input id="tab2" type="radio" name="tabs">
-                        <label for="tab2">Share Sth. Intersting</label>
+                        <label for="tab2">Easy Mode</label>
 
                         <input id="tab3" type="radio" name="tabs">
-                        <label for="tab3">Ask For Help</label>
+                        <label for="tab3">Medium Mode</label>
 
                         <input id="tab4" type="radio" name="tabs">
-                        <label for="tab4">Find Friends</label>
+                        <label for="tab4">Hard Mode</label>
                         
                         <input id="tab5" type="radio" name="tabs">
-                        <label for="tab5">Else</label>
-
-                        <!-- 这个是用来写分享 -->
-                        <input id="tab6" name="tabs" onclick="window.location.href='{% url 'forum:share' %}'">
-                        <label for="tab6">Share sth.</label>
-                        
+                        <label for="tab5">Add Riddle</label>
+                         
                         <!-- 从这里开始是下面的主要内容 -->
-
                         {% for theme_id, data in contents %}
-                        <section id="content{{theme_id}}">
-                            {% for single_post in data.posts %}
-                            <div class="question-type2033">
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <div class="left-user12923 left-user12923-repeat">
-                                            <a href="#"><img src="{% static 'imgs/images.png' %}" alt="image"> </a>
-                                            <a href="{% url 'forum:post_detail' post_id=single_post.id %}"><i class="fa fa-check" aria-hidden="true"></i></a> 
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-9">
-                                        <div class="right-description893">
-                                            <div id="que-hedder2983">
-                                                <h3><a href="{% url 'forum:post_detail' post_id=single_post.id %}">{{ single_post.post_title }}</a></h3>
-                                            </div>
-                                            <div class="ques-details10018">
-                                                <p>{{ single_post.post_detail|safe }}.</p>
-                                            </div>
-                                            <hr>
-                                            <div class="ques-icon-info3293">
-                                                <a href="#"><i class="fa fa-star" aria-hidden="true"> {{ single_post.post_likes }} </i> </a>
-                                                <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> {{ single_post.publish_date }} </i></a>
-                                                <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> {{ single_post.theme }} </i></a>
-                                                <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a>
+                            <section id="content{{ theme_id }}">
+                                {% for single_riddle in data.riddles %}
+                                <div class="question-type2033">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <div class="left-user12923 left-user12923-repeat">
+                                                <a href="#"><img src="{% static 'imgs/images.png' %}" alt="image"> </a>
+                                                <a href="{% url 'mystery_hunt:hunt_detail' riddle_id=single_riddle.riddle_id %}"><i class="fa fa-check" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="ques-type302">
-                                            <a href="{% url 'forum:post_detail' post_id=single_post.id %}">
-                                                <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> {{single_post.comments}} comments </i></button>
-                                            </a>
-                                            <a href="{% url 'forum:post_detail' post_id=single_post.id %}">
-                                                <button type="button" class="q-type23 button-ques2973"><i class="fa fa-user-circle-o" aria-hidden="true"> {{single_post.likes}} likes </i></button>
-                                            </a>
+                                        <div class="col-md-9">
+                                            <div class="right-description893">
+                                                <div id="que-hedder2983">
+                                                    <h3><a href="{% url 'mystery_hunt:hunt_detail' riddle_id=single_riddle.riddle_id %}">{{ single_riddle.riddle_text }}</a></h3>
+                                                </div>
+                                                <!--<div class="ques-details10018">
+                                                    <p>{{ single_riddle.answer|safe }}.</p>
+                                                </div>-->
+                                                <hr>
+                                                <div class="ques-icon-info3293">
+                                                    <a href="#"><i class="fa fa-star" aria-hidden="true"> {{ single_riddle.main_category }} </i></a>
+                                                    <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> {{ single_riddle.created_at }} </i></a>
+                                                    <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> {{ single_riddle.difficulty }} </i></a>
+                                                    <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="ques-type302">
+                                                <a href="{% url 'mystery_hunt:hunt_detail' riddle_id=single_riddle.riddle_id %}">
+                                                    <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true"> Replies </i></button>
+                                                </a>
+                                                <a href="{% url 'mystery_hunt:hunt_detail' riddle_id=single_riddle.riddle_id %}">
+                                                    <button type="button" class="q-type23 button-ques2973"><i class="fa fa-user-circle-o" aria-hidden="true"> Likes </i></button>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             {% endfor %}
-
                             <nav aria-label="Page navigation">
                                 <ul class="pagination">
                                     {% if data.page_obj.has_previous %}

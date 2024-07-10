@@ -1,0 +1,56 @@
+body{
+    margin: 5px;
+    border: 5px dotted blueviolet;
+    border-radius: 10px;
+    padding: 20px;
+    background: radial-gradient(at left bottom, #8fc7e2, #8475dc);
+}
+
+.container {
+    display: grid;
+    margin: auto;
+    padding: 4%;
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    color: rgb(216, 229, 81);
+    font-size: 3em;
+}
+
+#result {
+    color: rgb(36, 164, 102);
+}
+
+#participantCount {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 200px;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px dotted #ccc;
+    background-color: rgba(255, 255, 255, 0.5); /* 半透明白色背景 */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+img {
+    margin: auto;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+
+#result {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 3em;
+}

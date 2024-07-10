@@ -19,6 +19,7 @@ urlpatterns = [
     path('user_list/', views.user_list, name='user_list'),
     path('delete_user/', views.delete_user, name='delete_user'),
     
+    path('manage_prizes/', views.manage_prizes, name='manage_prizes'),
     path('prizes/', views.prize_list, name='prize_list'),
     path('delete_prize/', views.delete_prize, name='delete_prize'),
     path('update_prize/', views.update_prize, name='update_prize'),

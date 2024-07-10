@@ -1,20 +1,15 @@
 {% load static %}
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A layout example that shows off a blog page with a list of comments.">
-    <title>Pure Admin Panel</title>
-
-    <link rel="stylesheet" href="{% static 'css/pure-min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/pure-responsive-min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/admin_style.css' %}">
-
+    <title>Manage Prizes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 20px;
             background-color: #f4f4f9;
         }
         table {
@@ -78,14 +73,8 @@
     </style>
 </head>
 <body>
-    <div id="layout" class="pure-g">
-        {% include 'menu.html' %}
-
-        <div class="content pure-u-1 pure-u-md-21-24">
-            <div class="header-small">
-                <div class="items">
-                    <h1>Manage Prizes</h1>
-    <form method="post" action="{% url 'admin_panel:manage_prizes' %}">
+    <h1>Manage Prizes</h1>
+    <form method="post" action="{% url 'raffle:manage_prizes' %}">
         {% csrf_token %}
         <table>
             <thead>
@@ -109,7 +98,7 @@
     </form>
     
     <h2>Add New Prizes</h2>
-    <form method="post" action="{% url 'admin_panel:manage_prizes' %}" id="newPrizesForm">
+    <form method="post" action="{% url 'raffle:manage_prizes' %}" id="newPrizesForm">
         {% csrf_token %}
         <div id="newPrizesContainer">
             <div class="form-group">
@@ -122,52 +111,23 @@
         <button type="button" class="add-prize-button" onclick="addNewPrizeRow()">+</button>
         <button type="submit">Add Prizes</button>
     </form>
-            </div>
-        </div>
-    </div>
 
     <script>
-        // Add new row
-        document.getElementById('add-button').addEventListener('click', function() {
-            var newRow = document.getElementById('add-row').cloneNode(true);
-            newRow.removeAttribute('id');
-            newRow.getElementsByTagName('input')[0].value = '';
-            newRow.getElementsByTagName('input')[1].value = '';
-            document.querySelector('table tbody').appendChild(newRow);
-            newRow.querySelector('.delete-button').addEventListener('click', function() {
-                newRow.remove();
-            });
-        });
+        let newPrizeIndex = 2;
 
-        // Delete row
-        var deleteButtons = document.querySelectorAll('.delete-button');
-        deleteButtons.forEach(function(button) {
-            button.addEventListener('click', function(event) {
-                event.target.closest('tr').remove();
-            });
-        });
-
-        document.getElementById("submit-changes-button").addEventListener("click", function() {
-            // 获取表格中的数据
-            var tableData = [];
-            var tableRows = document.querySelectorAll("table tr");
-            tableRows.forEach(function(row) {
-                var rowData = [];
-                var cells = row.querySelectorAll("td");
-                cells.forEach(function(cell) {
-                    // 使用value属性而不是textContent属性来获取输入框中的值
-                    rowData.push(cell.querySelector('input') ? cell.querySelector('input').value : cell.textContent);
-                });
-                tableData.push(rowData);
-            });
-        
-            // 将数据填充到隐藏字段中
-            var hiddenInput = document.querySelector("input[name='prizes']");
-            hiddenInput.value = JSON.stringify(tableData);
-        
-            // 提交表单
-            document.getElementById("data-form").submit();
-        });
+        function addNewPrizeRow() {
+            const container = document.getElementById('newPrizesContainer');
+            const newRow = document.createElement('div');
+            newRow.classList.add('form-group');
+            newRow.innerHTML = `
+                <label for="new_prize_name_${newPrizeIndex}">Prize Name:</label>
+                <input type="text" id="new_prize_name_${newPrizeIndex}" name="new_prize_name_${newPrizeIndex}" required>
+                <label for="new_prize_quantity_${newPrizeIndex}">Quantity:</label>
+                <input type="number" id="new_prize_quantity_${newPrizeIndex}" name="new_prize_quantity_${newPrizeIndex}" min="1" required>
+            `;
+            container.appendChild(newRow);
+            newPrizeIndex++;
+        }
     </script>
 </body>
 </html>

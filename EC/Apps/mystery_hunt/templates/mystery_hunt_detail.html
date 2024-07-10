@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Ask online Form">
+    <meta name="language" content="English">
+    <title>Mystery Hunt Detail</title>
+
+    <link rel="stylesheet" href="{% static 'css/responsive.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"  type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+
+    <style>
+        .show-comment-box {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            background: linear-gradient(135deg, #f4f4f9, #c9d6ff);
+            width: 77%;
+            transform: translateX(-50%);
+            padding: 10px;
+            z-index: 999;
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 5px; /* 距离容器顶部的距离 */
+            right: 5px; /* 距离容器右侧的距离 */
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <section class="header-descriptin329">
+        <!-- 这里是最上面的header哈 -->
+        <div class="container">
+            <h3 style="color: yellow;">Post Details</h3>
+            <ol class="breadcrumb breadcrumb839">
+                <li><a href="{% url "home"%}">Home</a></li>
+                <li><a href="{% url "mystery_hunt:hunt_index"%}">Mystery Hunt</a></li>
+                <li><a href="#">Riddle Details</a></li>
+                <li class="active">{{ riddle.main_category }}</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+
+                    <div class="post-details">
+                        <!-- 这里是详细的分享内容 -->
+                        <div class="details-header923">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="post-title-left129">
+                                        <h3>Category: {{ riddle.main_category }}</h3> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-details-info1982" style='font-size: 1.5em;'>
+                            <div>{{riddle.riddle_text}}</div>                            
+                            <hr>
+                            <div class="post-footer29032">
+                                <div class="l-side2023"> 
+
+                                    <i class="fa fa-check check2" aria-hidden="true">solved</i>
+                                     <a href="#"><i class="fa fa-star star2" aria-hidden="true">{{post_content.post_likes}}</i></a> 
+                                     <!--<i class="fa fa-folder folder2" aria-hidden="true"> wordpress</i> -->
+                                     <i class="fa fa-clock-o clock2" aria-hidden="true"> {{ riddle.created_at }}</i> 
+                                     <a href="#"><i class="fa fa-commenting commenting2" aria-hidden="true">{{ comment.comments }}</i></a> 
+                                     <i class="fa fa-user user2" aria-hidden="true"> 70 views</i> </div>
+
+                                <div class="l-rightside39">
+                                    <!--
+                                    <button type="button"  class="like-button tolltip-button thumbs-up2" data-post-id="{{ post_id }}" data-toggle="tooltip" data-placement="bottom" title="Like">
+                                        <i class="fa fa-thumbs-o-up " aria-hidden="true"></i>
+                                    </button>
+                                    -->
+
+                                    <form id="likeRiddle " action="{% url "forum:like_post"%}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="post_id" value="{{post_content.post_id}}">
+                                        <button type="input" class="like-button tolltip-button thumbs-up2">
+                                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                    <span class="single-question-vote-result">{{ post_content.post_likes }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="author-details8392">
+                        <!-- 这里用来放置答案 -->
+                        <p id="answer" style="font-size: 1.2em; display: none;">{{ riddle.answer }}</p>
+                        <hr>
+                        <button id="showAnswerBtn" onclick="toggleAnswer()" class="btn">Show Answer</button>
+                    </div>
+                    
+                    <script>
+                        function toggleAnswer() {
+                            var answerElement = document.getElementById('answer');
+                            var btnText = document.getElementById('showAnswerBtn');
+                            
+                            if (answerElement.style.display === 'none') {
+                                answerElement.style.display = 'block';
+                                btnText.innerHTML = 'Hide Answer';
+                            } else {
+                                answerElement.style.display = 'none';
+                                btnText.innerHTML = 'Show Answer';
+                            }
+                        }
+                    </script>
+                    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/editor.js' %}"></script>    
+</body>
+</html>
+
+

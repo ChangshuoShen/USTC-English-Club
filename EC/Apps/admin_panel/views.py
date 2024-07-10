@@ -200,6 +200,35 @@ def delete_user(request):
     return redirect(reverse('admin_panel:user_list'))
 
 
+
+
+def manage_prizes(request):
+    if request.method == 'POST':
+        # 处理奖品数量更新
+        for prize_id, new_quantity in request.POST.items():
+            if prize_id.startswith('quantity_'):
+                prize_id = prize_id.replace('quantity_', '')
+                new_quantity = int(new_quantity)
+                Prize.update_prize(prize_id, new_quantity)
+        
+        # 处理添加新奖品
+        new_prizes = []
+        for key, value in request.POST.items():
+            if key.startswith('new_prize_name_'):
+                index = key.split('_')[-1]
+                new_prize_name = value
+                new_prize_quantity = int(request.POST.get(f'new_prize_quantity_{index}', 0))
+                if new_prize_name and new_prize_quantity:
+                    new_prizes.append(Prize(name=new_prize_name, quantity=new_prize_quantity))
+        
+        Prize.objects.bulk_create(new_prizes)
+        
+        return redirect('admin_panel:prize_list')
+    
+    prizes = Prize.objects.all()
+    return render(request, 'prize-list.html', {'prizes': prizes})
+
+
 def prize_list(request):
     prizes = Prize.get_all_prizes()
     return render(request, 'prize-list.html', {'prizes': prizes})
