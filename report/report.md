@@ -7,7 +7,7 @@
 
 
 
-注：所有程序以托管到`github`平台，可以直接使用
+注：所有程序已托管到`github`平台，可以直接利用如下命令
 
 ```
 git clone git@github.com:Stephen-Shenc/USTC-English-Club.git
@@ -30,7 +30,7 @@ git clone git@github.com:Stephen-Shenc/USTC-English-Club.git
 
 ### 1.1 系统功能需求
 
-#### 1.1.1 主要功能/`app`
+#### 1.1.1 涉及功能/`app`
 
 * 登陆注册
     * 用户可以通过邮箱进行注册
@@ -38,12 +38,17 @@ git clone git@github.com:Stephen-Shenc/USTC-English-Club.git
 * 论坛
     * 用户可以发布帖子、评论帖子、回复评论（二级评论）、点赞等功能
     * 支持按主题分类浏览帖子
+* 寻宝界面
+    * 主要展示从`https://www.riddles.com/posts`爬取的各riddle，并在详情中展示对应答案，供用户体验
+    * 支持按难度分类浏览Riddles
+* 抽奖界面
+    * 主要服务于本社团的各个活动，管理员可以在后台管理奖品及其数量，抽奖界面按照奖品个数为权重做抽奖逻辑
+    * 每次抽奖可以提前输入参与人数，
 * 管理员界面
     * 管理员可以审核用户注册、管理帖子、管理评论等
     * 提供对用户和内容的审核、删除等管理功能
     * 添加一个抽奖池的编辑功能，可以控制奖品及对应个数
 
-* 抽奖界面
 
 #### 1.1.2 涉及角色
 

@@ -1,0 +1,30 @@
+body {
+    padding-top: 56px; /* Adjust this based on the height of your navbar */
+}
+header {
+    position: relative;
+    text-align: center;
+    color: white;
+    background: url('../imgs/start.png') no-repeat center center;
+    background-size: cover;
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+header h1, header h2, header h3, header h4 {
+    margin: 0.5rem 0;
+    color: black;
+}
+.fade-out {
+    opacity: 0;
+}
+main {
+    margin-top: -56px; /* Offset by the height of the navbar */
+}
+
+.img-80 {
+    width: 80%;
+}

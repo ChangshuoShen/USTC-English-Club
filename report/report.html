@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据库课程设计报告</title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">数据库课程设计</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#introduction">引言</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#requirements">需求分析</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#design">数据库设计</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#implementation">系统总体设计</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testing">实现与测试</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#supplement">补充</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#conclusion">心得体会</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#references">参考内容</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="container-fluid">
+        <h1>数据库课程设计</h1>
+        <h2>英语俱乐部交流平台</h2>
+        <h4>申长硕PB22020518 & 滕润喆PB22061212</h4>
+    </header>
+    <main class="container">
+
+        <!-- 这部分是简单的介绍 -->
+        <section id="introduction" class="my-4">
+            <h2>引言</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">开发意义</h5>
+                                <hr>
+                                <p class="card-text">
+                                    随着信息技术的不断进步，越来越多的学校开始建设信息化平台。
+                                    作为英语俱乐部的往届的骨干，结合课程特性创建一个英语俱乐部交流平台尤为重要。
+                                    <br>
+                                    由于参与者和活动数量庞大，手工管理俱乐部的交流和活动变得越来越不切实际。
+                                    利用计算机技术进行现代信息管理可以显著提高这些操作的准确性和效率。
+                                </p>
+                            </div>
+                            <figure class="figure">
+                                <img src="./static/imgs/raffle_UI.png" class="card-img-bottom rounded mx-auto d-block img-thumbnail img-80" alt="Raffle UI">
+                                <figcaption class="figure-caption text-center">2024年3月自主设计寻宝互动抽奖UI并投入使用</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">可行性</h5>
+                                <hr>
+                                <p class="card-text">
+                                    传统的俱乐部交流和活动管理常常存在准确性低、效率低等问题。
+                                    <br>
+                                    计算机具有存储快、检索方便、准确性高的特点，可以有效解决这些问题，使管理过程更加顺畅和可靠。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">应用环境</h5>
+                                <hr>
+                                <ul class="list-unstyled">
+                                    <li><strong>架构：</strong> B\S (Browser/Server) 架构</li>
+                                    <li><strong>数据库：</strong> mysql  Ver 14.14 Distrib 5.7.24, for Linux (x86_64) using EditLine wrapper</li>
+                                    <li><strong>技术路线：</strong> 使用 Django 框架</li>
+                                    <li><strong>开发工具：</strong> 使用 PyCharm 作为主要的开发环境，结合 Git 进行版本控制和协作开发</li>
+                                    <li><strong>辅助技术：</strong> 使用爬虫技术，获取初始的寻宝体验的谜题</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card bg-light mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">获取源码</h5>
+                                <hr>
+                                <p class="card-text">所有程序已托管到 `github` 平台，可以直接利用如下命令获取：</p>
+                                <code>git clone git@github.com:Stephen-Shenc/USTC-English-Club.git</code>
+                                <p class="card-text">请确保配置相关数据库后才可执行。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+        
+        <!-- 这部分是需求分析 -->
+        <section id="requirements" class="my-4">
+            <h2>需求分析</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">功能概述/各界面介绍</h5>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">登陆注册&用户信息</h6>
+                            <ul class="list-unstyled">
+                                <li>用户可以通过邮箱进行注册，使用我们注册的邮箱
+                                    <a href="mailto:ustc_englishclub@163.com" class="text-decoration-none">ustc_englishclub@163.com</a>
+                                    统一发送验证码</li>
+                                <li>提供用户登录、密码重置和账户管理功能</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">论坛</h6>
+                            <ul class="list-unstyled">
+                                <li>用户可以发布帖子、评论帖子、回复评论（二级评论）、点赞等功能</li>
+                                <li>支持按主题分类浏览帖子</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">寻宝界面</h6>
+                            <ul class="list-unstyled">
+                                <li>主要展示从 <a href="https://www.riddles.com/posts" target="_blank">https://www.riddles.com/posts</a> 爬取的各riddle，并在详情中展示对应答案，供用户体验</li>
+                                <li>支持按难度分类浏览Riddles</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">抽奖界面</h6>
+                            <ul class="list-unstyled">
+                                <li>主要服务于本社团的各个活动，管理员可以在后台管理奖品及其数量，抽奖界面直接以奖品个数为权重实现抽奖逻辑</li>
+                                <li>每次抽奖可以提前输入参与人数</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">管理员界面</h6>
+                            <ul class="list-unstyled">
+                                <li>管理员可以审核用户注册、管理帖子、管理评论等</li>
+                                <li>提供对用户和内容的审核、删除等管理功能</li>
+                                <li>添加一个抽奖池的编辑功能，可以控制奖品及对应个数</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">用户模块</h5>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" rowspan="2">概述</th>
+                                    <th scope="col">功能</th>
+                                    <th scope="col">描述</th>
+                                    <th scope="col">实现方式</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="4">账户管理</td>
+                                    <td>注册</td>
+                                    <td>用户可以通过邮箱进行注册</td>
+                                    <td>表单提交、邮箱验证</td>
+                                </tr>
+                                <tr>
+                                    <td>登录</td>
+                                    <td>用户可以通过邮箱和密码进行登录</td>
+                                    <td>表单提交、会话管理</td>
+                                </tr>
+                                <tr>
+                                    <td>密码重置</td>
+                                    <td>用户可以重置忘记的密码</td>
+                                    <td>邮件发送、验证链接</td>
+                                </tr>
+                                <tr>
+                                    <td>基本信息编辑</td>
+                                    <td>用户可以更新个人基本信息</td>
+                                    <td>表单提交、数据更新</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="5">参与论坛</td>
+                                    <td>发帖</td>
+                                    <td>用户可以在论坛中发布帖子</td>
+                                    <td>表单提交、数据存储</td>
+                                </tr>
+                                <tr>
+                                    <td>评论</td>
+                                    <td>用户可以对帖子进行评论</td>
+                                    <td>表单提交、数据存储</td>
+                                </tr>
+                                <tr>
+                                    <td>二级评论</td>
+                                    <td>用户可以对其他评论进行回复</td>
+                                    <td>表单提交、数据存储</td>
+                                </tr>
+                                <tr>
+                                    <td>点赞</td>
+                                    <td>用户可以点赞帖子和评论</td>
+                                    <td>AJAX请求、数据更新</td>
+                                </tr>
+                                <tr>
+                                    <td>分类查看</td>
+                                    <td>用户可以按主题分类浏览帖子</td>
+                                    <td>分类筛选、数据展示</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3">体验寻宝</td>
+                                    <td>全部浏览</td>
+                                    <td>用户可以浏览所有寻宝内容</td>
+                                    <td>数据展示、页面跳转</td>
+                                </tr>
+                                <tr>
+                                    <td>按难度分类浏览</td>
+                                    <td>用户可以按照难度级别筛选寻宝内容</td>
+                                    <td>分类筛选、数据展示</td>
+                                </tr>
+                                <tr>
+                                    <td>详情页面查看答案</td>
+                                    <td>用户可以在详情页面查看每个寻宝的答案</td>
+                                    <td>页面跳转、数据展示</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="1">参与抽奖</td>
+                                    <td>抽奖</td>
+                                    <td>输入参与人数进行对应数量的抽奖</td>
+                                    <td>表单提交、权重抽奖逻辑</td>
+                                </tr>                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">管理员模块</h5>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" rowspan="2">概述</th>
+                                    <th scope="col">功能</th>
+                                    <th scope="col">描述</th>
+                                    <th scope="col">实现方式</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>数据统筹</td>
+                                    <td>DashBoard</td>
+                                    <td>可以查看目前已有的用户&帖子&评论等的数量</td>
+                                    <td>后台管理界面、状态更新</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">用户管理</td>
+                                    <td>用户信息查看</td>
+                                    <td>可以查看用户密码以外的所有信息</td>
+                                    <td>后台管理界面、状态更新</td>
+                                </tr>
+                                <tr>
+                                    <td>用户删除</td>
+                                    <td>可以直接删除不合规用户</td>
+                                    <td>后台管理界面、数据操作</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="4">论坛管理</td>
+                                    <td>分类查看帖子</td>
+                                    <td>可以按照类别查看所有帖子</td>
+                                    <td>后台管理界面、状态更新</td>
+                                </tr>
+                                <tr>
+                                    <td>查看帖子详情页</td>
+                                    <td>从“普通用户”视角看帖子，且拥有普通用户的权限</td>
+                                    <td>数据展示、表单提交</td>
+                                </tr>
+                                <tr>
+                                    <td>管理帖子</td>
+                                    <td>可以审核、或删除用户发布的帖子</td>
+                                    <td>后台管理界面、数据操作</td>
+                                </tr>
+                                <tr>
+                                    <td>管理评论</td>
+                                    <td>可以审核、或删除用户发布的评论</td>
+                                    <td>后台管理界面、数据操作</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">抽奖管理</td>
+                                    <td>奖品查看</td>
+                                    <td>查看奖品池中的奖品类别及个数</td>
+                                    <td>后台管理界面、状态更新</td>
+                                </tr>
+                                <tr>
+                                    <td>奖品管理</td>
+                                    <td>管理员可以管理抽奖池中的奖品类别及其数量</td>
+                                    <td>后台管理界面、数据操作</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3">寻宝管理</td>
+                                    <td>查看Official Riddles</td>
+                                    <td>管理员可以查看从官方获取的Riddles</td>
+                                    <td>后台管理界面、数据操作</td>
+                                </tr>
+                                <tr>
+                                    <td>删除Official Riddles</td>
+                                    <td>管理员可以删除不需要的Official Riddles</td>
+                                    <td>后台管理界面、数据操作</td>
+                                </tr>
+                                <tr>
+                                    <td>添加Official Riddles</td>
+                                    <td>管理员可以添加新的的Official Riddles</td>
+                                    <td>后台管理界面、数据操作</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 这部分是ER图和所有的table及其method -->
+        <section id="design" class="my-4">
+            <h2>数据库设计</h2>
+        
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">ER图设计</h5>
+                    <hr>
+                    <p>在这里描述你的ER图设计，包括实体、关系、主键和外键等信息。</p>
+                    <img src="./path/to/er_diagram.png" class="card-img-bottom rounded mx-auto d-block img-thumbnail" alt="ER Diagram">
+                    <figcaption class="figure-caption text-center">数据库实体关系图</figcaption>
+                </div>
+            </div>
+        
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">数据库表设计</h5>
+                    <hr>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">User</h6>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">字段</th>
+                                            <th scope="col">数据类型</th>
+                                            <th scope="col">描述</th>
+                                            <th scope="col">约束</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>id</td>
+                                            <td>AutoField</td>
+                                            <td>用户ID</td>
+                                            <td>Primary Key</td>
+                                        </tr>
+                                        <tr>
+                                            <td>email</td>
+                                            <td>EmailField</td>
+                                            <td>用户邮箱</td>
+                                            <td>Unique</td>
+                                        </tr>
+                                        <tr>
+                                            <td>password</td>
+                                            <td>CharField</td>
+                                            <td>用户密码</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>register_date</td>
+                                            <td>DateTimeField</td>
+                                            <td>注册日期</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>avatar</td>
+                                            <td>ImageField</td>
+                                            <td>用户头像</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>name</td>
+                                            <td>CharField</td>
+                                            <td>用户名</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>gender</td>
+                                            <td>CharField</td>
+                                            <td>性别</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>birthday</td>
+                                            <td>DateField</td>
+                                            <td>生日</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>bio</td>
+                                            <td>TextField</td>
+                                            <td>用户简介</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>likes_num</td>
+                                            <td>IntegerField</td>
+                                            <td>点赞数量</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>comments_num</td>
+                                            <td>IntegerField</td>
+                                            <td>评论数量</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>liked_num</td>
+                                            <td>IntegerField</td>
+                                            <td>被点赞数量</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>is_admin</td>
+                                            <td>BooleanField</td>
+                                            <td>是否管理员</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>is_active</td>
+                                            <td>BooleanField</td>
+                                            <td>是否活跃</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <h6 class="card-subtitle mb-2 text-muted">User 操作和方法</h6>
+                            <ul>
+                                <li><strong>编辑个人资料：</strong> edit_profile()</li>
+                                <li><strong>创建用户：</strong> create_user()</li>
+                                <li><strong>获取所有用户：</strong> get_all_users()</li>
+                                <li><strong>获取用户数量：</strong> get_user_counts()</li>
+                                <li><strong>通过邮箱获取用户：</strong> get_user_by_email()</li>
+                                <li><strong>通过ID获取用户：</strong> get_user_by_id()</li>
+                                <li><strong>自定义查询：</strong> custom_query()</li>
+                                <li><strong>设置密码：</strong> set_password()</li>
+                                <li><strong>验证密码：</strong> authenticate_user()</li>
+                                <li><strong>设置为管理员：</strong> set_admin()</li>
+                                <li><strong>取消管理员权限：</strong> unset_admin()</li>
+                                <li><strong>更新电子邮件地址：</strong> update_email()</li>
+                                <li><strong>更新密码：</strong> update_password()</li>
+                                <li><strong>更新头像：</strong> update_avatar()</li>
+                                <li><strong>停用帐户：</strong> deactivate_account()</li>
+                                <li><strong>删除帐户：</strong> delete_account()</li>
+                                <li><strong>发送密码重置电子邮件：</strong> send_password_reset_email()</li>
+                                <li><strong>获取年龄：</strong> get_age()</li>
+                                <li><strong>获取完整姓名：</strong> get_full_name()</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Post</h6>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">字段</th>
+                                            <th scope="col">数据类型</th>
+                                            <th scope="col">描述</th>
+                                            <th scope="col">约束</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>id</td>
+                                            <td>AutoField</td>
+                                            <td>帖子ID</td>
+                                            <td>Primary Key</td>
+                                        </tr>
+                                        <tr>
+                                            <td>publisher_id</td>
+                                            <td>ForeignKey</td>
+                                            <td>发布者ID</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>post_title</td>
+                                            <td>TextField</td>
+                                            <td>标题</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>post_content</td>
+                                            <td>TextField</td>
+                                            <td>帖子内容</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>theme</td>
+                                            <td>CharField</td>
+                                            <td>主题</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>publish_date</td>
+                                            <td>DateTimeField</td>
+                                            <td>发布日期</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>post_likes</td>
+                                            <td>IntegerField</td>
+                                            <td>点赞数</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <h6 class="card-subtitle mb-2 text-muted">Post 操作和方法</h6>
+                            <ul>
+                                <li><strong>创建帖子：</strong> create_post()</li>
+                                <li><strong>按ID获取帖子：</strong> get_post_by_id()</li>
+                                <li><strong>获取帖子数量：</strong> get_post_counts()</li>
+                                <li><strong>获取最新帖子：</strong> get_latest_posts()</li>
+                                <li><strong>按主题获取帖子：</strong> get_posts_by_theme()</li>
+                                <li><strong>获取所有帖子：</strong> get_all_posts()</li>
+                                <li><strong>更新帖子：</strong> update_post()</li>
+                                <li><strong>删除帖子：</strong> delete_post()</li>
+                            </ul>
+                            <hr>
+                            <h6 class="card-subtitle mb-2 text-muted">特定功能方法示例</h6>
+                            <ul>
+                                <li><strong>按主题获取所有帖子：</strong> get_posts_for_single_theme(theme)</li>
+                                <li><strong>按难度获取Riddle帖子：</strong> get_riddles_by_difficulty()</li>
+                                <li><strong>按主题分类获取Riddle帖子：</strong> get_riddles_by_main_category()</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Comment</h6>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">字段</th>
+                                            <th scope="col">数据类型</th>
+                                            <th scope="col">描述</th>
+                                            <th scope="col">约束</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>id</td>
+                                            <td>AutoField</td>
+                                            <td>评论ID</td>
+                                            <td>Primary Key</td>
+                                        </tr>
+                                        <tr>
+                                            <td>post</td>
+                                            <td>ForeignKey</td>
+                                            <td>关联帖子</td>
+                                            <td>ForeignKey to Post</td>
+                                        </tr>
+                                        <tr>
+                                            <td>user</td>
+                                            <td>ForeignKey</td>
+                                            <td>评论用户</td>
+                                            <td>ForeignKey to User</td>
+                                        </tr>
+                                        <tr>
+                                            <td>content</td>
+                                            <td>TextField</td>
+                                            <td>评论内容</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>comment_date</td>
+                                            <td>DateTimeField</td>
+                                            <td>评论日期</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>comment_likes</td>
+                                            <td>IntegerField</td>
+                                            <td>评论点赞数</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <h6 class="card-subtitle mb-2 text-muted">Comment 操作和方法</h6>
+                            <ul>
+                                <li><strong>查找特定帖子的评论：</strong> find_comments_on_specific_post()</li>
+                                <li><strong>通过帖子ID查找特定帖子的评论：</strong> find_comments_on_specific_post_through_post_id()</li>
+                                <li><strong>获取评论数量：</strong> get_comment_counts()</li>
+                                <li><strong>获取最新评论：</strong> get_latest_comments()</li>
+                                <li><strong>创建评论：</strong> create_comment()</li>
+                                <li><strong>删除评论：</strong> delete_comment()</li>
+                                <li><strong>更新评论：</strong> update_comment()</li>
+                                <li><strong>通过评论ID获取评论：</strong> get_comment_by_id()</li>
+                                <li><strong>获取所有评论：</strong> get_all_comments()</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Reply</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">字段</th>
+                                    <th scope="col">数据类型</th>
+                                    <th scope="col">描述</th>
+                                    <th scope="col">约束</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>AutoField</td>
+                                    <td>回复ID</td>
+                                    <td>Primary Key</td>
+                                </tr>
+                                <tr>
+                                    <td>comment</td>
+                                    <td>ForeignKey</td>
+                                    <td>关联评论</td>
+                                    <td>ForeignKey to Comment</td>
+                                </tr>
+                                <tr>
+                                    <td>user</td>
+                                    <td>ForeignKey</td>
+                                    <td>回复用户</td>
+                                    <td>ForeignKey to User</td>
+                                </tr>
+                                <tr>
+                                    <td>reply_content</td>
+                                    <td>TextField</td>
+                                    <td>回复内容</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>reply_date</td>
+                                    <td>DateTimeField</td>
+                                    <td>回复日期</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted">Reply 操作和方法</h6>
+                    <ul>
+                        <li><strong>通过评论ID查找特定评论的回复：</strong> find_replies_on_specific_comment_through_comment_id()</li>
+                        <li><strong>创建回复：</strong> create_reply()</li>
+                        <li><strong>删除回复：</strong> delete_reply()</li>
+                        <li><strong>更新回复：</strong> update_reply()</li>
+                        <li><strong>通过回复ID获取回复：</strong> get_reply_by_id()</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Like</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">字段</th>
+                                    <th scope="col">数据类型</th>
+                                    <th scope="col">描述</th>
+                                    <th scope="col">约束</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>AutoField</td>
+                                    <td>点赞ID</td>
+                                    <td>Primary Key</td>
+                                </tr>
+                                <tr>
+                                    <td>post</td>
+                                    <td>ForeignKey</td>
+                                    <td>关联帖子</td>
+                                    <td>ForeignKey to Post</td>
+                                </tr>
+                                <tr>
+                                    <td>user</td>
+                                    <td>ForeignKey</td>
+                                    <td>点赞用户</td>
+                                    <td>ForeignKey to User</td>
+                                </tr>
+                                <tr>
+                                    <td>created_at</td>
+                                    <td>DateTimeField</td>
+                                    <td>点赞时间</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted">Like 操作和方法</h6>
+                    <ul>
+                        <li><strong>点赞帖子：</strong> like_post()</li>
+                        <li><strong>取消点赞：</strong> unlike_post()</li>
+                        <li><strong>统计帖子的点赞数量：</strong> count_likes_for_post()</li>
+                        <li><strong>统计用户的点赞数量：</strong> count_likes_by_user()</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Riddle</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">字段</th>
+                                    <th scope="col">数据类型</th>
+                                    <th scope="col">描述</th>
+                                    <th scope="col">约束</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>riddle_id</td>
+                                    <td>AutoField</td>
+                                    <td>Riddle ID</td>
+                                    <td>Primary Key</td>
+                                </tr>
+                                <tr>
+                                    <td>main_category</td>
+                                    <td>CharField</td>
+                                    <td>主要类别</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>riddle_text</td>
+                                    <td>TextField</td>
+                                    <td>谜语文本</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>answer</td>
+                                    <td>TextField</td>
+                                    <td>答案</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>difficulty</td>
+                                    <td>CharField</td>
+                                    <td>难度</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>created_at</td>
+                                    <td>DateTimeField</td>
+                                    <td>创建时间</td>
+                                    <td>Auto-generated</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted">Riddle 操作和方法</h6>
+                    <ul>
+                        <li><strong>创建新的谜语：</strong> create_riddle()</li>
+                        <li><strong>根据ID获取谜语：</strong> get_riddle_by_id()</li>
+                        <li><strong>获取所有谜语：</strong> get_all_riddles()</li>
+                        <li><strong>根据类别获取谜语：</strong> get_riddles_by_category()</li>
+                        <li><strong>根据难度获取谜语：</strong> get_riddles_by_difficulty()</li>
+                        <li><strong>更新谜语：</strong> update_riddle()</li>
+                        <li><strong>删除谜语：</strong> delete_riddle()</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Prize</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Field</th>
+                                    <th scope="col">Data Type</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Constraints</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>CharField</td>
+                                    <td>Name of the prize</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>quantity</td>
+                                    <td>PositiveIntegerField</td>
+                                    <td>Quantity of the prize available</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted">Prize Operations and Methods</h6>
+                    <ul>
+                        <li><strong>Update Prize Quantity:</strong> update_prize()</li>
+                        <li><strong>Draw a Prize:</strong> draw_prize()</li>
+                        <li><strong>Get All Prizes:</strong> get_all_prizes()</li>
+                        <li><strong>Clear All Prizes:</strong> clear_all_prizes()</li>
+                        <li><strong>Create Prizes from Dictionary:</strong> create_from_dict()</li>
+                    </ul>
+                </div>
+            </div>
+            
+
+        </section>
+
+        <!-- 系统总体设计 -->
+        <section id="implementation" class="my-4">
+            <h2>系统总体设计</h2>
+            <h4>功能模块</h4>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">用户模块</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- 账户管理 -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">账户管理</h6>
+                                    <ul>
+                                        <li><strong>注册：</strong> 用户可以通过填写邮箱和密码完成注册，并通过邮箱验证确认账户。</li>
+                                        <li><strong>登录：</strong> 用户可以使用注册时填写的邮箱和密码进行登录，系统会管理用户的会话状态。</li>
+                                        <li><strong>密码重置：</strong> 用户可以通过提供注册时使用的邮箱地址，收到的邮件中的验证链接来重置密码。</li>
+                                        <li><strong>基本信息编辑：</strong> 用户可以更新个人的基本信息，包括用户名、个人简介等。</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 参与抽奖 -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">参与抽奖</h6>
+                                    <ul>
+                                        <li><strong>抽奖：</strong> 输入参与人数进行对应数量的抽奖。</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <!-- 体验寻宝 -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">体验寻宝</h6>
+                                    <ul>
+                                        <li><strong>全部浏览：</strong> 用户可以浏览所有寻宝内容。</li>
+                                        <li><strong>按难度分类浏览：</strong> 用户可以按照难度级别筛选寻宝内容。</li>
+                                        <li><strong>详情页面查看答案：</strong> 用户可以在详情页面查看每个寻宝的答案。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 参与论坛 -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">参与论坛</h6>
+                                    <ul>
+                                        <li><strong>发帖：</strong> 用户可以在论坛中发布帖子。</li>
+                                        <li><strong>评论：</strong> 用户可以对帖子进行评论。</li>
+                                        <li><strong>二级评论：</strong> 用户可以对其他评论进行回复。</li>
+                                        <li><strong>点赞：</strong> 用户可以点赞帖子和评论。</li>
+                                        <li><strong>分类查看：</strong> 用户可以按主题分类浏览帖子。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">管理员模块</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- 数据统筹 -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">数据统筹</h6>
+                                    <ul>
+                                        <li><strong>DashBoard：</strong> 可以查看目前已有的用户、帖子、评论等的数量。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                
+                            <!-- 用户管理 -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">用户管理</h6>
+                                    <ul>
+                                        <li><strong>用户信息查看：</strong> 可以查看用户密码以外的所有信息。</li>
+                                        <li><strong>用户删除：</strong> 可以直接删除不合规用户。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 抽奖管理 -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">抽奖管理</h6>
+                                    <ul>
+                                        <li><strong>奖品查看：</strong> 查看奖品池中的奖品类别及个数。</li>
+                                        <li><strong>奖品管理：</strong> 管理抽奖池中的奖品类别及其数量。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- 论坛管理 -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">论坛管理</h6>
+                                    <ul>
+                                        <li><strong>分类查看帖子：</strong> 可以按照类别查看所有帖子。</li>
+                                        <li><strong>查看帖子详情页：</strong> 从“普通用户”视角看帖子，且拥有普通用户的权限。</li>
+                                        <li><strong>管理帖子：</strong> 可以审核或删除用户发布的帖子。</li>
+                                        <li><strong>管理评论：</strong> 可以审核或删除用户发布的评论。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 寻宝管理 -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">寻宝管理</h6>
+                                    <ul>
+                                        <li><strong>查看Official Riddles：</strong> 管理员可以查看从官方获取的Riddles。</li>
+                                        <li><strong>删除Official Riddles：</strong> 管理员可以删除不需要的Official Riddles。</li>
+                                        <li><strong>添加Official Riddles：</strong> 管理员可以添加新的Official Riddles。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">图示说明</h5>
+                    <hr>
+                    <p class="card-text">
+                        来点描述？
+                    </p>
+                </div>
+                <figure class="figure">
+                    <img src="./imgs/functions.png" class="card-img-bottom rounded mx-auto d-block img-thumbnail img-80" alt="Raffle UI">
+                    <figcaption class="figure-caption text-center">caption here</figcaption>
+                </figure>
+            </div>
+        </section>
+        
+        <!-- 实现与测试 -->
+        <section id="testing" class="my-4">
+            <h2>实现与测试</h2>
+            
+            <!-- 游客视角 -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">游客视角</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">1、访问主页</h6>
+                                    <img src="./static/imgs/visitor/visit1.png" class="img-fluid" alt="visit1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">2、访问论坛、可以看各种类别的帖子</h6>
+                                    <img src="./static/imgs/visitor/visit2.png" class="img-fluid" alt="visit2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">3、点击已有的评论可以弹出回复框，进行回复</h6>
+                                    <img src="./static/imgs/visitor/visit3.png" class="img-fluid" alt="visit3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">4、如果没有登陆时进行评论/回复/发帖，都会跳转到登陆页面</h6>
+                                    <img src="./static/imgs/visitor/visit4.png" class="img-fluid" alt="visit4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">5、访问寻宝体验页面，查看各种Riddles</h6>
+                                    <img src="./static/imgs/visitor/visit5.png" class="img-fluid" alt="visit5">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">6、Riddle详情页、可以点击show answer获取答案</h6>
+                                    <img src="./static/imgs/visitor/visit6.png" class="img-fluid" alt="visit6">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">7、尝试访问Admin Panel管理员面板，会显示没有权限，然后5秒返回</h6>
+                                    <img src="./static/imgs/visitor/visit7.png" class="img-fluid" alt="visit7">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">8、可以查看抽奖页面，但是没有抽奖权限</h6>
+                                    <img src="./static/imgs/visitor/visit8.png" class="img-fluid" alt="visit8">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 普通用户视角 -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">普通用户视角（不再重复上述的游客视角）</h5>
+                    <br>
+                    <h6>帐号管理部分</h6>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">1、填写用户名、邮箱、密码点击注册</h6>
+                                    <img src="./static/imgs/user/user01.png" class="img-fluid" alt="user1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">2、可以收到来自<a href="mailto:ustc_englishclub@163.com" class="text-decoration-none">ustc_englishclub@163.com</a>的验证码</h6>
+                                    <img src="./static/imgs/user/user01.5.png" class="img-fluid" alt="user1.5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">3、之后弹出输入框提示输入验证码，同时窗口上方有提示信息</h6>
+                                    <img src="./static/imgs/user/user02.png" class="img-fluid" alt="user2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">4、验证成功后可以进行登陆</h6>
+                                    <img src="./static/imgs/user/user03.png" class="img-fluid" alt="user3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">5、注册成功跳转到用户信息界面，可以查看当前信息</h6>
+                                    <img src="./static/imgs/user/user04.png" class="img-fluid" alt="user4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">6、还可以修改部分信息，之后点击下方change即可完成修改</h6>
+                                    <img src="./static/imgs/user/user05.png" class="img-fluid" alt="user5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">7、如果在登陆时忘记密码，也可以点击下方忘记密码按钮</h6>
+                                    <img src="./static/imgs/user/user06.png" class="img-fluid" alt="user6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">8、弹出输入框，可以使用邮箱验证码进行密码更改</h6>
+                                    <img src="./static/imgs/user/user07.png" class="img-fluid" alt="user7">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">9、验证码验证通过之后即可完成密码修改</h6>
+                                    <img src="./static/imgs/user/user08.png" class="img-fluid" alt="user8">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">10、之后便可以正常登陆</h6>
+                                    <img src="./static/imgs/user/user09.png" class="img-fluid" alt="user9">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <h6>论坛部分</h6>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">1、查看按主题分类的各个论坛</h6>
+                                    <img src="./static/imgs/user/user11.png" class="img-fluid" alt="user11">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">2、点击浏览发帖的详情界面</h6>
+                                    <img src="./static/imgs/user/user12.png" class="img-fluid" alt="user12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">3、点击其中的大拇指可以点赞</h6>
+                                    <img src="./static/imgs/user/user13.png" class="img-fluid" alt="user13">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">4、翻到底部有一个评论按钮，可以用于做一级评论</h6>
+                                    <img src="./static/imgs/user/user14.png" class="img-fluid" alt="user14">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">5、点击下方 "leave a comment/reply" 即可进行评论</h6>
+                                    <img src="./static/imgs/user/user15.png" class="img-fluid" alt="user15">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">6、再点击任意一个已经有的评论，则会弹出回复框</h6>
+                                    <img src="./static/imgs/user/user16.png" class="img-fluid" alt="user16">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">7、输入内容并发送，则完成了对一级评论的回复功能</h6>
+                                    <img src="./static/imgs/user/user17.png" class="img-fluid" alt="user17">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">8、还可以点击Forum_index中的share，跳转到分享界面</h6>
+                                    <img src="./static/imgs/user/user18.png" class="img-fluid" alt="user18">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">9、填写标题，选择主题，有编辑助手，还可上传图片文件</h6>
+                                    <img src="./static/imgs/user/user19.png" class="img-fluid" alt="user19">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">10、提交之后可以直接跳转到对应详情页，之后可以执行和前面一样的评论之类的操作</h6>
+                                    <img src="./static/imgs/user/user110.png" class="img-fluid" alt="user110">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <h6>寻宝体验部分</h6>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">1、查看按难度分类的各个论坛</h6>
+                                    <img src="./static/imgs/user/user21.png" class="img-fluid" alt="user21">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">2、点击浏览Riddle的详情界面</h6>
+                                    <img src="./static/imgs/user/user22.png" class="img-fluid" alt="user22">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">3、可以点击show answer查看答案</h6>
+                                    <img src="./static/imgs/user/user23.png" class="img-fluid" alt="user21">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">4、关于点赞、评论等功能就不再重复实现了，都是一样的</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <h6>抽奖部分</h6>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">1、输入参与人数，可以抽取对应个数的奖品</h6>
+                                    <img src="./static/imgs/user/user31.png" class="img-fluid" alt="user11">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">2、抽奖的逻辑是中间的img旋转3s之后提交表单（提升用户体验），后端按照奖品数量为权值进行抽奖，最后返回抽取到的奖品</h6>
+                                    <img src="./static/imgs/user/user32.png" class="img-fluid" alt="user12">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <h6>管理员面板——无权限，同游客一样5秒返回</h6>
+                </div>
+            </div>
+        
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">管理员视角</h5>
+                    <h6>管理员拥有普通用户的所有权限和功能，下面只展示管理员特有的权限——数据管理</h6>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">1、登陆专门注册的管理员账号<a href="mailto:super@mail">super@mail</a>获取管理员权限</h6>
+                                    <img src="./static/imgs/administrator/admin01.png" class="img-fluid" alt="admin01">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">2、进入Admin_Panel，首先看到的是总数据，这些数据都是自编脚本做的“虚拟数据”</h6>
+                                    <img src="./static/imgs/administrator/admin02.png" class="img-fluid" alt="admin02">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">3、点击Posts中的任意一类，可以跳转到对应类别的发帖（在此处展示的都是没有解析的样式）</h6>
+                                    <img src="./static/imgs/administrator/admin03.png" class="img-fluid" alt="admin03">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">4、点击view，可以以正常用户视角进行查看，当然也可以进行点赞和评论</h6>
+                                    <img src="./static/imgs/administrator/admin04.png" class="img-fluid" alt="admin02">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">5、点击删除，首先弹出是否确定（所有的删除操作均经过此逻辑）</h6>
+                                    <img src="./static/imgs/administrator/admin05.png" class="img-fluid" alt="admin01">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">6、图示相比左边删除了id为1714的评论</h6>
+                                    <img src="./static/imgs/administrator/admin06.png" class="img-fluid" alt="admin02">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">7、还可以展示所有的评论，不过此时只赋予删除操作</h6>
+                                    <img src="./static/imgs/administrator/admin07.png" class="img-fluid" alt="admin01">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">8、图示删除了id为329的评论</h6>
+                                    <img src="./static/imgs/administrator/admin08.png" class="img-fluid" alt="admin02">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">9、还可查看所有用户的基本信息</h6>
+                                    <img src="./static/imgs/administrator/admin09.png" class="img-fluid" alt="admin01">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">10、图示删除了id为7的用户</h6>
+                                    <img src="./static/imgs/administrator/admin10.png" class="img-fluid" alt="admin02">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">11、管理员还有权限查看已有奖品及数量信息</h6>
+                                    <img src="./static/imgs/administrator/admin11.png" class="img-fluid" alt="admin01">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">12、可以直接修改现有奖品的数量信息</h6>
+                                    <img src="./static/imgs/administrator/admin12.png" class="img-fluid" alt="admin02">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">13、还可以添加奖品信息</h6>
+                                    <img src="./static/imgs/administrator/admin13.png" class="img-fluid" alt="admin01">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">14、图示添加了5个小风扇奖品</h6>
+                                    <img src="./static/imgs/administrator/admin14.png" class="img-fluid" alt="admin02">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">补充</h5>
+                    <h6>平台在所有数量较多的页面均可实现换页功能</h6>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">1、论坛页面换页功能，寻宝体验模块类似</h6>
+                                    <img src="./static/imgs/pagination/pag1.png" class="img-fluid" alt="admin01">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">2、管理员模块换页功能，admin_panel其余部分类似</h6>
+                                    <img src="./static/imgs/pagination/pag2.png" class="img-fluid" alt="admin02">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="supplement" class="my-4">
+            <h2>补充</h2>
+              <p>...</p>
+        </section>
+        
+        <section id="conclusion" class="my-4">
+          <h2>心得体会</h2>
+            <p  >...</p>
+        </section>
+        
+        
+        <section id="references" class="my-4">
+            <h2>参考内容</h2>
+            <p>...</p>
+        </section>
+    </main>
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 Shenc & Runge</p>
+    </footer>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/popper.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script>
+        window.addEventListener('scroll', function() {
+            var header = document.querySelector('header');
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            var opacity = 1 - scrollTop / 500; // Adjust the divisor to control the fade speed
+            header.style.opacity = opacity;
+        });
+    </script>
+</body>
+</html>
