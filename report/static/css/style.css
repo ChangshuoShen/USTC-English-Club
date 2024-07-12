@@ -28,3 +28,31 @@ main {
 .img-80 {
     width: 80%;
 }
+
+/* 让dropdown-menu在hover时显示 */
+.navbar-nav .dropdown:hover .dropdown-menu {
+    display: block;
+    background-color: rgba(256, 256, 256, 0.5);
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.7) !important; /* 背景颜色设置为半透明的黑色 */
+    color: bisque !important;
+}
+
+.card-body {
+    text-indent: 20px; /* 设置段落缩进 */
+}
+
+.card-title {
+    font-weight: bold; /* 加粗标题 */
+}
+
+.card-body p {
+    margin-bottom: 10px; /* 段落间距 */
+}
+
+.card-body hr {
+    margin-top: 10px; /* 水平线上边距 */
+    margin-bottom: 10px; /* 水平线下边距 */
+}
