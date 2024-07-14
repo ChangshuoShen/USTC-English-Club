@@ -68,14 +68,14 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#suplement" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#supplement" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             补充
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#suple1">补充1</a>
-                            <a class="dropdown-item" href="#suple2">补充2</a>
-                            <a class="dropdown-item" href="#suple3">补充3</a>
-                            <a class="dropdown-item" href="#suple4">补充4</a>
+                            <a class="dropdown-item" href="#supple1">范式分析</a>
+                            <a class="dropdown-item" href="#supple2">安全性考量</a>
+                            <a class="dropdown-item" href="#supple3">多事务并发考量</a>
+                            <a class="dropdown-item" href="#supple4">补充4</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -83,8 +83,9 @@
                             心得
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#con1">申长硕</a>
-                            <a class="dropdown-item" href="#con2">滕润喆</a>
+                            <a class="dropdown-item" href="#con1">小组</a>
+                            <a class="dropdown-item" href="#con2">申长硕</a>
+                            <a class="dropdown-item" href="#con3">滕润喆</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -416,7 +417,7 @@
                 <div class="card-body">
                     <h5 class="card-title">ER图设计</h5>
                     <hr>
-                    <img src="./path/to/er_diagram.png" class="card-img-bottom rounded mx-auto d-block img-thumbnail" alt="ER Diagram">
+                    <img src="./static/imgs/ER_Graph.png" class="card-img-bottom rounded mx-auto d-block img-thumbnail" alt="ER Diagram">
                     <figcaption class="figure-caption text-center">数据库实体关系图</figcaption>
                 </div>
             </div>
@@ -922,7 +923,7 @@
                     </div>
 
                     <hr>
-                    <h6 class="card-subtitle mb-2 text-muted">Prize Operations and Methods</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Prize 操作和方法</h6>
                     <ul>
                         <li><strong>Update Prize Quantity:</strong> update_prize()</li>
                         <li><strong>Draw a Prize:</strong> draw_prize()</li>
@@ -1419,7 +1420,7 @@
                     </div>
 
                     <br>
-                    <h6>管理员面板——无权限，同游客一样5秒返回</h6>
+                    <h6>管理员面板——普通用户无权限，同游客一样5秒返回</h6>
                 </div>
             </div>
         
@@ -1586,29 +1587,98 @@
         
         <section id="supplement" class="my-4">
             <h2>补充</h2>
-              <p>...</p>
+            <div class="card mb-4" id="supple1">
+                <div class="card-body">
+                    <h5 class="card-title">范式分析</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p><strong>1NF：</strong>所有属性值都是原子的，不可再分，所以我们的模型设计符合1NF</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p><strong>2NF：</strong>由于User、Post、Comments、Reply、Like、Riddle、Prize均有主键，且所有非主属性完全依赖于主键，因此该也符合第二范式</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p><strong>3NF：</strong>我们设计的模型中各实体的非主属性都直接依赖于主键，没有传递依赖，所以符合第三范式</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p><strong>4NF：</strong></p>
+                        </li>
+                    </ul>
+                    <br>
+                    <h5 class="card-title">是否有必要升4NF的考量</h5>
+                    <hr>
+                    <p>啦啦啦</p>
+                    <h5>总结</h5>
+                    <hr>
+                    <p>啦啦啦</p>
+                </div>
+            </div>
+            <div class="card mb-4" id="supple2">
+                <div class="card-body">
+                    <h5 class="card-title">安全性考量</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p><strong>身份验证：</strong>在用户注册的时候和忘记密码进行修改密码的时候均使用邮箱发送动态验证码进行身份验证</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p><strong>敏感数据加密：</strong>对于用户的密码，我们使用Django提供的make_password和check_password进行加密存储及验证，数据库中存储的密码均值哈希加密之后的密码</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p><strong>权限控制：</strong>我们自创的身份验证（当然Django已经内置了对应的功能），确保只有登陆的用户参能参与论坛的点赞，发帖，评论，回复等操作。以及确保只有管理员有权限进入Admin-Panel进行数据总揽操纵</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p><strong>CSRF保护：</strong>我们在所有表单提交的部分均使用了跨站点请求(SCRF)保护，从而确保用户提交的表单数据是合法的</p>
+                        </li>
+                        <li class="list-group-item">
+                            <p><strong>日志记录：</strong>我们通过设置日志记录(logging)系统以记录重要的操作和事件，例如在项目推进过程中的<strong>错误和异常、请求和响应、调试信息、性能监视、安全事件及系统和环境信息</strong>等。这样便于追踪和排查潜在的安全问题</p>
+                            <p>（性能方面，助教老师在线下汇报的时候还问我们有一个地方加载的比较慢，那一次是因为用腾讯会议共享屏幕的原因，从目前的测试情况看，我们已经做出来的各功能的完成性能是不影响用户体验的）</p>
+                        </li>
+                    </ul>
+                    <p>ps：在和一位网安学长的交流中和数据库课程上，我们体会到了平台对于自身数据库保护以及对于用户信息保护的重要性和措施，（例如密码加密方面，我们很早的时候在学长那里了解到了MD5之类的一些加密方法，之后选用Django框架之后发现已经有加密的方法就直接拿来用了）所以在项目推进的过程中始终谨记这一点！</p>
+                    
+                </div>
+            </div>
+            <div class="card mb-4" id="supple3">
+                <div class="card-body">
+                    <h5 class="card-title">多事务并发考量</h5>
+                    <hr>
+                    <p></p>
+                    
+                </div>
+            </div>
         </section>
         
         <section id="conclusion" class="my-4">
-          <h2>心得体会</h2>
+            <h2>心得体会</h2>
             <div class="card mb-4" id="con1">
+                <div class="card-body">
+                    <h5 class="card-title">小组：</h5>
+                    <hr>
+                    <p>我们小组两位成员均负责全栈的工作，从前后端开发，数据库管理方面，均协作完成。</p>
+                    <p>我们不仅使用Git进行版本控制和团队协作，还定期进行代码审查、交流工作，确保各部分代码质量和项目进度。同时，我们经常线下交流谈论，共同调试，解决开发过程中遇到的各个问题，确保项目按时交付。</p>
+                    <p>这次项目合作是一次很好的机会，我们也期待能够在更多的项目和大作业中开展交流和讨论，相互学习和启发，进一步提升个人和团队的能力。</p>
+                </div>
+            </div>
+            <div class="card mb-4" id="con2">
                 <div class="card-body">
                     <h5 class="card-title">申长硕：</h5>
                     <hr>
                     <p>在数据库课程设计中负责前端开发和使用Django框架实现前后端交互，这是我宝贵的学习经历。通过这次实践，我不仅掌握了Django框架的应用，还深入理解了如何设计和优化数据库以及前后端数据交互的重要性。</p>
-                    <p>首先，我学会了如何设计和构建高效的后端数据库。在项目开始前，我们进行了详细的需求分析和数据模型设计，确保数据库结构合理且符合实际应用需求。通过使用MySQL，我学习了如何创建表格、定义字段，并且掌握了使用SQL语句进行数据操作的技能。这些实践不仅加深了我对数据库设计原理的理解，还提升了我在实际应用中解决问题的能力。</p>
+                    <p>首先，我学会了如何设计和构建的后端数据库。在项目开始前，我们进行了详细的需求分析和数据模型设计。其中，我从自己过去一个学年在英语俱乐部的工作出发，确保数据库结构合理且符合实际应用需求。通过使用MySQL，我学习了如何创建表格、定义字段，并且掌握了使用SQL语句进行数据操作的技能（当然在这次的课程设计中我主要是使用Django提供的ORM完成各项任务）。这些实践不仅加深了我对数据库设计原理的理解，还提升了我在实际应用中解决问题的能力。</p>
                     <p>其次，通过开发前端界面，我学习了如何使用HTML、CSS和JavaScript实现用户友好的界面设计。在与后端的密切协作中，我学会了如何通过AJAX技术实现前后端数据交互，提升了系统的响应速度和用户体验。</p>
                     <p>团队合作和沟通是项目成功的关键。我们使用Git进行版本控制和团队协作，及时解决问题并分享进展，这使得项目开发过程更加高效和有序。与团队成员的协作不仅帮助我更好地理解后端开发需求，还培养了我的团队合作能力和沟通技巧。</p>
                     <p>在项目开发过程中，我遇到了各种挑战，如性能优化、安全性保障和用户体验提升。通过分析和解决这些问题，我不断提升了自己的技术水平和问题解决能力。这些经历不仅是技术上的提升，更是对团队协作和项目管理能力的锻炼。</p>
-                    <p>总结来说，参与数据库课程设计并负责Django后端开发的经历让我获益良多。通过这次实践，我不仅掌握了先进的开发技术和数据库管理方法，还培养了解决实际问题和团队协作的能力。这些宝贵的经验将为我未来的职业发展打下坚实的基础，我将继续深入学习，不断提升自己在软件开发和数据库管理领域的专业能力。</p>
+                    <p>总的来说，参与数据库课程设计并负责Django后端开发的经历让我获益良多。通过这次实践，我不仅掌握了先进的开发技术和数据库管理方法，还培养了解决实际问题和团队协作的能力。这些宝贵的经验将为我未来的职业发展打下坚实的基础，我将继续深入学习，继续提升自己在软件开发和数据库管理领域的专业能力。</p>
                 </div>
             </div>
-            <div class="card mb-4" id="con1">
+            <div class="card mb-4" id="con3">
                 <div class="card-body">
                     <h5 class="card-title">滕润喆：</h5>
                     <hr>
-                    <p></p>
-                    <p></p>
+                    <p>在这次数据库课程设计的项目中，我从需求分析、系统设计到实现与测试，经历了完整的项目开发流程，收获颇丰。展开来说如下，在项目初期的需求分析阶段，我们对系统进行了全面的需求梳理和功能规划，从一个用户的角度考虑，除此之外，我们还调研了英语社管理层及社员对于我们开发这个系统的需求。进行了概念模型和关系模型的设计，之后再设计的过程中不断迭代。做完数据库大作业我认为只有在开始阶段进行系统性思考，才能保证后续设计和开发的顺利进行。明确的需求和清晰的功能模块划分是项目成功的关键。</p>
+                    <p>在实际开发阶段，项目采用了B/S架构，使用了Django框架来实现后端服务，前端通过Ajax与后端进行交互，实现了诸如用户注册、登录、发帖、评论等功能。通过这个过程，我学会了如何设计和实现一个高效、可维护的前后端交互系统。在实现与测试阶段，我们编写了一些测试用例来验证系统的用户登录、密码重置、帖子发布和评论等关键功能，来确保系统的稳定性和安全性。这个阶段让我明白了安全性和稳定性测试也是十分重要的一环。</p>
+                    <p>这次数据库还让我意识到一个数据库系统最重要的是数据的质量。最开始我们的数据是随机生成的，后来在测试和小范围测试使用的时候，我们发现展示随机生成的数据会大幅拉低用户体验。所以我们精选了一些网站进行了数据爬取，在数据收集和清洗过程中，我们也发现了许多问题，如数据格式不统一、数据缺失等。这一系列问题使我深刻认识到高质量的数据对于数据库系统提升用户体验的的重要性。</p>
+                    <p>这次数据库课程设计项目是一次非常宝贵的实践机会，不仅让我在技术上得到了提升，也让我在项目管理和团队合作方面积累了丰富的经验。未来，我将继续努力学习，不断提升自己的技术水平和综合能力，为更复杂的项目开发打下坚实的基础。</p>
                 </div>
             </div>
 
@@ -1617,7 +1687,21 @@
         
         <section id="references" class="my-4">
             <h2>参考内容</h2>
-            <p>...</p>
+            <div class="card mb-4" id="con3">
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="http://staff.ustc.edu.cn/~huangzhy/Course/DB2024.html"><span>数据库课程主页</span></a>
+                        </li>
+                        <li>
+                            <a href="#references">数据库系统开发指导——TAs</a>
+                        </li>
+                        <li>
+                            <a href="https://docs.djangoproject.com/zh-hans/5.0/"><span>Django官方文档</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </section>
     </main>
     <footer class="bg-dark text-white text-center py-3">
