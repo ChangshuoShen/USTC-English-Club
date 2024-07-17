@@ -74,8 +74,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#supple1">范式分析</a>
                             <a class="dropdown-item" href="#supple2">安全性考量</a>
-                            <a class="dropdown-item" href="#supple3">多事务并发考量</a>
-                            <a class="dropdown-item" href="#supple4">补充4</a>
+                            <a class="dropdown-item" href="#supple3">事务并发考量</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -89,15 +88,9 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#references" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="#references" role="button" aria-haspopup="true">
                             参考内容
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#ref1">参考1</a>
-                            <a class="dropdown-item" href="#ref2">参考2</a>
-                            <a class="dropdown-item" href="#ref3">参考3</a>
-                            <a class="dropdown-item" href="#ref4">参考4</a>
-                        </div>
                     </li>
                 </ul>
             </div>
@@ -1601,37 +1594,184 @@
                             <p><strong>3NF：</strong>我们设计的模型中各实体的非主属性都直接依赖于主键，没有传递依赖，所以符合第三范式</p>
                         </li>
                         <li class="list-group-item">
-                            <p><strong>4NF：</strong></p>
+                            <p><strong>4NF——是否有必要升4NF的考量：</strong></p>
+                            <div class="card">
+                                <div class="card-body">
+                                  <p class="card-text">
+                                    多值依赖是在一个关系中，如果一个属性集X确定另一个属性集Y，并且Y是X的独立多值属性，那么我们说Y多值依赖于X，记作X →→ Y。多值依赖的一个关键点是，一个属性集可以独立地与多个值关联，而不依赖于关系中的其他属性。
+                                  </p>
+                                  <p class="card-text">
+                                    举个例子，假设我们有如下的表结构，其中一个用户可能会对多个帖子点赞和评论：
+                                  </p>
+                                  <h6 class="mt-4">原始表的情况</h6>
+                                  <p>User表</p>
+                                  <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                      <thead>
+                                        <tr>
+                                          <th>user_id</th>
+                                          <th>name</th>
+                                          <th>likes_num</th>
+                                          <th>comments_num</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>1</td>
+                                          <td>Runge</td>
+                                          <td>2</td>
+                                          <td>2</td>
+                                        </tr>
+                                        <tr>
+                                          <td>2</td>
+                                          <td>Shenc</td>
+                                          <td>3</td>
+                                          <td>1</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <p class="card-text">
+                                    在这个表中，likes_num和comments_num分别表示用户点赞和评论的总数。这些数据是从Likes表和Comments表聚合得到的。
+                                  </p>
+                                  <h6>Likes表</h6>
+                                  <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                      <thead>
+                                        <tr>
+                                          <th>user_id</th>
+                                          <th>post_id</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>1</td>
+                                          <td>101</td>
+                                        </tr>
+                                        <tr>
+                                          <td>1</td>
+                                          <td>102</td>
+                                        </tr>
+                                        <tr>
+                                          <td>2</td>
+                                          <td>103</td>
+                                        </tr>
+                                        <tr>
+                                          <td>2</td>
+                                          <td>104</td>
+                                        </tr>
+                                        <tr>
+                                          <td>2</td>
+                                          <td>105</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <h6>Comments表</h6>
+                                  <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                      <thead>
+                                        <tr>
+                                          <th>user_id</th>
+                                          <th>post_id</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>1</td>
+                                          <td>101</td>
+                                        </tr>
+                                        <tr>
+                                          <td>1</td>
+                                          <td>103</td>
+                                        </tr>
+                                        <tr>
+                                          <td>2</td>
+                                          <td>106</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <p class="card-text">
+                                    在原始User表中，每个user_id唯一确定了likes_num和comments_num，但这些数据是通过聚合Likes和Comments表中的数据得来的。<code>likes_num</code>是通过对Likes表中对应user_id的记录进行计数得到的。<code>comments_num</code>是通过对Comments表中对应user_id的记录进行计数得到的。可以理解如下：
+                                  </p>
+                                  <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                      <thead>
+                                        <tr>
+                                          <th>user_id</th>
+                                          <th>name</th>
+                                          <th>likes</th>
+                                          <th>comments</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>1</td>
+                                          <td>Runge</td>
+                                          <td>101, 102</td>
+                                          <td>101, 103</td>
+                                        </tr>
+                                        <tr>
+                                          <td>2</td>
+                                          <td>Shenc</td>
+                                          <td>103, 104, 105</td>
+                                          <td>106</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <p class="card-text">
+                                    即存在多值依赖：<code>user_id →→ likes</code>和<code>user_id →→ comments</code>，那原关系也就不满足第四范式。
+                                  </p>
+                                  <h6 class="mt-4">若改进，我们想到的设计如下：</h6>
+                                  <p class="card-text"><strong>User表</strong></p>
+                                  <pre><code>CREATE TABLE User (
+                                user_id INT PRIMARY KEY,
+                                name VARCHAR(255)
+                            );</code></pre>
+                                  <p class="card-text"><strong>Likes表</strong></p>
+                                  <pre><code>CREATE TABLE Likes (
+                                user_id INT,
+                                post_id INT,
+                                PRIMARY KEY (user_id, post_id),
+                                FOREIGN KEY (user_id) REFERENCES User(user_id)
+                            );</code></pre>
+                                  <p class="card-text"><strong>Comments表</strong></p>
+                                  <pre><code>CREATE TABLE Comments (
+                                user_id INT,
+                                post_id INT,
+                                PRIMARY KEY (user_id, post_id),
+                                FOREIGN KEY (user_id) REFERENCES User(user_id)
+                            );</code></pre>
+                                  <p class="card-text">
+                                    通过这种方式，我们消除了多值依赖，因为User表只存储用户基本信息，Likes表独立记录用户点赞的帖子，Comments表独立记录用户评论的帖子。然而，这种设计有一个显著的缺点，就是每次需要展示点赞数和评论数时，都需要重新查询和计算，如果用户数量和互动频繁的情况下，这种效率就比较低了。因此，我们认为在实际应用中，仍然保留在第三范式更为合理。通过这种trade-off，我们觉得能够更好地满足用户需求，提供优质的系统体验。
+                                  </p>
+                                </div>
+                              </div>
+                        </div>
                         </li>
                     </ul>
-                    <br>
-                    <h5 class="card-title">是否有必要升4NF的考量</h5>
-                    <hr>
-                    <p>啦啦啦</p>
-                    <h5>总结</h5>
-                    <hr>
-                    <p>啦啦啦</p>
-                </div>
             </div>
             <div class="card mb-4" id="supple2">
                 <div class="card-body">
                     <h5 class="card-title">安全性考量</h5>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <p><strong>身份验证：</strong>在用户注册的时候和忘记密码进行修改密码的时候均使用邮箱发送动态验证码进行身份验证</p>
+                            <p><strong>身份验证：</strong>在用户注册的时候和忘记密码进行修改密码的时候均使用邮箱发送动态验证码进行身份验证。</p>
                         </li>
                         <li class="list-group-item">
-                            <p><strong>敏感数据加密：</strong>对于用户的密码，我们使用Django提供的make_password和check_password进行加密存储及验证，数据库中存储的密码均值哈希加密之后的密码</p>
+                            <p><strong>敏感数据加密：</strong>对于用户的密码，我们使用Django提供的make_password和check_password进行加密存储及验证，数据库中存储的密码均值哈希加密之后的密码。</p>
                         </li>
                         <li class="list-group-item">
-                            <p><strong>权限控制：</strong>我们自创的身份验证（当然Django已经内置了对应的功能），确保只有登陆的用户参能参与论坛的点赞，发帖，评论，回复等操作。以及确保只有管理员有权限进入Admin-Panel进行数据总揽操纵</p>
+                            <p><strong>权限控制：</strong>我们自创的身份验证（当然Django已经内置了对应的功能），确保只有登陆的用户参能参与论坛的点赞，发帖，评论，回复等操作。以及确保只有管理员有权限进入Admin-Panel进行数据总揽操纵。</p>
                         </li>
                         <li class="list-group-item">
-                            <p><strong>CSRF保护：</strong>我们在所有表单提交的部分均使用了跨站点请求(SCRF)保护，从而确保用户提交的表单数据是合法的</p>
+                            <p><strong>CSRF保护：</strong>我们在所有表单提交的部分均使用了跨站点请求(SCRF)保护，从而确保用户提交的表单数据是合法的。</p>
                         </li>
                         <li class="list-group-item">
-                            <p><strong>日志记录：</strong>我们通过设置日志记录(logging)系统以记录重要的操作和事件，例如在项目推进过程中的<strong>错误和异常、请求和响应、调试信息、性能监视、安全事件及系统和环境信息</strong>等。这样便于追踪和排查潜在的安全问题</p>
-                            <p>（性能方面，助教老师在线下汇报的时候还问我们有一个地方加载的比较慢，那一次是因为用腾讯会议共享屏幕的原因，从目前的测试情况看，我们已经做出来的各功能的完成性能是不影响用户体验的）</p>
+                            <p><strong>日志记录：</strong>我们通过设置日志记录(logging)系统以记录重要的操作和事件，例如在项目推进过程中的<strong>错误和异常、请求和响应、调试信息、性能监视、安全事件及系统和环境信息</strong>等。这样便于追踪和排查潜在的安全问题。</p>
+                            <p>（性能方面，助教老师在线下汇报的时候还问我们有一个地方加载的比较慢，那一次是因为用腾讯会议共享屏幕的原因，从目前的测试情况看，我们已经做出来的各功能的完成性能是不影响用户体验的）。</p>
                         </li>
                     </ul>
                     <p>ps：在和一位网安学长的交流中和数据库课程上，我们体会到了平台对于自身数据库保护以及对于用户信息保护的重要性和措施，（例如密码加密方面，我们很早的时候在学长那里了解到了MD5之类的一些加密方法，之后选用Django框架之后发现已经有加密的方法就直接拿来用了）所以在项目推进的过程中始终谨记这一点！</p>
@@ -1640,9 +1780,16 @@
             </div>
             <div class="card mb-4" id="supple3">
                 <div class="card-body">
-                    <h5 class="card-title">多事务并发考量</h5>
+                    <h5 class="card-title">事务并发考量</h5>
                     <hr>
-                    <p></p>
+                    <p>在事务并发可能导致的冲突方面，我们主要使用Django本身提供的事务管理工具进行解决，主要使用两种方法：</p>
+                    <ul>
+                        <li><strong>atomic</strong>保证某代码块的原子性，确保代码块在一个事物内执行</li>
+                        <li><strong>select_for_update</strong>保证选中的行直到事务结束</li>
+                    </ul>
+                    <p>在脏读处理方面，由于我们保证每一个基本事务的原子性，每一个基本事务都会在提交完成才结束，这个时候才有其他事务(函数)执行，所以是可以有效防止脏读的。</p>
+                    <p>在另两种问题上，我们并没有做更多限制，主要原因是我们觉得在用户A浏览一个页面的时候，用户B进行评论(UPDATE抑或是INSERT)之后A不能马上看到，这是一件可以接受的事情。在下次刷新的时候可以看见就够用了，一般不会影响用户的使用体验。</p>
+                    <p>故而，我们最终的隔离级别停留在Read Committed级别，通过保证特定代码块/函数的原子性，保证一个事务必须等另一个事务提交之后才能读取数据。</p>
                     
                 </div>
             </div>
